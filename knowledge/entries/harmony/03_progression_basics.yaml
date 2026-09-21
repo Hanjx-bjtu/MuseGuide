@@ -1,0 +1,58 @@
+---
+id: harmony.progression_basics.01
+title: 和弦进行的基础逻辑
+title_en: Chord Progression Basics
+category: harmony
+subcategory: progression_basics
+layman_title: 和弦为什么会「想回家」
+layman_content: |
+  和弦不是随便排的。有的和弦听起来「稳」，像站在地上；
+  有的听起来「悬着」，像话说到一半。
+  写歌就是把「稳」和「悬」交替着用：先让你悬一下，再稳稳落回来。
+  所以你会觉得某些和弦总「想」接在另一些和弦后面 —— 那不是巧合，
+  是它本来就悬着，需要一个稳的和弦把它接住。
+content: |
+  和弦进行建立在「稳定—不稳定—解决」的循环上。
+  三个功能组：主功能（Tonic，I / vi）稳定；属功能（Dominant，V / vii°）最不稳定，
+  强烈要求解决；下属功能（Subdominant，IV / ii）中度不稳定，起过渡作用。
+  最常见的运动是 T → S → D → T：离开稳定，经过过渡，制造紧张，然后解决。
+  这也是为什么 V → I 听感上像「句号」，而 I → V 像「逗号」。
+  进行的选择本质上是在决定：紧张感从哪里来、在哪里释放、释放得彻不彻底。
+tags: [harmony, progression, function, tonic, dominant, basics]
+emotions: [温暖, 轻快, 释然]
+examples: ["C | F | G | C", "C | G | Am | F", "Am | Dm | G | C"]
+key_context: C Major
+roman_numerals: ["I", "IV", "V", "I"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, rock, ballad]
+source:
+  title: Open Music Theory — Harmonic Function
+  url: https://openmusictheory.github.io/harmonicFunctions.html
+  license: CC BY-SA 4.0
+related: [starter.common_progressions.01, harmony.cadence_function.01, layman.what_is_progression.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户问「为什么这里要接这个和弦」「为什么我的进行听起来没结束」时，
+答案通常落在功能逻辑上，而不是「这个和弦更好听」。
+
+## 三个功能组
+
+| 功能 | 和弦（C 大调） | 听感 | 作用 |
+|---|---|---|---|
+| 主 Tonic | C、Am | 稳、落地 | 起点与归宿 |
+| 下属 Subdominant | F、Dm | 中度不稳 | 过渡、铺垫 |
+| 属 Dominant | G、E、Bdim | 悬、要解决 | 制造紧张 |
+
+## 运动的常规路径
+
+```text
+T → S → D → T     （最典型：C → F → G → C）
+T → D → T         （最直接：C → G → C）
+T → S → T         （无紧张感，听感平稳）
+```
+
+**反向走（D → S）会让听感「倒退」**，这是很多「感觉不对劲」的实际原因。

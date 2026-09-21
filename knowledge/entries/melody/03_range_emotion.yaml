@@ -1,0 +1,55 @@
+---
+id: melody.range_emotion.01
+title: 音域与音区如何影响情绪
+title_en: Range, Tessitura and Emotion
+category: melody
+subcategory: range_emotion
+layman_title: 唱得高一点，还是低一点
+layman_content: |
+  同一段旋律，唱高一点会显得更激动、更用力；
+  唱低一点会更沉静、更接近说话。
+  如果整首歌都挤在中间几个音里，听感会比较平；
+  如果只在副歌冲上去，那一下就会特别明显。
+  所以「哪里高、哪里低」本身就是一种表达。
+content: |
+  音域（Range）是旋律的最低音到最高音的距离，音区（Tessitura）是主要停留的区域。
+  音域窄（六度以内）听感集中、口语化，适合主歌叙述与零基础起步；
+  音域宽（十度以上）表现力强，但需要演唱能力支撑。
+  音区整体偏高 → 明亮、紧张、年轻；整体偏低 → 沉稳、厚重、忧郁。
+  最实用的手法是「音区对比」：主歌保持在舒适的中低音区，
+  副歌整体抬高，用音区落差制造情绪推进，而不必依赖更大的音量。
+tags: [melody, range, tessitura, register, emotion]
+emotions: [激昂, 伤感, 温柔]
+examples: ["E4 G4 A4 G4 E4"]
+key_context: C Major
+roman_numerals: []
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, rock]
+source:
+  title: Open Music Theory — Melody
+  url: https://openmusictheory.github.io/melody.html
+  license: CC BY-SA 4.0
+related: [melody.contour.01, melody.tension_release.01]
+priority: 3
+---
+
+## 什么时候会用到
+
+用户说「副歌不够高」「感觉唱不上去」「想让情绪更强烈」，
+或者反过来「太吵了，想安静一点」。
+
+## 速查
+
+| 用户诉求 | 做法 |
+|---|---|
+| 副歌更突出 | 副歌整体抬高音区，主歌保持在舒适区 |
+| 更沉静 | 整体下移，减少跳进 |
+| 更口语化 | 缩小音域到六度内，多用同音反复 |
+| 更激动 | 扩大音域，加入向上的跳进 |
+
+## 零基础用户的现实约束
+
+§1.3 的 MVP 边界里不含演唱能力评估，但起步方案仍应**默认选择窄音域**
+（`E4`~`A4` 这类六度内），因为用户第一次写歌大概率要自己唱。
+音域过宽会让「能写出来」变成「唱不出来」，直接损害 §9 第 9 条的「实际参考价值」。

@@ -1,0 +1,55 @@
+---
+id: melody.contour.01
+title: 旋律轮廓：走向决定情绪
+title_en: Melodic Contour
+category: melody
+subcategory: contour
+layman_title: 旋律往上还是往下，情绪完全不同
+layman_content: |
+  旋律往上走，听起来会更有精神、更开阔；
+  往下走，听起来会低沉、像叹气。
+  先上后下像波浪，是最好记也最自然的一种；
+  一直重复同一句，会让人印象深刻，但也容易腻。
+  你只需要决定：这首歌的主线，是往上还是往下。
+content: |
+  旋律轮廓（Contour）指音高随时间的整体走向，是情绪最直接的载体。
+  上行轮廓常与「希望、推进、高潮」关联；下行轮廓常与「叹息、低落、告别」关联。
+  拱形轮廓（先上后下）最能给人「讲完一件事」的完整感，是抒情歌的主流选择。
+  倒拱形（先下后上）产生「由抑到扬」的效果，适合「伤感→释然」这类复合情绪。
+  平直轮廓（同音反复）记忆点强但推进力弱，通常用在主歌的叙述段。
+  实操上，把曲中最高音安排在副歌的第一句，是提升副歌存在感最省力的做法。
+tags: [melody, contour, shape, emotion, phrase]
+emotions: [伤感, 释然, 激昂]
+examples: ["E4 G4 A4 G4 E4"]
+key_context: C Major
+roman_numerals: []
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, rock]
+source:
+  title: Open Music Theory — Melodic Contour
+  url: https://openmusictheory.github.io/melody.html
+  license: CC BY-SA 4.0
+related: [melody.tension_release.01, melody.range_emotion.01, emotion.sad_to_hopeful.01]
+priority: 4
+---
+
+## 什么时候会用到
+
+用户说「副歌不够突出」「旋律听起来闷」「想要更有起伏」时，
+先看轮廓，往往不用改和声。
+
+## 四种基本轮廓
+
+| 轮廓 | 形状 | 常见情绪 | 典型用法 |
+|---|---|---|---|
+| 上行 | ↗ | 希望、推进 | 副歌开头、高潮铺垫 |
+| 下行 | ↘ | 叹息、低落 | 主歌、告别句 |
+| 拱形 | ↗↘ | 完整、诉说 | 抒情歌主歌 |
+| 倒拱形 | ↘↗ | 由抑到扬 | 伤感→释然 |
+
+## 与「伤感→释然」的配合
+
+`MVP计划.md` §3.3.3 的示例正是这个场景：主歌用下行/拱形轮廓表达伤感，
+副歌转为上行轮廓表达释然。**轮廓与和声同向变化时，转折感最强**；
+若和声转了但旋律没转，用户会说「感觉没变过来」。

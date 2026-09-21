@@ -1,0 +1,65 @@
+---
+id: layman.what_is_cadence.01
+title: 终止式是什么
+title_en: What Is a Cadence
+category: layman
+subcategory: concept_explanation
+layman_title: 终止式是什么
+layman_content: |
+  终止式就是音乐的「句号」。
+  一首歌分成好几句，每句结束的时候，要用一种方式告诉听众
+  「这句说完了」或者「还没说完」。
+  用句号结束，听众会觉得这段落了地；
+  用逗号结束，听众会期待下一句。
+  如果你觉得歌的结尾「没落下来」，多半就是缺了这个句号。
+content: |
+  终止式（Cadence）是乐句结束处的和声公式，负责表达「结束感」的强弱。
+  最直接的句号是「不稳的和弦接回稳的和弦」——
+  也就是 V → I 这样的进行。
+  若停在 V 上不解决，则像逗号，产生「还要继续」的期待。
+  分段与分句都靠它：主歌结尾常用逗号（留悬念），
+  副歌结尾常用句号（给满足）。
+  对创作者最实用的一点：想让某个段落「有结束感」，
+  就在最后两个和弦上做这个动作，不需要改动整段。
+tags: [layman, concept, cadence, ending, phrase]
+emotions: [释然, 温暖]
+examples: ["G | C", "G | Am"]
+key_context: C Major
+roman_numerals: ["V", "I"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, jazz]
+source:
+  title: MuseGuide 通俗解释层（项目自建）
+  url: https://openmusictheory.github.io/cadences.html
+  license: CC BY-SA 4.0
+related: [layman.what_is_progression.01, harmony.cadence_function.01, emotion.tension_resolution.01]
+priority: 5
+---
+
+## 使用场景
+
+这是 `MVP计划.md` §3.2.2 映射表里明确列出的一条：
+用户说「想要收尾的感觉」→ 系统应映射到 `Cadence / 终止式`。
+
+用户不会说「我想要终止式」，他只会说「感觉没说完」。
+本条目就是这两句话之间的翻译。
+
+## 表述规则（§3.8.3）
+
+1. 类比：句号和逗号
+2. 给出可执行的判断：*结尾停在不稳的和弦上 = 逗号，回到稳的 = 句号*
+3. 落在 `MVP计划.md` §13 的示例写法上：
+
+> 音乐里有一种叫「终止式」的东西，就像句号一样，
+> 让听众感觉到「这一段结束了」。你的副歌结尾缺少这种「句号」。
+
+**注意这里的表述顺序**：先描述问题（「没落下来」），
+再引入术语（「终止式」），最后给动作（「加一个 G → C」）。
+术语出现在解释之后，而不是之前 —— 这是零基础友好的关键。
+
+## 零基础模式下的禁区
+
+**不出现**：完全终止、半终止、变格终止、欺骗终止、K46。
+这些分类对创作者的决策没有帮助，只会增加阅读负担。
+需要这些区分的是 `harmony.cadence_function.01`（进阶文档）。

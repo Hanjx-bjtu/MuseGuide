@@ -46,12 +46,12 @@ MuseGuide 不替用户生成一整首歌，而是：
 | **P0** | 工程地基（契约 / 测试 / 配置 / 降级） | ✅ 已完成 | — |
 | **P1** | 意图映射 + 选择式输入 + Layman 术语表 | ✅ 已完成（**G1 通过**） | — |
 | P2 | 解析 + 分析 + 起步方案 | ⬜ 待开始 | **M2** |
-| P3 | 知识库 29 篇 + Hybrid 检索 + Query 分解 | 🔨 骨架就位（8 篇示例条目） | **M1** |
+| P3 | 知识库 29 篇 + Hybrid 检索 + Query 分解 | 🔨 **P3.1 知识库完成（29 篇）**；检索待开始 | **M1** |
 | P4 | 进阶分析 + 多方案 + Grounding 校验 | ⬜ 待开始 | **M4** |
 | P5 | 双入口 Streamlit 界面 | ⬜ 待开始 | **M3** |
 | P6 | 评估 + 报告 + Demo | ⬜ 待开始 | **M5 / M6** |
 
-**当前测试：** `165 passed, 1 skipped`（无需 API Key 与网络）
+**当前测试：** `169 passed, 1 skipped`（无需 API Key 与网络）
 
 **文档：**
 
@@ -63,8 +63,37 @@ MuseGuide 不替用户生成一整首歌，而是：
 | [`docs/DATA_CONTRACTS.md`](docs/DATA_CONTRACTS.md) | 契约字段表 |
 | [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) | 验收口径总表 |
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | 架构决策记录（ADR） |
+| [`docs/kb_authoring.md`](docs/kb_authoring.md) | 知识条目撰写规范 + 来源与许可证规则 |
 
 ---
+
+## 知识库
+
+29 篇条目，覆盖 `MVP计划.md` §3.6.1 目录树的全部 6 个分类：
+
+| 分类 | 篇数 | 内容 |
+|---|---|---|
+| `harmony/` | 6 | 进行基础、七和弦、调式借用、终止式、副属和弦、和弦色彩 |
+| `melody/` | 4 | 张力释放、旋律轮廓、音域与情绪、动机发展 |
+| `emotion/` | 5 | 温暖和声、忧郁色彩、伤感→释然、张力释放、告别场景 |
+| `starter/` | 5 | 起步四决定、调性与速度、曲式结构、按风格选进行、落地三步 |
+| `examples/` | 4 | 流行、民谣、日系、低音线案例 |
+| `layman/` | 5 | 和弦、调性、进行、终止式、情绪与和声（概念科普） |
+
+**每条目都带通俗解释层**（`layman_title` + `layman_content`）—— 这是 Layman-aware
+Generation 的物理载体，在零基础模式下优先渲染，**不是可选的装饰**。
+
+```powershell
+python knowledge/build_kb.py --check     # 校验：来源、通俗层、id 唯一、related 可解析
+python knowledge/build_kb.py --build     # 校验并产出（带版本 hash，供实验溯源）
+```
+
+校验与以下约束**由测试强制**，不合规会让 `pytest` 变红：
+- 六大分类配比与计划一致
+- 100% 条目含 `source.title` / `url` / `license`
+- 通俗层不含零基础禁区术语
+- 情绪标签落在受控词表内
+- 项目自建的经验性内容必须标 `medium`，不得标 `high`
 
 ## 5 分钟跑通
 

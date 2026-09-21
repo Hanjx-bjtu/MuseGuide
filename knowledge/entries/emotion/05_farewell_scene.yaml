@@ -1,0 +1,70 @@
+---
+id: emotion.farewell_scene.01
+title: 告别 / 毕业这类主题怎么写
+title_en: Farewell and Graduation Themes
+category: emotion
+subcategory: scene_mapping
+layman_title: 写「告别」这类歌，从哪下手
+layman_content: |
+  告别类的歌有个天然的写法：前半段写「舍不得」，后半段写「往前走」。
+  音乐上正好对应「先用小调，再回到大调」。
+  速度别太快，像翻相册那样慢慢来；
+  和弦不用复杂，几个常用的就够 —— 这类歌打动人的是情绪走向，不是花样。
+content: |
+  告别、毕业、离别这类主题有稳定的情感结构：回忆 → 不舍 → 接受 → 向前。
+  这一结构天然对应音乐上的三件事：
+  一、调性与和声：主歌用小调或小调和弦承载「不舍」，
+  副歌回到大调承载「接受与向前」，形成 `emotion.sad_to_hopeful.01` 描述的转向。
+  二、速度与节奏：中慢速（60~85 BPM），和声节奏宽松，每小节一个和弦即可，
+  给歌词留出叙述空间。
+  三、曲式：主歌—副歌两段式即可满足 MVP 场景，不需要 bridge。
+  副歌结尾使用完全终止（V → I）让「向前」的意味落地；
+  若想保留一丝不舍，可用欺骗终止（V → vi）收尾。
+  和弦选择上，I–V–vi–IV 或 vi–IV–I–V 都已足够 ——
+  这类主题的难点在情绪走向的准确，而不在和声的新颖。
+tags: [emotion, farewell, graduation, scene, starter]
+emotions: [伤感, 释然, 温暖]
+examples: ["Am | F | C | G", "C | G | Am | F"]
+key_context: C Major
+roman_numerals: ["vi", "IV", "I", "V"]
+difficulty: beginner
+confidence_level: medium
+applicable_genres: [pop, folk, ballad]
+source:
+  title: MuseGuide 场景映射表（项目自建，综合 Open Music Theory 条目）
+  url: https://openmusictheory.github.io/modalMixture.html
+  license: CC BY-SA 4.0
+related: [emotion.sad_to_hopeful.01, starter.how_to_start.01, starter.song_structure.01]
+priority: 5
+---
+
+## 为什么单独写这一篇
+
+`MVP计划.md` §3.1.2 给出的**唯一一个零基础示例**就是毕业主题：
+
+> 我想写一首关于毕业的歌，有点伤感但最后是释然的感觉。
+
+这是系统会被问到的第一个问题，因此值得有专门条目覆盖，
+而不是让检索去拼凑「伤感」+「释然」两条通用知识。
+
+## 情感结构 → 音乐手段
+
+| 阶段 | 情感 | 音乐手段 |
+|---|---|---|
+| 回忆 | 平静、带距离 | 慢速、稀疏的和声节奏、中低音区 |
+| 不舍 | 伤感 | 小调和弦、下行旋律 |
+| 接受 | 释然 | 回到大调、上行旋律 |
+| 向前 | 开阔 | 完全终止、音区抬高 |
+
+## 常见写法
+
+```text
+主歌（回忆 / 不舍）：Am → F → C → G     中慢速，旋律偏低
+副歌（接受 / 向前）：C → G → Am → F     音区抬高，结尾 V → I
+```
+
+## 要注意
+
+`confidence_level` 标为 `medium` 而非 `high`：把「毕业」映射到具体的和声手法
+属于项目自建的经验性映射，不是乐理上的必然，不同创作者会有不同选择。
+**标注确定性等级比假装权威更诚实**（见 `docs/kb_authoring.md` §3.2）。

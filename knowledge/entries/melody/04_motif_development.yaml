@@ -1,0 +1,57 @@
+---
+id: melody.motif_development.01
+title: 动机发展：怎么让旋律「好记又耐听」
+title_en: Motif and Development
+category: melody
+subcategory: motif_development
+layman_title: 一个短句子，变着花样用
+layman_content: |
+  好记的旋律通常都有一个很短的「核心句」，比如三四个音。
+  整首歌其实就是把这个短句翻来覆去地用 —— 升高一点、降低一点、
+  拉长一点、接上一点新东西。
+  这样听众既觉得熟悉（好记），又不会觉得重复（耐听）。
+content: |
+  动机（Motif）是旋律中最短的、可识别的单位，通常 2~5 个音。
+  发展手法主要有四种：
+  重复（Repetition）：原样再现，强化记忆，但连续超过三次会显得呆板。
+  模进（Sequence）：把动机整体移高或移低若干音级重复，产生推进感，
+  是流行歌副歌最常用的手法。
+  变奏（Variation）：改变节奏或个别音，保持轮廓，产生新鲜感。
+  扩展（Extension）：在动机尾部接上新材料，用于乐句的收束或转折。
+  实操建议：主歌用一个动机反复，副歌用模进把同一个动机抬升成高潮，
+  这样全曲的统一性来自同一个素材，而不是靠堆砌。
+tags: [melody, motif, sequence, repetition, development]
+emotions: [轻快, 温暖, 激昂]
+examples: ["E4 G4 A4 G4 E4", "G4 B4 C5 B4 G4"]
+key_context: C Major
+roman_numerals: []
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, folk, jpop, rock]
+source:
+  title: Open Music Theory — Motives and Development
+  url: https://openmusictheory.github.io/motives.html
+  license: CC BY-SA 4.0
+related: [melody.contour.01, melody.tension_release.01]
+priority: 3
+---
+
+## 什么时候会用到
+
+用户说「副歌和主歌不像一首歌」「旋律听起来很散」，
+或者反过来「重复太多了，听着腻」。
+
+## 四种手法
+
+| 手法 | 做法 | 效果 | 风险 |
+|---|---|---|---|
+| 重复 | 原样再来一次 | 强化记忆 | 连续 >3 次会呆板 |
+| 模进 | 整体移高/移低 | 推进感、高潮 | 移得过多会脱离调性 |
+| 变奏 | 改节奏或个别音 | 新鲜感 | 改动过大则失去统一 |
+| 扩展 | 尾部接新材料 | 转折、收束 | 容易变成两首歌 |
+
+## 与 §3.4.2 的旋律输出衔接
+
+`MVP计划.md` §3.4.2 的分析结果里有 `repetition: true/false` 字段 —— 它检测的正是这里说的
+「重复」。当 `repetition` 为真时，系统可以据此建议用户用**模进**把已有的动机抬升成副歌，
+这比建议「重新写一段旋律」要友好得多，因为它承认了用户已经写出来的东西。

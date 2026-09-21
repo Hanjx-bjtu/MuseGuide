@@ -1,0 +1,62 @@
+---
+id: emotion.tension_resolution.01
+title: 张力与释放：音乐怎么「推上去再放开」
+title_en: Tension and Resolution
+category: emotion
+subcategory: tension_resolution
+layman_title: 先憋一口气，再呼出来
+layman_content: |
+  音乐让人激动，靠的是「憋住」和「放开」。
+  憋住的办法：和弦停在不稳的地方、旋律往上走、节奏变密。
+  放开的办法：回到稳的和弦、旋律落下来、节奏放松。
+  如果一首歌从头到尾都没有「憋住」的时刻，
+  它就不会有真正的高潮 —— 因为没有东西可以释放。
+content: |
+  张力（Tension）与释放（Resolution）是音乐情绪推进的底层机制。
+  累积张力的手段：使用属功能与不稳定和弦（V、vii°）、引入调外音、
+  提高音区、加密节奏、增加声部厚度、拉长乐句的期待。
+  释放的手段：解决到主和弦（V → I）、旋律落回主音、降低音区、
+  放缓节奏、减少声部。
+  有效的做法是让张力与释放**在同一乐句内配对**：有悬念就必须有答案，
+  否则听感会「悬空」。副歌前的 pre-chorus 是典型的张力累积段，
+  副歌第一句是第一级释放，副歌结尾的终止式是最终释放。
+tags: [emotion, tension, resolution, climax, build-up]
+emotions: [激昂, 释然, 伤感]
+examples: ["Am | F | G | C", "F | G | Am | C"]
+key_context: C Major
+roman_numerals: ["iv", "V", "I"]
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, rock, ballad, jpop]
+source:
+  title: Open Music Theory — Tension and Resolution
+  url: https://openmusictheory.github.io/harmonicFunctions.html
+  license: CC BY-SA 4.0
+related: [melody.tension_release.01, harmony.cadence_function.01, emotion.sad_to_hopeful.01]
+priority: 4
+---
+
+## 什么时候会用到
+
+用户说「副歌不够有情绪」「想要高潮感」「听完没什么感觉」。
+这三句话指向同一个问题：**张力没有被建立起来，或者建立了却没被释放。**
+
+## 匹配表
+
+| 诉求 | 累积张力 | 释放 |
+|---|---|---|
+| 想要高潮 | pre-chorus 用 V 或调外和弦 | 副歌第一句回到 I |
+| 想要收尾 | 副歌末尾停在 V | 结尾 V → I |
+| 想要更激动 | 音区抬高、节奏加密 | 最后一句骤降 |
+
+## 一个常被忽略的原则
+
+**张力与释放必须配对，且距离不能太远。**
+如果张力从主歌累积到全曲结尾才释放，中间的过程会显得冗长
+（因为没有局部的「呼吸」）。因此成熟的写法是在每个乐句内都做一次小循环，
+在主歌到副歌之间做一次大循环。
+
+这条原则直接对应 `MVP计划.md` §3.5.3 的检索示例：
+用户说「副歌听起来不够有情绪」，正确的检索方向是
+Tension/Resolution + Cadence + Chord Progression + Melody Contour，
+而不是「找更好的和弦」。

@@ -1,0 +1,63 @@
+---
+id: examples.bass_line.01
+title: 低音线进行案例
+title_en: Bass Line Movement
+category: examples
+subcategory: bass_line
+layman_title: 换个低音，感觉就不一样了
+layman_content: |
+  每次换和弦时，最低的那个音也在走。
+  如果它一步一步往下走（而不是跳来跳去），整首歌会听起来更连贯，
+  像一条线把几个和弦串起来了。
+  最省事的做法：不用改和弦本身，只改最低音。
+  比如把 G 换成 G/B，别的都不动。
+content: |
+  低音线（Bass Line）是听感连贯性的主要来源，也是改动成本最低的增色手段之一。
+  级进下行：C → G/B → Am → F/A → Fm/Ab → C。
+  低音依次为 C → B → A → A → Ab → C，形成一条平滑下行的线条，
+  在保持和声功能不变的前提下显著提升「设计感」。
+  持续音（Pedal Point）：低音长时间停留在同一个音上（如持续 C），
+  上方和弦变化，产生张力累积，常用于前奏与副歌前的铺垫。
+  上行低音：C → C/E → F → F/A → G，逐步抬升，产生推进感。
+  跳进低音：低音做四度或五度跳进（C → G → Am → F 的默认形态），
+  功能清晰但连贯性弱 —— 这也是 `C | G | Am | F` 听起来「普通」的原因之一。
+tags: [examples, bass line, voice leading, inversion, continuity]
+emotions: [温暖, 释然, 梦幻]
+examples: ["C | G/B | Am | F/A | Fm/Ab | C", "C | C/E | F | F/A | G"]
+key_context: C Major
+roman_numerals: ["I", "V6", "vi", "IV6"]
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, citypop, ballad, folk]
+source:
+  title: Open Music Theory — Voice Leading
+  url: https://openmusictheory.github.io/voiceLeading.html
+  license: CC BY-SA 4.0
+related: [examples.pop_progressions.01, harmony.chord_color.01, examples.jpop_progressions.01]
+priority: 4
+---
+
+## 什么时候会用到
+
+用户说「想要更连贯」「听起来有点断」「想让和弦连起来」。
+这是「感觉普通」的第二大原因（第一是走向太常见）。
+
+## 三种低音运动
+
+| 类型 | 示例 | 听感 | 改动量 |
+|---|---|---|---|
+| 级进下行 | C → G/B → Am → F/A | 平滑、有设计感 | 极小 |
+| 持续音 | C 持续 + 上方变化 | 累积张力 | 小 |
+| 上行 | C → C/E → F → G | 推进感 | 极小 |
+| 跳进（默认） | C → G → Am → F | 功能清晰但平 | — |
+
+## 为什么这是最值得推荐的方案
+
+在 `MVP计划.md` §3.9.3 的进阶示例里，「改变低音走法」被列为三个建议方向之一。
+它值得被优先推荐，原因是：
+
+1. **改动量极小** —— 用户不需要重新学和弦，只是换个按法
+2. **和声功能完全不变** —— 不会破坏用户已经满意的部分
+3. **听感变化明显** —— 投入产出比最高
+
+这与 `harmony.chord_color.01` 里「先给低风险方案」的原则一致。

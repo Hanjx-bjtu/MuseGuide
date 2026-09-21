@@ -1,0 +1,68 @@
+---
+id: starter.song_structure.01
+title: 一首歌的基本结构
+title_en: Basic Song Structure
+category: starter
+subcategory: song_structure
+layman_title: 一首歌是由几段拼起来的
+layman_content: |
+  歌不是一口气唱完的，它分成几段。
+  最常见的是「主歌 + 副歌」：主歌像在讲故事，比较平；
+  副歌是反复出现、最好记的那一句。
+  主歌可以有好几段，副歌通常反复用同一段。
+  你的第一首歌，写好这两段就够了。
+content: |
+  流行歌的基本结构由若干段落组成，最核心的是两段：
+  主歌（Verse）：叙述、铺垫，旋律音区较低、和声较平，可重复多段。
+  副歌（Chorus）：情绪高点、记忆点，旋律音区较高，
+  通常反复使用同一段和声与旋律。
+  常见的扩展段落：前奏（Intro）建立氛围；
+  预副歌（Pre-Chorus）累积张力，指向副歌；
+  桥段（Bridge）在第三次副歌前提供对比；
+  尾奏（Outro）收束。
+  对零基础用户，建议只做主歌 + 副歌两段：
+  一是降低决策成本，二是这两段已经足以构成完整听感。
+  主歌与副歌的差异应当明显 —— 至少在音区或和声起点上有一个不同，
+  否则听众分不清「哪句是副歌」。
+tags: [starter, structure, verse, chorus, form]
+emotions: [温柔, 释然, 轻快]
+examples: ["主歌 Am | F | C | G", "副歌 C | G | Am | F"]
+key_context: C Major
+roman_numerals: ["vi", "IV", "I", "V"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, rock, ballad]
+source:
+  title: Open Music Theory — Form in Popular Music
+  url: https://openmusictheory.github.io/popForm.html
+  license: CC BY-SA 4.0
+related: [starter.how_to_start.01, starter.first_song_landing.01, emotion.sad_to_hopeful.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+`MVP计划.md` §3.3.3 的起步方案输出结构里，`sections` 数组就是主歌与副歌两段 ——
+本条目是那个字段的知识依据。
+
+## 段落一览
+
+| 段落 | 作用 | 音区 | 是否必须 |
+|---|---|---|---|
+| 前奏 | 建立氛围 | — | 否 |
+| 主歌 | 叙述 | 较低 | ✅ |
+| 预副歌 | 累积张力 | 渐升 | 否 |
+| 副歌 | 情绪高点 | 较高 | ✅ |
+| 桥段 | 提供对比 | 变化 | 否 |
+| 尾奏 | 收束 | — | 否 |
+
+## 主歌与副歌必须有区别
+
+最常见的「不像一首歌」的原因，就是主歌和副歌听起来差不多。
+三个可区分的维度（满足一个即可）：
+
+1. **音区**：副歌整体抬高
+2. **和声起点**：主歌从小调开始，副歌从大调开始
+3. **和声节奏**：副歌的和弦换得更快
+
+`MVP计划.md` §3.3.3 的示例同时用了前两个维度。

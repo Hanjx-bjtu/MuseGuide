@@ -1,0 +1,55 @@
+---
+id: harmony.cadence_function.01
+title: 终止式：音乐怎么「把话说完」
+title_en: Cadence and Closure
+category: harmony
+subcategory: cadence
+layman_title: 音乐的「句号」和「逗号」
+layman_content: |
+  说话有句号和逗号，音乐也有。
+  一个「悬着」的和弦接回「稳」的和弦，听起来就像句号，让人感觉这段结束了；
+  如果停在悬着的和弦上，就像逗号，会让人觉得「还没说完」。
+  你的歌结尾要是感觉「没落下来」，通常就是缺了这个句号。
+content: |
+  终止式是乐句结束时的和声公式，决定「结束感」的强弱。
+  完全终止（Authentic Cadence）：V → I，最典型的句号。若 V 与 I 均为原位且
+  旋律落在主音上，称为完全终止；否则为不完全终止，结束感稍弱。
+  半终止（Half Cadence）：停在 V 上，像逗号，要求继续。
+  变格终止（Plagal Cadence）：IV → I，柔和、常用于结尾的「阿门」感。
+  欺骗终止（Deceptive Cadence）：V → vi，期待解决却转到小调，产生意外与失落感。
+  实操上：想让副歌「落下来」用 V → I；想留悬念用半终止；
+  想让结尾带一点惆怅，用欺骗终止。
+tags: [harmony, cadence, closure, ending, phrase]
+emotions: [释然, 伤感, 温暖]
+examples: ["C | F | G | C", "C | G | Am", "F | G | C"]
+key_context: C Major
+roman_numerals: ["IV", "V", "I"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, jazz]
+source:
+  title: Open Music Theory — Cadences
+  url: https://openmusictheory.github.io/cadences.html
+  license: CC BY-SA 4.0
+related: [harmony.progression_basics.01, layman.what_is_cadence.01, emotion.tension_resolution.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户说「结尾感觉没说完」「副歌结束了但好像还悬着」「想更有收尾的感觉」——
+这几句话指向的都是终止式，而不是和弦本身不好听。
+
+## 四种终止式
+
+| 终止式 | 写法 | 听感 | 适用 |
+|---|---|---|---|
+| 完全终止 | V → I | 句号，最确定 | 副歌结尾、全曲结尾 |
+| 半终止 | 停在 V | 逗号，要接下去 | 主歌结尾、铺垫 |
+| 变格终止 | IV → I | 柔和、安稳 | 结尾的余韵 |
+| 欺骗终止 | V → vi | 意外、失落 | 想留一丝惆怅 |
+
+## 与旋律的配合
+
+终止的「确定感」不只来自和声：**旋律落在主音上**才算真正说完。
+和声给了 V → I，但旋律停在三音上，听起来仍会「差一点」。

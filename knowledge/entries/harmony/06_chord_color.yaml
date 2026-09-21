@@ -1,0 +1,59 @@
+---
+id: harmony.chord_color.01
+title: 和弦色彩的四种加法
+title_en: Four Ways to Add Chord Color
+category: harmony
+subcategory: chord_color
+layman_title: 让同一个走向「不那么普通」的四种办法
+layman_content: |
+  如果你的和弦走向听起来没错、但有点普通，通常不用换走向，
+  只要往上面「加东西」。
+  四种加法：加一个音（更柔和）、换一个低音（更连贯）、
+  换掉其中一个和弦（多一层情绪）、在中间插一个和弦（更有推进感）。
+  改得越少，越不容易出错。
+content: |
+  在保持原有功能关系的前提下增加和声色彩，有四种改动成本递增的手法：
+  一、加音（Extension）：三和弦变七和弦（Cmaj7），或加九音（Cadd9）。
+  改动最小，听感变柔和、梦幻，功能关系完全不变。
+  二、换低音（Inversion / Bass Line）：C → G/B → Am → F/A，低音级进下行，
+  增加连贯性与「设计感」，和声实质不变。
+  三、替换（Substitution）：把 IV 换成 iv（调式借用），或把 I 换成 iii，
+  引入新的色彩但不破坏框架。
+  四、插入（Insertion）：在目标和弦前插入副属和弦（V/vi），制造局部推进。
+  排序建议：先试一、二，它们几乎不会「改坏」；三、四的听感变化更明显，
+  需要确认用户是否接受更大幅度的改动。
+tags: [harmony, color, extension, inversion, substitution, reharmonization]
+emotions: [温暖, 梦幻, 温柔]
+examples: ["Cmaj7 | G/B | Am7 | Fmaj7", "C | G/B | Am | F/A", "C | E7 | Am | Fm"]
+key_context: C Major
+roman_numerals: ["Imaj7", "V6", "vi7", "IVmaj7"]
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, jazz, citypop, ballad]
+source:
+  title: MuseGuide 和弦色彩整理（综合 Open Music Theory 条目）
+  url: https://openmusictheory.github.io/seventhChords.html
+  license: CC BY-SA 4.0
+related: [harmony.seventh_chords.01, harmony.modal_interchange.01, harmony.secondary_dominant.01, examples.bass_line.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+这是「感觉普通但想保持温暖」这类需求的总入口。
+`MVP计划.md` §3.9.3 的进阶示例给出的建议 A（七和弦）与建议 B（借用和弦）
+分别对应下面的手法一和手法三。
+
+## 四种手法的对比
+
+| 手法 | 示例 | 改动量 | 听感变化 | 风险 |
+|---|---|---|---|---|
+| 一、加音 | C → Cmaj7 | 极小 | 更柔和、梦幻 | 低 |
+| 二、换低音 | C → G/B | 极小 | 更连贯 | 低 |
+| 三、替换 | F → Fm | 小 | 多一层阴影 | 中 |
+| 四、插入 | C → E7 → Am | 中 | 推进感明显 | 中 |
+
+## 给用户的排序原则
+
+**先给低风险方案。** 用户的目标通常是「保留我喜欢的部分，只改掉不喜欢的那一点」，
+而不是「重写」。把改动量当作建议排序的第一依据，比把「理论上有趣」放第一更贴合需求。

@@ -1,0 +1,61 @@
+---
+id: layman.what_is_key.01
+title: 调性是什么
+title_en: What Is a Key
+category: layman
+subcategory: concept_explanation
+layman_title: 调性是什么
+layman_content: |
+  调性就是一首歌的「基准色」。
+  就像画画前先决定这幅画偏暖还是偏冷，写歌也要先定一个基准，
+  之后所有和弦都围绕它来选。
+  同一个旋律，放在不同的调里，听起来的高低不同，但性格是一样的；
+  真正决定「明亮还是忧伤」的，是大调还是小调。
+content: |
+  调性（Key）是一首作品围绕的中心音与音阶体系。
+  它包含两个信息：主音（中心音，如 C）与调式（大调或小调）。
+  大调（Major）听感明亮、开阔、稳定；
+  小调（Minor）听感柔和、内敛、忧郁。
+  因此「C 大调」读作：以 C 为中心音的明亮体系。
+  调性的作用是为和弦提供参照：同一个和弦在不同调里承担的功能不同。
+  例如 Am 在 C 大调里是 vi 级（稳定），在 A 小调里是 i 级（主和弦）。
+  对创作者的实用含义：先定调性，再选和弦；
+  换调不会改变歌曲的性格，只有换大小调才会。
+tags: [layman, concept, key, major, minor, beginner]
+emotions: [温暖, 忧郁]
+examples: ["C Major", "A Minor"]
+key_context: C Major
+roman_numerals: ["I", "i"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, rock, jazz]
+source:
+  title: MuseGuide 通俗解释层（项目自建）
+  url: https://openmusictheory.github.io/key.html
+  license: CC BY-SA 4.0
+related: [layman.what_is_chord.01, starter.choosing_key_and_tempo.01, layman.emotion_and_harmony.01]
+priority: 5
+---
+
+## 使用场景
+
+用户在起步方案里看到「调性：C 大调」，但不知道那是什么意思，
+也不知道「为什么不是 D 大调」。
+
+## 表述规则（§3.8.3）
+
+1. 先给类比：基准色 / 画面的冷暖
+2. 区分两件事：**高低由调决定，性格由大小调决定**
+3. 落点：你不需要选，系统建议一个最容易上手的就行
+
+## 零基础模式下的禁区
+
+**不出现**：主音、音阶、调号、五度圈、关系大小调。
+
+用户真正需要知道的只有一句：*大调明亮，小调忧伤，先按建议的来*。
+
+## 为什么建议 C 大调
+
+不是因为它最好听，而是因为它**解释成本与操作成本最低**：
+钢琴上全是白键，用户想自己试的时候不需要学黑键。
+起步阶段降低操作门槛比追求音色更重要（见 `starter.choosing_key_and_tempo.01`）。

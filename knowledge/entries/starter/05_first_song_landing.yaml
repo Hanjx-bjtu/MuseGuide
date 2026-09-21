@@ -1,0 +1,69 @@
+---
+id: starter.first_song_landing.01
+title: 拿到方案之后怎么落地
+title_en: Turning a Plan into a Song
+category: starter
+subcategory: first_song_landing
+layman_title: 有了和弦之后，下一步做什么
+layman_content: |
+  拿到几个和弦之后，不要急着追求完美。
+  先按顺序把它们循环弹（或哼）几遍，感受一下走向；
+  然后随便哼一段旋律盖在上面，不用管好不好听；
+  最后挑出你还记得住的那一句，把它留下来当副歌。
+  第一版的目标是「有东西」，不是「好听」。
+content: |
+  起步方案给出的是骨架，落地需要三步：
+  一、熟悉和声：把和弦按顺序循环，每个和弦持续一到两小节，
+  确认走向的听感符合预期。若某个和弦听着别扭，先换掉它，
+  而不是调整其它部分。
+  二、叠加旋律：在和弦上自由哼唱，优先使用和弦音（根音、三音、五音）作为
+  落点，经过音可以随意。不需要一开始就写谱。
+  三、筛选记忆点：反复几遍后，挑出最容易记住的那一句作为副歌核心，
+  其余部分围绕它展开。
+  关键心态：第一版的目标是产出**可修改的初稿**，而不是成品。
+  所有后续建议都建立在「已经有东西」之上 —— 从零改起远比修改初稿困难。
+tags: [starter, workflow, landing, draft, practice]
+emotions: [温柔, 温暖]
+examples: ["C | G | Am | F"]
+key_context: C Major
+roman_numerals: ["I", "V", "vi", "IV"]
+difficulty: beginner
+confidence_level: medium
+applicable_genres: [pop, folk, ballad]
+source:
+  title: MuseGuide 起步引导整理（项目自建工作流建议）
+  url: https://openmusictheory.github.io/
+  license: CC BY-SA 4.0
+related: [starter.how_to_start.01, starter.song_structure.01, starter.common_progressions.01]
+priority: 3
+---
+
+## 为什么需要这一篇
+
+`MVP计划.md` §9 的成功标准第 9 条是「输出结果对零基础用户具有实际参考价值」。
+「实际」的含义是**用户看完知道下一步做什么**，而不只是看懂了一段解释。
+
+常见的失败模式：系统给出了漂亮的调性与和弦建议，
+用户点头表示理解，然后关掉页面 —— 因为不知道从哪动手。
+本条目就是为了堵这个缺口。
+
+## 三步落地
+
+| 步骤 | 做什么 | 判断标准 |
+|---|---|---|
+| 1 熟悉和声 | 循环弹/哼和弦 | 走向听感符合预期 |
+| 2 叠加旋律 | 在和弦上自由哼唱 | 有能重复的片段 |
+| 3 筛选记忆点 | 挑出最难忘的一句 | 隔天还能想起来 |
+
+## 落在哪一步会卡住
+
+- 卡在第 1 步：和弦听着别扭 → 属于和声问题，回退到和弦建议
+- 卡在第 2 步：哼不出旋律 → 属于旋律问题，见 `melody.contour.01`
+- 卡在第 3 步：记不住任何一句 → 属于动机问题，见 `melody.motif_development.01`
+
+**这条「卡在哪一步 → 查哪类知识」的映射，正是 P4 建议生成需要的推理路径。**
+
+## 确定性说明
+
+`confidence_level` 为 `medium`：这是项目自建的工作流建议，
+不是乐理定理。它描述的是「多数人的有效路径」，而非唯一正确答案。
