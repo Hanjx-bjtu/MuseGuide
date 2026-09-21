@@ -38,20 +38,28 @@ MuseGuide 不替用户生成一整首歌，而是：
 
 ## 当前状态
 
-> 🚧 **P0 工程地基 + P1 意图映射已完成**：契约层、降级协议、知识库校验器、测试基建、
-> Intent Mapping 四层瀑布、Layman 三档适配、受控词表。业务链路 P2~P6 按 `实现阶段计划.md` 推进。
+> 🚧 **P0 / P1 / P2 已完成**：契约层、降级协议、意图映射、Layman 三档适配、
+> 音乐解析与分析、Creative Starter 起步方案、FastAPI 双链路接口。
+> **里程碑 M2 已达成** —— 零基础用户可获得带理论依据的起步方案。
 
 | 阶段 | 内容 | 状态 | 里程碑 |
 |---|---|---|---|
 | **P0** | 工程地基（契约 / 测试 / 配置 / 降级） | ✅ 已完成 | — |
 | **P1** | 意图映射 + 选择式输入 + Layman 术语表 | ✅ 已完成（**G1 通过**） | — |
-| P2 | 解析 + 分析 + 起步方案 | ⬜ 待开始 | **M2** |
-| P3 | 知识库 29 篇 + Hybrid 检索 + Query 分解 | 🔨 **P3.1 知识库完成（29 篇）**；检索待开始 | **M1** |
+| **P2** | 解析 + 分析 + 起步方案 + API | ✅ 已完成（**G2 通过**） | **M2 ✅** |
+| P3 | 知识库 29 篇 + Hybrid 检索 + Query 分解 | 🔨 知识库完成；检索待开始 | **M1** |
 | P4 | 进阶分析 + 多方案 + Grounding 校验 | ⬜ 待开始 | **M4** |
 | P5 | 双入口 Streamlit 界面 | ⬜ 待开始 | **M3** |
 | P6 | 评估 + 报告 + Demo | ⬜ 待开始 | **M5 / M6** |
 
-**当前测试：** `169 passed, 1 skipped`（无需 API Key 与网络）
+**当前测试：** `313 passed, 1 skipped`（无需 API Key 与网络）
+
+**运行环境提示：** P2 起需要 `music21` 做调性交叉验证。本机 `RAG` conda 环境
+同时具备 `music21` / `pytest` / `chromadb`，是当前的推荐环境：
+
+```powershell
+& "D:\Anaconda_envs\envs\RAG\python.exe" -m pytest
+```
 
 **文档：**
 
@@ -135,15 +143,79 @@ python knowledge/build_kb.py --check     # 只校验
 python knowledge/build_kb.py --build     # 校验并产出
 ```
 
-### 5. 启服务（P5 完成后）
+### 5. 启后端并试用（P2 已可用）
 
 ```powershell
-# 终端 1：后端
 uvicorn app.api.server:app --reload --port 8000
+```
 
-# 终端 2：界面
+```powershell
+# 零基础链路：创作意图 → 起步方案
+curl.exe -s -X POST http://127.0.0.1:8000/api/starter `
+  -H "Content-Type: application/json" `
+  -d '{\"text\": \"我想写一首关于毕业的歌，有点伤感但最后是释然的感觉。\"}'
+
+# 进阶链路：和弦分析
+curl.exe -s -X POST http://127.0.0.1:8000/api/analyze `
+  -H "Content-Type: application/json" `
+  -d '{\"chords\": \"C | G | Am | F\"}'
+
+# 选择式输入选项（每个选项都带通俗说明）
+curl.exe -s http://127.0.0.1:8000/api/options
+```
+
+交互式 API 文档：<http://127.0.0.1:8000/docs>
+
+### 6. 启界面（P5 完成后）
+
+```powershell
 streamlit run app/main.py
 ```
+
+---
+
+## 已实现的两条链路
+
+### 零基础链路（Creative Starter）
+
+```text
+创作意图（日常语言） + 选择式输入
+        ↓  Intent Mapping（四层瀑布）
+音乐概念（情绪/风格/速度/调性倾向/和声需求）
+        ↓  知识检索（P2 用离线直出，P3 换 Hybrid）
+理论依据（带来源与许可）
+        ↓  LLM 生成 + 结构化校验
+起步方案：调性 + 主歌/副歌和弦 + 每项的通俗解释
+```
+
+实际输出示例（无 API Key 的降级路径也能给出这份方案）：
+
+```text
+key  : C Major | tempo: 82
+主歌: Am → F → C → G  (偏伤感)
+     从小调和弦开始，听起来柔和忧伤。
+副歌: C → G → Am → F  (转向释然)
+     从大调和弦开始，听起来更温暖开阔。
+why : 伤感的部分靠小调和弦实现，释然的部分靠回到大调和弦实现 ——
+      两者前后接在一起，就形成了情绪的转折。
+调整建议: 把副歌最后那个和弦换成 Fm，会多一丝忧伤，像回忆闪过
+依据: 告别/毕业这类主题怎么写 · 「伤感→释然」的情绪转折实现 · ...
+降级: ['llm_unavailable']
+```
+
+### 进阶链路（作品分析，P2 完成第一步）
+
+```text
+C | G | Am | F
+        ↓  解析 → 调性识别 → 级数与功能标注 → 通俗解读
+{key: C Major, roman: [I, V, vi, IV],
+ functions: [Tonic, Dominant, Tonic, Subdominant],
+ layman: {key: "听起来明亮温暖的调…",
+          progression: "流行歌最常用的走向之一",
+          character: "功能稳定，听感平稳，但色彩较少；低音基本停在根音上…"}}
+```
+
+> P4 会在此基础上加入修改建议与 Grounding 幻觉校验。
 
 ---
 
