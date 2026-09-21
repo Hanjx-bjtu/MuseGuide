@@ -42,18 +42,39 @@ def _seed(text: str) -> int:
     return int(hashlib.sha256(text.encode("utf-8")).hexdigest()[:8], 16)
 
 
+def _user_text(prompt: str) -> str:
+    """从 prompt 中抽出「用户原文」部分。
+
+    ⚠️ **这是一个真实踩过的坑**：Mock 若直接扫描整个 prompt，会把
+    prompt 模板自带的示例词（如 §3.2.3 里写的「忧郁、温暖、激昂」）
+    当成用户的情绪，于是每次调用都返回五个情绪。
+    Mock 必须只看用户输入那一段，才能真实反映「输出与输入相关」。
+    """
+    match = re.search(r'"([^"]+)"', prompt)
+    if match:
+        return match.group(1)
+
+    marker = "用户创作意图/目标："
+    if marker in prompt:
+        return prompt.split(marker, 1)[1].split("\n", 1)[0].strip()
+    if "[用户创作意图]" in prompt:
+        return prompt.split("[用户创作意图]", 1)[1].split("[", 1)[0].strip()
+    return prompt
+
+
 def _intent_payload(prompt: str) -> dict:
-    """从 prompt 里粗暴地抽取情绪词，保证 Mock 输出与输入相关（而非恒定）。"""
-    emotions = [w for w in ("伤感", "释然", "温暖", "忧郁", "激昂", "温柔", "轻快", "梦幻") if w in prompt]
+    """从**用户原文**中抽取情绪词，保证 Mock 输出与输入相关（而非恒定）。"""
+    text = _user_text(prompt)
+    emotions = [w for w in ("伤感", "释然", "温暖", "忧郁", "激昂", "温柔", "轻快", "梦幻") if w in text]
     if not emotions:
         emotions = ["温暖"]
-    style = next((s for s in ("民谣", "流行", "摇滚", "钢琴", "电子", "爵士") if s in prompt), "流行")
-    tempo = next((t for t in ("很慢", "中等偏慢", "中等") if t in prompt), "中等偏慢")
+    style = next((s for s in ("民谣", "流行", "摇滚", "钢琴", "电子", "爵士") if s in text), "流行")
+    tempo = next((t for t in ("中等偏慢", "很慢", "中等") if t in text), "中等偏慢")
     return {
         "emotion": emotions,
         "style": style,
         "tempo_feel": tempo,
-        "key_preference": "大调（释然感）" if "释然" in prompt else "小调（忧伤感）",
+        "key_preference": "大调（释然感）" if "释然" in text else "小调（忧伤感）",
         "harmony_needs": ["需要情绪转折"] if len(emotions) > 1 else ["需要和声色彩"],
     }
 

@@ -19,6 +19,10 @@ venv/
 .ruff_cache/
 .coverage
 htmlcov/
+.scratch/
+.scratch-*/
+tmp_pytest*/
+.pytest_tmp/
 
 # --- 知识库构建产物（可由 build_kb.py 重建；向量文件体积大）---
 knowledge/build/*.npy

@@ -78,9 +78,9 @@ def test_related_references_resolve(entries):
     assert not dangling, f"related 引用了不存在的条目：{dangling}"
 
 
-def test_build_produces_versioned_artifact(entries, tmp_path, monkeypatch):
+def test_build_produces_versioned_artifact(entries, scratch_dir, monkeypatch):
     """构建产物必须带版本 hash —— 实验溯源依赖它。"""
-    monkeypatch.setattr(build_kb, "BUILD_DIR", tmp_path)
+    monkeypatch.setattr(build_kb, "BUILD_DIR", scratch_dir)
     stats = build_kb.build(entries)
     assert stats["version"] and len(stats["version"]) == 12
     assert stats["entry_count"] == len(entries)
@@ -89,15 +89,15 @@ def test_build_produces_versioned_artifact(entries, tmp_path, monkeypatch):
     assert set(stats["by_category"]) <= set(REQUIRED_CATEGORIES)
     assert set(stats["by_category"]) == {e["category"] for e in entries}
 
-    jsonl = (tmp_path / "kb.jsonl").read_text(encoding="utf-8").strip().splitlines()
+    jsonl = (scratch_dir / "kb.jsonl").read_text(encoding="utf-8").strip().splitlines()
     assert len(jsonl) == len(entries)
     for line in jsonl:
         json.loads(line)  # 每行都是合法 JSON
 
 
-def test_build_version_changes_with_content(entries, tmp_path, monkeypatch):
+def test_build_version_changes_with_content(entries, scratch_dir, monkeypatch):
     """内容变了，版本 hash 必须变 —— 否则实验溯源无意义。"""
-    monkeypatch.setattr(build_kb, "BUILD_DIR", tmp_path)
+    monkeypatch.setattr(build_kb, "BUILD_DIR", scratch_dir)
     v1 = build_kb.build(entries)["version"]
     mutated = [dict(entries[0]), *entries[1:]]
     mutated[0] = {**mutated[0], "content": mutated[0]["content"] + "\n补充一句。"}
