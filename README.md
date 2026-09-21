@@ -38,10 +38,10 @@ MuseGuide 不替用户生成一整首歌，而是：
 
 ## 当前状态
 
-> 🚧 **P0 / P1 / P2 / P4 已完成**：契约层、意图映射、Layman 三档适配、
+> 🚧 **P0 / P1 / P2 / P4 / P5 已完成**：契约层、意图映射、Layman 三档适配、
 > 音乐解析与分析、Creative Starter 起步方案、Creative Tutor 修改建议 +
-> **Grounding 幻觉校验**、FastAPI 三链路接口。
-> **里程碑 M2 与 M4 均已达成。**
+> **Grounding 幻觉校验**、FastAPI 三链路接口、**Streamlit 双入口界面**。
+> **里程碑 M2 / M4 / M3 均已达成。**
 
 | 阶段 | 内容 | 状态 | 里程碑 |
 |---|---|---|---|
@@ -49,17 +49,28 @@ MuseGuide 不替用户生成一整首歌，而是：
 | **P1** | 意图映射 + 选择式输入 + Layman 术语表 | ✅ 已完成（**G1 通过**） | — |
 | **P2** | 解析 + 分析 + 起步方案 + API | ✅ 已完成（**G2 通过**） | **M2 ✅** |
 | **P4** | 进阶建议 + 多方案 + Grounding 校验 | ✅ 已完成（**G4 通过**） | **M4 ✅** |
+| **P5** | 双入口 Streamlit 界面 | ✅ 已完成（**G5 通过**） | **M3 ✅** |
 | P3 | Hybrid 检索 + Query 分解 | 🔨 知识库 29 篇完成；检索待开始 | **M1** |
-| P5 | 双入口 Streamlit 界面 | ⬜ 待开始 | **M3** |
 | P6 | 评估 + 报告 + Demo | ⬜ 待开始 | **M5 / M6** |
 
-**当前测试：** `381 passed, 1 skipped`（无需 API Key 与网络）
+**当前测试：** `base` 环境 **403 passed, 7 skipped**；`RAG` 环境 **384 passed, 6 skipped**
 **Grounding 幻觉捕获率：** 注入式测试 **5/5 = 100%**（门槛 80%）
 
-**运行环境提示：** P2 起需要 `music21` 做调性交叉验证。本机 `RAG` conda 环境
-同时具备 `music21` / `pytest` / `chromadb`，是当前的推荐环境：
+> 跳过项是界面测试中依赖真实后端的用例（`live_backend` 夹具）。
+> 启动后端后重跑即会执行：`uvicorn app.api.server:app --port 8011`。
+
+**运行环境提示：** 依赖分散在两个 conda 环境里，按用途选择：
+
+| 环境 | 具备 | 用途 |
+|---|---|---|
+| `base` (`D:\Anaconda`) | `streamlit` / `pytest` / `httpx` | **跑界面与全量测试** |
+| `RAG` (`D:\Anaconda_envs\envs\RAG`) | `music21` / `pytest` / `chromadb` | 需要调性交叉验证时 |
 
 ```powershell
+# 全量测试（含界面）
+& "D:\Anaconda\python.exe" -m pytest
+
+# 缺 music21 时会自动跳过交叉验证，调性置信度从 0.95 降为 0.7（显式降级，不静默）
 & "D:\Anaconda_envs\envs\RAG\python.exe" -m pytest
 ```
 
@@ -145,10 +156,11 @@ python knowledge/build_kb.py --check     # 只校验
 python knowledge/build_kb.py --build     # 校验并产出
 ```
 
-### 5. 启后端并试用（P2 已可用）
+### 5. 启后端并试用
 
 ```powershell
-uvicorn app.api.server:app --reload --port 8000
+# 终端 1：后端（界面依赖它）
+& "D:\Anaconda\python.exe" -m uvicorn app.api.server:app --port 8000
 ```
 
 ```powershell
@@ -173,11 +185,39 @@ curl.exe -s http://127.0.0.1:8000/api/options
 
 交互式 API 文档：<http://127.0.0.1:8000/docs>
 
-### 6. 启界面（P5 完成后）
+### 6. 启界面
 
 ```powershell
-streamlit run app/main.py
+# 终端 2：界面
+& "D:\Anaconda\python.exe" -m streamlit run app/main.py
 ```
+
+打开 <http://localhost:8501>，侧栏会显示后端连接状态与知识库条目数。
+
+> 界面通过 HTTP 调后端（ADR-0005），因此**后端必须先启动**。
+> 未启动时界面不会崩溃，而是提示「连不上后端服务」并给出启动命令。
+>
+> 后端地址可用 ``MUSEGUIDE_API`` 环境变量覆盖（默认 `http://127.0.0.1:8000`）。
+
+---
+
+## 界面（P5）
+
+三个页面，用 `st.navigation` 组织：
+
+| 页面 | 依据 | 内容 |
+|---|---|---|
+| 🌱 **零基础起步**（默认） | §3.10.2 / §3.10.3 / §3.10.4 | 意图输入 + 大方向按钮 → 三步选择（速度/风格/情绪）→ 起步方案 |
+| 🎼 **已有雏形** | §3.10.5 | 创作目标 + 和弦 + 旋律 → 分析结果 + 建议 + 依据与校验 |
+| 📖 **关于与依据** | §1.3 / §3.9.3 | 系统状态、能做什么、**不做什么**、依据从哪来 |
+
+**界面的三个设计要点：**
+
+1. **每个选项都带日常类比**（「中等偏慢，像散步」），零基础用户不需要理解术语也能选。
+2. **降级用 `st.info` 而不是 `st.error`** —— 没接 AI 模型时内容仍由知识库生成，
+   把它渲染成红色报错会让用户以为系统坏了。
+3. **「理论依据」可展开**，显示知识条目原文、标签、来源链接与条目 ID。
+   这是与普通音乐 AI 的可视差异点。
 
 ---
 
@@ -347,6 +387,13 @@ pytest -m slow                  # 需要真实 LLM 的测试（默认跳过）
 | `test_starter.py` | §3.3.4 四段 Prompt；结构化解析；三级降级；输出稳定性 |
 | `test_grounding.py` | **幻觉注入捕获率 ≥80%**；对照组无误报；各校验项单元行为 |
 | `test_advice.py` | §3.9.3 五段结构；多方案 2~3；多样性；Layman 三档可测区分 |
+| `test_ui.py` | **无头驱动真实交互**：首页→引导→方案、进阶流程、降级提示、客户端错误翻译 |
+
+> **界面测试用 ``AppTest`` 点击按钮走完整流程，而不是只检查「页面能打开」。**
+> 这是实测教训：第一版只做静态渲染检查，三个页面全过；改成点击驱动后
+> 立刻发现引导页在真实交互下抛 ``StopIteration`` 直接崩溃。
+> 另外，**不能只断言「无异常」** —— 一个什么都没渲染的页面同样没有异常
+> （关于页曾因缺少 ``main()`` 调用整页空白，却被判为通过）。
 
 ### Intent Mapping 的四层瀑布
 

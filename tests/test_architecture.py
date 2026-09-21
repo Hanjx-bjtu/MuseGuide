@@ -28,11 +28,15 @@ FORBIDDEN_IN_CORE = (
 )
 
 #: 期望的分层：键可以依赖值中的层（但不含 core，因为 core 谁都能依赖）
+#:
+#: ``app.ui`` 与 ``app.api`` 同层：二者都是「入口」，彼此不得互相 import
+#: （界面通过 HTTP 调后端，见 ADR-0005）。因此它们同 rank，不会互相放行。
 LAYER_ORDER = {
     "app.core": 0,
     "app.providers": 1,
     "app.services": 2,
     "app.api": 3,
+    "app.ui": 3,
 }
 
 
