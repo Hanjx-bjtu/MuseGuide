@@ -125,8 +125,19 @@ def tutor_prompt(
     analysis: AnalysisResult,
     evidence: list[Evidence],
     level: UserLevel = "some",
+    constraints: list[str] | None = None,
 ) -> str:
-    """组装修改建议 Prompt —— 严格对齐 §3.9.2 的四段结构。"""
+    """组装修改建议 Prompt —— 严格对齐 §3.9.2 的四段结构。
+
+    :param constraints: 用户明确要求保持的东西（如「保持温暖」）。
+        必须显式写进 Prompt，否则模型很容易给出「改动很大」的方案，
+        而用户的真实诉求往往是「保留我喜欢的部分，只改掉不喜欢的那一点」。
+    """
+    constraint_block = ""
+    if constraints:
+        lines = "\n".join(f"- {c}" for c in constraints)
+        constraint_block = f"\n[必须保持的约束]\n{lines}\n（任何违反这些约束的方案都不要给出）\n"
+
     return f"""{prompt_style_block(level)}
 
 [用户作品]
@@ -134,7 +145,7 @@ def tutor_prompt(
 
 [用户目标]
 {goal_text or '（用户未明确说明目标）'}
-
+{constraint_block}
 [检索到的知识]
 {render_evidence(evidence, level)}
 
@@ -143,7 +154,7 @@ def tutor_prompt(
 2. 指出可能的问题
 3. 给出 2-3 个修改方向
 4. 每个方向说明理论依据
-5. 引用检索到的知识（用 [编号] 标注来源）
+5. 引用检索到的知识（用 [来源N] 标注，N 必须是上面真实存在的编号）
 
 [输出格式]
 只输出如下结构的 JSON，不要输出任何解释性文字或 markdown 围栏：
@@ -154,9 +165,13 @@ def tutor_prompt(
     {{
       "label": "建议 A：简短标题",
       "chords": ["Cmaj7", "G/B", "Am7", "Fmaj7"],
-      "feature": "这个方向的特点（面向进阶用户）",
+      "feature": "这个方向的特点（面向进阶用户的一句话）",
       "reason": "通俗解释：听起来会怎样、为什么",
-      "theory": ["理论依据要点"]
+      "theory": ["理论依据要点 [来源1]"]
     }}
   ]
 }}"""
+
+
+#: §3.9.3 进阶版的固定段落名（供渲染与测试核对）
+ADVICE_SECTIONS: tuple[str, ...] = ("分析", "问题", "建议", "理论依据")

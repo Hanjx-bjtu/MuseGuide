@@ -38,21 +38,23 @@ MuseGuide 不替用户生成一整首歌，而是：
 
 ## 当前状态
 
-> 🚧 **P0 / P1 / P2 已完成**：契约层、降级协议、意图映射、Layman 三档适配、
-> 音乐解析与分析、Creative Starter 起步方案、FastAPI 双链路接口。
-> **里程碑 M2 已达成** —— 零基础用户可获得带理论依据的起步方案。
+> 🚧 **P0 / P1 / P2 / P4 已完成**：契约层、意图映射、Layman 三档适配、
+> 音乐解析与分析、Creative Starter 起步方案、Creative Tutor 修改建议 +
+> **Grounding 幻觉校验**、FastAPI 三链路接口。
+> **里程碑 M2 与 M4 均已达成。**
 
 | 阶段 | 内容 | 状态 | 里程碑 |
 |---|---|---|---|
 | **P0** | 工程地基（契约 / 测试 / 配置 / 降级） | ✅ 已完成 | — |
 | **P1** | 意图映射 + 选择式输入 + Layman 术语表 | ✅ 已完成（**G1 通过**） | — |
 | **P2** | 解析 + 分析 + 起步方案 + API | ✅ 已完成（**G2 通过**） | **M2 ✅** |
-| P3 | 知识库 29 篇 + Hybrid 检索 + Query 分解 | 🔨 知识库完成；检索待开始 | **M1** |
-| P4 | 进阶分析 + 多方案 + Grounding 校验 | ⬜ 待开始 | **M4** |
+| **P4** | 进阶建议 + 多方案 + Grounding 校验 | ✅ 已完成（**G4 通过**） | **M4 ✅** |
+| P3 | Hybrid 检索 + Query 分解 | 🔨 知识库 29 篇完成；检索待开始 | **M1** |
 | P5 | 双入口 Streamlit 界面 | ⬜ 待开始 | **M3** |
 | P6 | 评估 + 报告 + Demo | ⬜ 待开始 | **M5 / M6** |
 
-**当前测试：** `313 passed, 1 skipped`（无需 API Key 与网络）
+**当前测试：** `381 passed, 1 skipped`（无需 API Key 与网络）
+**Grounding 幻觉捕获率：** 注入式测试 **5/5 = 100%**（门槛 80%）
 
 **运行环境提示：** P2 起需要 `music21` 做调性交叉验证。本机 `RAG` conda 环境
 同时具备 `music21` / `pytest` / `chromadb`，是当前的推荐环境：
@@ -155,10 +157,15 @@ curl.exe -s -X POST http://127.0.0.1:8000/api/starter `
   -H "Content-Type: application/json" `
   -d '{\"text\": \"我想写一首关于毕业的歌，有点伤感但最后是释然的感觉。\"}'
 
-# 进阶链路：和弦分析
+# 进阶链路第一步：作品分析
 curl.exe -s -X POST http://127.0.0.1:8000/api/analyze `
   -H "Content-Type: application/json" `
   -d '{\"chords\": \"C | G | Am | F\"}'
+
+# 进阶链路：修改建议 + Grounding 校验
+curl.exe -s -X POST http://127.0.0.1:8000/api/advice `
+  -H "Content-Type: application/json" `
+  -d '{\"goal\": \"保持温暖，但不要太普通\", \"chords\": \"C | G | Am | F\", \"constraints\": [\"保持温暖\"]}'
 
 # 选择式输入选项（每个选项都带通俗说明）
 curl.exe -s http://127.0.0.1:8000/api/options
@@ -203,19 +210,49 @@ why : 伤感的部分靠小调和弦实现，释然的部分靠回到大调和�
 降级: ['llm_unavailable']
 ```
 
-### 进阶链路（作品分析，P2 完成第一步）
+### 进阶链路（Creative Tutor）
 
 ```text
-C | G | Am | F
+C | G | Am | F  +  创作目标「保持温暖，但不要太普通」
         ↓  解析 → 调性识别 → 级数与功能标注 → 通俗解读
-{key: C Major, roman: [I, V, vi, IV],
- functions: [Tonic, Dominant, Tonic, Subdominant],
- layman: {key: "听起来明亮温暖的调…",
-          progression: "流行歌最常用的走向之一",
-          character: "功能稳定，听感平稳，但色彩较少；低音基本停在根音上…"}}
+        ↓  检索知识（带来源与许可）
+        ↓  LLM 生成 + Layman 分级改写 + Grounding 校验
+分析 / 问题 / 建议 A·B·C / 理论依据
 ```
 
-> P4 会在此基础上加入修改建议与 Grounding 幻觉校验。
+实际输出（同样是**无 API Key 的降级路径**）：
+
+```text
+## 分析   当前进行为 I–V–vi–IV，流行歌最常用的走向之一。
+## 问题   功能稳定，听感平稳，但色彩较少 / 低音基本停在根音上，缺少流动感
+## 建议 A Cmaj7 | G7 | Am7 | Fmaj7
+          保持原有功能关系，通过七和弦增加色彩，改动成本最低。
+## 建议 B C | G | Am | Fm
+          从平行小调借一个和弦，引入阴影感但不破坏整体框架。
+## 建议 C C | G/B | Am | F
+          低音级进下行，增强连贯性与设计感，和声实质不变。
+## 依据   [harmony.chord_color.01] 和弦色彩的四种加法 · ...
+```
+
+### ⭐ Grounding：把「幻觉」变成机器可判定的指标
+
+`MVP计划.md` §7.2 要求评估 Groundedness，§9 第 6 条要求「每个建议附带理论依据」。
+这些要求看似只能靠人看，实际上大部分**可以被规则判定**：
+
+| 校验项 | 判定依据 | 级别 |
+|---|---|---|
+| 编造引用 | `[来源N]` 的 N 是否超出证据条数 | error |
+| 调外和弦 | 建议的和弦是否在声称调性下成立（复用 `is_in_key`） | error（借用和弦记 warning） |
+| 违反用户约束 | 用户说「保持温暖」，建议却把整体转向小调 | error |
+| 弱依据 | 建议与证据的词元重合比例是否过低 | warning |
+| 目标不符 | 建议是否回落到用户目标的概念域 | warning |
+| 缺少通俗解释 | 零基础模式下是否缺术语替换 | warning |
+
+**注入式测试结果：捕获率 5/5 = 100%**（门槛 80%），且对照组（合规建议）
+不产生 error 级误报 —— **假阳性比漏报更有害**，会让这个指标失去可信度。
+
+> 这套校验器在开发中抓到了作者自己的一个 bug：变形函数把 `G` 错变成 `Gmaj7`
+> （引入了调外的 F#），Grounding 立刻报 `out_of_key`。
 
 ---
 
@@ -305,6 +342,11 @@ pytest -m slow                  # 需要真实 LLM 的测试（默认跳过）
 | `test_knowledge_base.py` | 六分类非空、来源 100% 可追溯、通俗层必备、related 可解析 |
 | `test_intent.py` | §3.2.2 九条规则逐条命中；LLM 失败/解析失败回落规则层；选择优先于推断 |
 | `test_layman.py` | §3.8.2 七条术语映射逐条断言；三档输出策略；术语守卫；受控词表完整性 |
+| `test_parsers.py` | 和弦/旋律解析；后缀优先级；逆行重复检测；调性与轮廓 |
+| `test_analysis.py` | 金标准集上的调性 ≥90% / 级数 ≥85% / 功能 ≥85%；歧义案例显式声明 |
+| `test_starter.py` | §3.3.4 四段 Prompt；结构化解析；三级降级；输出稳定性 |
+| `test_grounding.py` | **幻觉注入捕获率 ≥80%**；对照组无误报；各校验项单元行为 |
+| `test_advice.py` | §3.9.3 五段结构；多方案 2~3；多样性；Layman 三档可测区分 |
 
 ### Intent Mapping 的四层瀑布
 

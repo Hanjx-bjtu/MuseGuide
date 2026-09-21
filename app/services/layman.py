@@ -161,3 +161,54 @@ def has_unexplained_terms(text: str, level: UserLevel = "zero") -> bool:
     if level != "zero":
         return False
     return bool(find_banned_terms(text))
+
+
+# --------------------------------------------------------------------------- #
+# 分级应用（P4.4）
+# --------------------------------------------------------------------------- #
+
+
+def adapt_advice(advice, level: UserLevel = "zero"):
+    """按用户水平改写整份建议的可读文本（§3.8.3 的三档策略）。
+
+    **为什么要在生成之后再转换一次：**
+    Prompt 里的 ``[输出风格要求]`` 只是「请求」模型用某种风格说话，
+    但模型未必照办。这一步是**确定性的兜底**：无论模型怎么写，
+    最终展示给零基础用户的文本都会经过术语替换。
+
+    改写范围仅限**展示文本**（``feature`` / ``reason`` / ``theory``），
+    不动 ``chords`` —— 和弦是数据，不是措辞。
+    """
+    if level == "advanced":
+        return advice  # 进阶用户保留原文，不做任何替换
+
+    options = [
+        option.model_copy(
+            update={
+                "feature": to_layman(option.feature, level),
+                "reason": to_layman(option.reason, level),
+                "theory": [to_layman(t, level) for t in option.theory],
+            }
+        )
+        for option in advice.options
+    ]
+
+    return advice.model_copy(
+        update={
+            "analysis": to_layman(advice.analysis, level),
+            "problems": [to_layman(p, level) for p in advice.problems],
+            "options": options,
+        }
+    )
+
+
+def terminology_density(text: str) -> float:
+    """粗略估计术语密度（专业表述与禁区术语的出现次数 / 文本长度 × 100）。
+
+    用于验证三档输出**确实有可测量的区分**，而不是仅仅换了 Prompt 措辞。
+    """
+    if not text:
+        return 0.0
+    hits = sum(1 for entry in TERM_MAP if entry.professional.lower() in text.lower())
+    hits += len(find_banned_terms(text))
+    return round(hits / max(len(text), 1) * 100, 4)

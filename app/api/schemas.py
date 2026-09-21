@@ -62,6 +62,51 @@ class AnalysisResponse(BaseModel):
     trace_id: str = ""
 
 
+class AdviceRequest(BaseModel):
+    """进阶链路请求（§3.1.3 进阶用户输入示例）。"""
+
+    goal: str = Field(default="", description='创作目标，如 "保持温暖，但不要太普通"')
+    chords: str = Field(default="", description='和弦进行，如 "C | G | Am | F"')
+    melody: str = Field(default="", description='旋律，如 "E4 G4 A4 G4 E4"')
+    key: str | None = Field(default=None, description="指定调性；留空则自动识别")
+    user_level: UserLevel = "some"
+    constraints: list[str] = Field(
+        default_factory=list, description="用户明确要求保持的东西，如 ['保持温暖']"
+    )
+
+
+class GroundingIssueOut(BaseModel):
+    """一条 Grounding 校验发现。"""
+
+    kind: str
+    detail: str = ""
+    severity: str = "warning"
+
+
+class GroundingResponse(BaseModel):
+    """Grounding 报告 —— 把「幻觉」变成可统计的指标。"""
+
+    ok: bool = True
+    issues: list[GroundingIssueOut] = Field(default_factory=list)
+    summary: dict = Field(default_factory=dict, description="计数汇总，供实验报告使用")
+
+
+class AdviceResponse(BaseModel):
+    """进阶链路响应（§3.9.3 进阶版固定结构）。"""
+
+    analysis: str = ""
+    problems: list[str] = Field(default_factory=list)
+    options: list[dict] = Field(default_factory=list, description="2~3 个修改方向")
+    evidence: list[Evidence] = Field(default_factory=list, description="理论依据（可追溯）")
+    grounding: GroundingResponse = Field(default_factory=GroundingResponse)
+    diversity_warnings: list[str] = Field(
+        default_factory=list, description="方案之间差异过小时的提示"
+    )
+    breakdown: dict = Field(default_factory=dict, description="作品分析结果")
+    degradation: list[str] = Field(default_factory=list)
+    trace_id: str = ""
+
+
 class OptionsResponse(BaseModel):
     """选择式输入的选项载荷（§3.10.2 / §3.10.3）。
 

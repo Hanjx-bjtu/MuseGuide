@@ -15,17 +15,23 @@ from fastapi.responses import JSONResponse
 
 from app import __version__
 from app.api.schemas import (
+    AdviceRequest,
+    AdviceResponse,
     AnalysisRequest,
     AnalysisResponse,
+    GroundingIssueOut,
+    GroundingResponse,
     HealthResponse,
     OptionsResponse,
     StarterRequest,
     StarterResponse,
 )
-from app.core.brief import CreationInput, SelectionInput
+from app.core.brief import CreationInput, CreativeGoal, SelectionInput
 from app.core.config import get_settings
 from app.core.options import selection_payload
-from app.services.analyzer import analyze_text
+from app.services.advisor import generate_advice
+from app.services.analyzer import analyze, analyze_text, build_artifact
+from app.services.generation.grounding import summarize
 from app.services.kb import load_entries
 from app.services.parser.chords import ChordParseError
 from app.services.parser.melody import MelodyParseError
@@ -143,6 +149,63 @@ def analyze(request: AnalysisRequest) -> AnalysisResponse:
         melody=result.melody,
         layman=result.layman.model_dump(),
         notes=result.notes,
+    )
+
+
+@app.post("/api/advice", response_model=AdviceResponse)
+def advice(request: AdviceRequest) -> AdviceResponse:
+    """进阶链路：作品 + 目标 → 分析 + 2~3 个修改方向 + Grounding 校验（§3.9）。"""
+    if not (request.chords.strip() or request.melody.strip()):
+        raise HTTPException(status_code=400, detail="请至少提供和弦进行或旋律")
+
+    try:
+        artifact = build_artifact(
+            chord_text=request.chords,
+            melody_text=request.melody,
+            key=request.key,
+        )
+    except ChordParseError as exc:
+        raise HTTPException(status_code=400, detail=f"和弦解析失败：{exc}") from exc
+    except MelodyParseError as exc:
+        raise HTTPException(status_code=400, detail=f"旋律解析失败：{exc}") from exc
+
+    payload = CreationInput(
+        mode="tutor",
+        raw_text=request.goal,
+        artifact=artifact,
+        user_level=request.user_level,
+    )
+    goal = CreativeGoal(text=request.goal, constraints=request.constraints)
+
+    llm = _llm_override()
+    if llm is None:
+        llm = _default_llm()
+
+    result = generate_advice(payload, goal=goal, llm=llm)
+    report = result.trace.grounding
+
+    return AdviceResponse(
+        analysis=result.advice.analysis,
+        problems=result.advice.problems,
+        options=[option.model_dump() for option in result.advice.options],
+        evidence=result.advice.evidence,
+        grounding=GroundingResponse(
+            ok=report.ok,
+            issues=[
+                GroundingIssueOut(kind=i.kind, detail=i.detail, severity=i.severity)
+                for i in report.issues
+            ],
+            summary=summarize(report),
+        ),
+        diversity_warnings=result.warnings,
+        breakdown={
+            "key": result.analysis.key,
+            "roman": result.analysis.roman,
+            "functions": result.analysis.functions,
+            "layman": result.analysis.layman.model_dump(),
+        },
+        degradation=[d.kind for d in result.trace.degradation],
+        trace_id=result.trace.trace_id,
     )
 
 
