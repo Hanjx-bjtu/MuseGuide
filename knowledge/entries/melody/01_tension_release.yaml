@@ -1,0 +1,51 @@
+---
+id: melody.tension_release.01
+title: 旋律的紧张与释放
+title_en: Melodic Tension and Release
+category: melody
+subcategory: tension_release
+layman_title: 旋律怎么「讲完一件事」
+layman_content: |
+  把旋律想象成说话的语气：音越高、跳得越远、唱得越密，就越紧张；
+  回到较低的音、一步步走、慢下来，就越放松。
+  最简单的做法是让旋律先往上走到整首歌的最高点（高潮），
+  再慢慢走回开始的地方 —— 听起来就像把一件事讲完了。
+content: |
+  旋律的「紧张感」主要来自三个可操作的维度：音高位置、跳进幅度、节奏密度。
+  音高越高越紧张；向上跳进比级进更紧张；节奏越密集越紧张。
+  释放则相反：回到较低的音、用级进、放慢节奏、并在稳定音级上停留。
+  实操上最简单的手法叫「拱形轮廓」：旋律先上行到最高点（高潮），
+  然后下行回到起始音附近。听众会自然感到「讲完了一件事」。
+tags: [melody, tension, release, contour]
+emotions: [激昂, 释然]
+examples: ["E4 G4 A4 G4 E4"]
+key_context: C Major
+roman_numerals: []
+difficulty: beginner
+confidence_level: medium
+applicable_genres: [pop, folk, ballad]
+source:
+  title: Open Music Theory — Melody
+  url: https://openmusictheory.github.io/melody.html
+  license: CC BY-SA 4.0
+related: [emotion.sad_to_hopeful.01]
+priority: 4
+---
+
+## 用户会怎么问
+
+「想要高潮感」「想要收尾的感觉」「感觉唱到一半没劲了」。
+
+## 三个可调的旋钮
+
+| 想要的听感 | 做法 |
+|---|---|
+| 更紧张 | 音更高、跳进更大、节奏更密 |
+| 更放松 | 回到低音、级进、放慢、停在稳定音 |
+| 高潮 | 全曲最高音放在副歌第一句 |
+| 收尾 | 最后一句下行回到主音 |
+
+## 与和声的配合
+
+旋律的释放最好与和声的终止同时发生（旋律落回主音 + 和弦进行 V → I），
+两者分开做会显得「没说完」。

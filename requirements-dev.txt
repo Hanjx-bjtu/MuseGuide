@@ -1,0 +1,8 @@
+# 开发依赖（P0 阶段门 G0 要求 pytest 全绿）
+-r requirements.txt
+
+pytest>=8.0
+pytest-cov>=5.0
+
+# 说明：MVP 阶段刻意不引入 LangChain / LlamaIndex（ADR-0007）、
+# 也不引入 Reranker 相关依赖（MVP计划.md §3.7.4）。

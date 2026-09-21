@@ -1,0 +1,49 @@
+---
+id: layman.what_is_chord.01
+title: 和弦是什么
+title_en: What Is a Chord
+category: layman
+subcategory: concept_explanation
+layman_title: 和弦是什么
+layman_content: |
+  把和弦想象成「同时按下去的几个音」。
+  就像画画时，单色只能画线条，几种颜色叠在一起才成了丰富的画面。
+  和弦就是音乐的「色彩」—— 不同的和弦组合，会让人感到不同的情绪：
+  C 听起来明亮稳定（像晴天），Am 听起来柔和略带忧伤（像阴天）。
+  你不需要会弹，只需要会选。
+content: |
+  和弦是「同时按下去的几个音」。
+  就像画画时，单色只能画线条，几种颜色叠在一起才成了丰富的画面；
+  和弦就是音乐的「色彩」—— 不同的和弦组合，会让人感到不同的情绪。
+  C 大三和弦听起来明亮、稳定，像晴天；
+  A 小三和弦听起来柔和、略带忧伤，像阴天。
+  一首歌通常不会一直用同一个和弦，而是在几个和弦之间来回走，
+  这个「走来走去」的序列就叫和弦进行。
+tags: [layman, concept, chord, beginner]
+emotions: []
+examples: ["C", "Am"]
+key_context: C Major
+roman_numerals: []
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, rock, jazz]
+source:
+  title: MuseGuide 通俗解释层（项目自建）
+  url: https://openmusictheory.github.io/
+  license: CC BY-SA 4.0
+related: [starter.common_progressions.01, emotion.sad_to_hopeful.01]
+priority: 5
+---
+
+## 使用场景
+
+零基础用户在界面上看到「和弦」两个字，但不敢问。系统应在**用户第一次遇到该词时**
+主动解释一次，而不是等他提问。
+
+## 表述规则（对应 §3.8.3）
+
+1. 先用一个日常类比（画画 / 颜色）
+2. 再给一个正反对比（C 像晴天 / Am 像阴天）
+3. 最后落到「所以你只需要选，不需要懂」
+
+**不出现**：三度叠置、音程、根音、转位 —— 这些词在零基础模式下属于禁用术语。

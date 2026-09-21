@@ -1,0 +1,32 @@
+# MuseGuide 运行依赖（对齐 MVP计划.md §4 技术选型）
+#
+# 已在本机 conda 环境 `RAG` (Python 3.11) 中验证存在的包已标注 [已装约x.x]。
+# 未标注的需要 `pip install -r requirements.txt`。
+
+# --- 后端 ---
+fastapi>=0.110            # [已装约0.141]
+uvicorn>=0.27             # [已装约0.53]
+pydantic>=2.6             # [已装约2.13]
+
+# --- 音乐解析 ---
+music21>=9.1              # [已装约10.5]
+
+# --- 检索 ---
+chromadb>=0.4             # [已装约1.5]
+rank_bm25>=0.2            # 【需安装】关键词检索（§3.7.4）
+
+# --- LLM 客户端（DeepSeek 走 OpenAI 兼容端点）---
+openai>=1.30              # [已装约3.14]
+
+# --- 配置 ---
+python-dotenv>=1.0        # [已装]
+
+# --- 前端 ---
+streamlit>=1.32           # 【需安装】§4 技术选型
+
+# --- HTTP（界面调 API，见 ADR-0005）---
+httpx>=0.27               # [已装约0.28]
+
+# --- 嵌入（P3 才需要；可用 Ollama 替代，见 ADR-0008）---
+# sentence-transformers>=2.6   # 【需安装】依赖 torch，注意本机 LongPathsEnabled=0
+# jieba>=0.42                  # 【需安装】中文分词；未装时回落到 bigram 切分

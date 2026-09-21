@@ -1,0 +1,53 @@
+---
+id: harmony.modal_interchange.01
+title: Modal Interchange（调式借用）
+title_en: Modal Interchange
+category: harmony
+subcategory: modal_interchange
+layman_title: 借用别的调的和弦
+layman_content: |
+  就像画画时，本来用暖色调，突然加一点冷色，画面会更有层次。
+  音乐里也可以从别的调「借」一个和弦过来，让听感多一层色彩。
+  比如在明亮的 C 大调里，把 F 换成 Fm —— 只变了一个音，
+  但会突然多一丝忧伤，像回忆闪过。
+content: |
+  Modal Interchange 指从同主音的其他调式借用和弦。以 C 大调为例，可从
+  C 小调借用 Fm、Ab、Bb、Eb 等和弦。借来的和弦带有原调式的色彩，
+  因此能在不改变整体调性的前提下引入新的听感层次。
+  Fm（iv）是最常用的借用和弦之一：它只把 F 和弦的三音 A 降低半音到 Ab，
+  改动极小，但会立刻带来一层阴影感。
+  使用要点：借用和弦通常出现在乐句的弱拍或不稳定位置；
+  若连续使用多个调外和弦，调性会变得模糊，反而失去「借用」的效果。
+tags: [harmony, color, borrowed chord, modal interchange]
+emotions: [忧郁, 伤感, 温暖]
+examples: ["C | G | Am | Fm", "C | Ab | Bb | C"]
+key_context: C Major
+roman_numerals: ["iv", "bVI", "bVII"]
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, folk, jazz, jpop]
+source:
+  title: Open Music Theory — Modal Mixture
+  url: https://openmusictheory.github.io/modalMixture.html
+  license: CC BY-SA 4.0
+related: [harmony.seventh_chords.01, emotion.sad_to_hopeful.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户说「想要更温暖，但不要太普通」「想加一点忧伤的影子」时，最直接的答案就是借用和弦。
+它是「改动成本最低、听感变化明显」的手法：只改一个音，情绪就多一层。
+
+## 常见借用
+
+| 借用和弦 | 罗马数字 | 听感 |
+|---|---|---|
+| Fm | iv | 一丝忧伤、阴影 |
+| Ab | bVI | 宽广、电影感 |
+| Bb | bVII | 松弛、民谣感 |
+| Eb | bIII | 明亮中带一点阴郁 |
+
+## 要注意
+
+连续使用调外和弦会让调性模糊。**一次只借一个，并让它回到主调的和弦上**，效果最稳。

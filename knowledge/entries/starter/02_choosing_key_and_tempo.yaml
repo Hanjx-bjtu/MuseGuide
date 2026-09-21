@@ -1,0 +1,52 @@
+---
+id: starter.choosing_key_and_tempo.01
+title: 怎么选调性和速度
+title_en: Choosing Key and Tempo
+category: starter
+subcategory: choosing_key_and_tempo
+layman_title: 先定「什么颜色」和「什么步速」
+layman_content: |
+  调性决定这首歌整体的颜色：明亮、柔和，还是偏暗。
+  速度决定它走起来的感觉：像翻相册那样慢，像散步，还是像走路。
+  零基础建议先从 C 大调开始 —— 不是因为最好听，
+  而是因为它按起来最简单（钢琴上全是白键），解释起来也最省事。
+content: |
+  调性决定「整体色彩」，速度决定「走路的感觉」。两者是起步方案里最先要定的两件事。
+  调性：C 大调明亮温暖、G 大调开阔、F 大调柔和；A 小调忧伤、E 小调更暗。
+  零基础用户建议从 C 大调或 A 小调开始 —— 它们用到的黑键最少，
+  在钢琴上最容易按，也最好唱。
+  速度：60 BPM 像翻相册（回忆、独白）；82 BPM 像散步（抒情歌）；
+  100 BPM 像走路（普通流行歌）；120 BPM 以上适合轻快或舞曲。
+  实操建议：先定情绪，再由情绪推调性与速度 —— 反过来很难解释。
+tags: [starter, key, tempo, beginner]
+emotions: [温柔, 伤感, 轻快]
+examples: ["C Major, 82 BPM"]
+key_context: C Major
+roman_numerals: []
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad]
+source:
+  title: MuseGuide 起步引导整理（综合 Open Music Theory 条目）
+  url: https://openmusictheory.github.io/
+  license: CC BY-SA 4.0
+related: [starter.common_progressions.01, emotion.sad_to_hopeful.01]
+priority: 5
+---
+
+## 为什么建议 C 大调
+
+不是因为 C 大调最好听，而是因为**它的解释成本最低**：
+用户如果想自己在钢琴上试，C 大调全是白键。起步阶段降低操作门槛比追求音色更重要。
+
+## 速度的通俗参照
+
+| 用户说法 | BPM | 参照 |
+|---|---|---|
+| 很慢 | 60 | 像翻相册 |
+| 中等偏慢 | 82 | 像散步 |
+| 中等 | 100 | 像走路 |
+| 偏快 | 120 | 像赶路 |
+
+这些参照直接来自 `MVP计划.md` §3.10.3 的界面文案，**必须保持一致** ——
+用户在界面上看到的说法和系统解释里用的说法若是两套，会造成困惑。

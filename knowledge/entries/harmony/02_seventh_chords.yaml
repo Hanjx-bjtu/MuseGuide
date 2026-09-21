@@ -1,0 +1,53 @@
+---
+id: harmony.seventh_chords.01
+title: 七和弦与和弦色彩
+title_en: Seventh Chords and Chord Color
+category: harmony
+subcategory: seventh_chords
+layman_title: 给和弦「加点料」
+layman_content: |
+  三个音叠在一起叫和弦。如果在上面再加一个音，它听起来会变「软」一点、
+  更柔和、更梦幻 —— 这就是加了七音的七和弦。
+  最省力的改法：把 C 换成 Cmaj7。走向没变，稳定感没变，
+  但听感立刻多了一层质感。
+content: |
+  在三和弦之上再叠一个三度音就得到七和弦。它比三和弦多一层「未解决」的听感，
+  因此常用于需要柔和、梦幻或爵士色彩的场景。
+  常用的四种：Cmaj7（大七，柔和明亮）、Am7（小七，柔和忧伤）、
+  G7（属七，紧张、要求解决）、Dm7（小七，铺垫感强）。
+  七和弦不会改变和弦的功能关系 —— Cmaj7 仍然是 I 级，仍然稳定，
+  只是听感比 C 更「软」一点。这是「保持原样但更有味道」的最省力做法。
+tags: [harmony, color, seventh chord, extension]
+emotions: [温暖, 梦幻, 温柔]
+examples: ["Cmaj7 | G/B | Am7 | Fmaj7"]
+key_context: C Major
+roman_numerals: ["Imaj7", "V7", "vi7", "IVmaj7"]
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, jazz, citypop, ballad]
+source:
+  title: Open Music Theory — Seventh Chords
+  url: https://openmusictheory.github.io/seventhChords.html
+  license: CC BY-SA 4.0
+related: [harmony.modal_interchange.01, melody.tension_release.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户说「听起来不错，但有点普通 / 想更梦幻一点 / 想更有质感」，
+而**不想改变和弦走向**时，加七音是改动成本最低的方案。
+
+## 三和弦 → 七和弦 对照
+
+| 原和弦 | 加七音后 | 听感变化 |
+|---|---|---|
+| C | Cmaj7 | 更柔和、更梦幻 |
+| Am | Am7 | 更松弛 |
+| F | Fmaj7 | 更绵长 |
+| G | G7 | 更紧张（需要解决回 C） |
+
+## 要注意
+
+**七个音以上的延伸音（9、11、13）在零基础场景下不必引入** ——
+它们对听感的影响更细微，但解释成本高得多。MVP 阶段到七和弦为止。
