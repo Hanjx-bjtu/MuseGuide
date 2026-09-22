@@ -116,6 +116,52 @@ MuseGuide 不替用户生成一整首歌，而是：
 
 ---
 
+## 如何进行人工评分
+
+`MVP计划.md` §7.2 的八个主观维度（Theory Validity / Usefulness /
+Comprehensibility / Actionability 等）需要人来判断 —— 这是 P6 唯一「靠人」的环节。
+工具链已就绪，**三步、约 60~90 分钟**：
+
+```powershell
+# ① 生成评分材料（真实 API，约 3 分钟）
+python knowledge/eval/make_scoring_sheet.py
+```
+
+产出两份文件：
+
+| 文件 | 用途 |
+|---|---|
+| `reports/scoring/samples.md` | **读这个** —— 16 题的完整输入与输出原文 |
+| `reports/scoring/scores.csv` | **填这个** —— 每行一题，评分列留空 |
+
+```powershell
+# ② 打开 samples.md 通读，然后在 scores.csv 里填 1~5 分
+#    详见 docs/SCORING_GUIDE.md（含每个维度的分档判据与锚点）
+
+# ③ 汇总出报告
+python knowledge/eval/summarize_scores.py
+```
+
+产出 `reports/HUMAN_SCORING.md`：各维度均值/中位数/最低分、与门槛对比、
+得分最低的题、以及**未评项统计**。
+
+**四条设计原则**（都为了让评分结果可信）：
+
+1. **不懂乐理也能评。** 八个维度里只有 `theory_validity` 需要乐理判断，
+   其余评的是普通读者的直觉反应（「看懂了没」「回答了没」「愿不愿意照做」）。
+2. **留空比乱填有价值。** 未评项按「未评」统计、**不计入均值**，
+   不会像 0 分那样把结果拉低。拿不准就留空。
+3. **样本不足会说样本不足。** 评分少于 5 题、或有效评分不足一半时，
+   报告会明确写「不足以支撑结论」，而不是给出一个好看的平均分。
+4. **有第二人时自动算 Cohen's κ。** κ < 0.6 的维度会被标注为
+   **「不可用于结论」** —— 宁可承认指标不可靠，也不拿它当证据。
+
+> ⚠️ **报告会如实写明「尚未评分」或「N 题未评」。**
+> 一份全是 5 分的评分表对项目的帮助，远小于一份标出了 3 个低分的表 ——
+> 评分的目的是**发现边界**，不是证明它好。
+
+---
+
 ## 局限（诚实清单）
 
 > 这一节不是免责声明，而是结论可信度的一部分。
@@ -123,7 +169,7 @@ MuseGuide 不替用户生成一整首歌，而是：
 
 | # | 局限 | 影响 |
 |---|---|---|
-| 1 | **45 个人工评分用例未完成** | Theory Validity / Usefulness / Comprehensibility / Actionability 等**主观维度仍需人工评分**。生成评测覆盖的只是可机器判定的部分（结构、接地性、术语、延迟） |
+| 1 | **45 个人工评分用例未完成** | 评分工具链**已就绪**（见下方「如何进行人工评分」），但**评分尚未填写**。Theory Validity / Usefulness / Comprehensibility / Actionability 等主观维度目前无数据 |
 | 2 | **评测集规模有限** | 生成 16 题、检索 62 题、知识库 29 条，覆盖不了真实场景的长尾 |
 | 3 | **无专业音乐人复核** | 分析层的 1.000 是相对**本项目自建金标准集**的准确率，不是绝对正确性 |
 | 4 | **标注一致性（κ）未测** | 评测集由单人标注，无第二人独立标注 |
@@ -185,6 +231,7 @@ MuseGuide 不替用户生成一整首歌，而是：
 | [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md) | 验收口径总表 |
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | 架构决策记录（ADR） |
 | [`docs/kb_authoring.md`](docs/kb_authoring.md) | 知识条目撰写规范 + 来源与许可证规则 |
+| [`docs/SCORING_GUIDE.md`](docs/SCORING_GUIDE.md) | **人工评分指南**（八维度分档判据 + 常见偏差） |
 
 ---
 
