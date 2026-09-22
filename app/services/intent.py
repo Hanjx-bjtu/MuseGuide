@@ -28,6 +28,7 @@ from typing import Any
 from app.core.brief import CreativeIntent, IntentSource, SelectionInput
 from app.core.degradation import DegradationLog
 from app.core.options import (
+    STYLE_OPTIONS,
     emotion_option,
     style_option,
     tempo_option_by_label,
@@ -288,10 +289,31 @@ def parse_llm_intent(payload: str) -> CreativeIntent:
         # 只保留受控词表内的情绪
         intent.emotion = [str(e).strip() for e in emotion if emotion_option(str(e).strip())]
 
-    for key in ("style", "tempo_feel", "key_preference"):
-        value = data.get(key)
-        if isinstance(value, str) and value.strip():
-            setattr(intent, key, value.strip())
+    # 风格必须归一到受控词表。
+    #
+    # ⚠️ 实测教训（接入真实 LLM 后暴露）：模型返回的是「流行民谣」
+    # 「日系流行」「City Pop / 都市流行」这类**混合说法**，早期实现
+    # 匹配不到就原样保留，于是这些自由文本直接进入了契约与界面。
+    #
+    # 后果有两层：
+    # 1. 零基础用户看到「City Pop / 都市流行」等于没有通俗说明 ——
+    #    而受控词表的每个选项都配了日常类比（§3.10.2 的硬性要求）；
+    # 2. 按风格过滤知识库时会漏召（`STYLE_QUERIES` 只认词表内的值）。
+    #
+    # 因此改为：能归一就归一，归一不了就**丢弃**（宁可让下游走默认，
+    # 也不要让自由文本污染受控字段）。
+    raw_style = data.get("style")
+    if isinstance(raw_style, str) and raw_style.strip():
+        intent.style = normalize_style(raw_style)
+
+    value = data.get("key_preference")
+    if isinstance(value, str) and value.strip():
+        intent.key_preference = value.strip()
+
+    raw_tempo = data.get("tempo_feel")
+    if isinstance(raw_tempo, str) and raw_tempo.strip():
+        tempo_opt = tempo_option_by_label(raw_tempo)
+        intent.tempo_feel = tempo_opt.concept if tempo_opt else raw_tempo.strip()
 
     needs = data.get("harmony_needs")
     if isinstance(needs, str):
@@ -310,7 +332,90 @@ def parse_llm_intent(payload: str) -> CreativeIntent:
     return intent
 
 
+#: 风格归一化的补充别名。
+#:
+#: 模型常返回复合说法（「流行民谣」「日系流行」），受控词表的 ``aliases``
+#: 未必覆盖。这里补充一批**只在归一化时使用**的映射，使常见说法都能落到
+#: 六个受控风格之一，而不是被丢弃。
+STYLE_NORMALIZATION_HINTS: tuple[tuple[str, str], ...] = (
+    ("citypop", "流行"),
+    ("city pop", "流行"),
+    ("都市", "流行"),
+    ("日系", "流行"),
+    ("jpop", "流行"),
+    ("j-pop", "流行"),
+    ("抒情", "流行"),
+    ("民谣", "民谣"),
+    ("folk", "民谣"),
+    ("吉他", "民谣"),
+    ("摇滚", "摇滚"),
+    ("rock", "摇滚"),
+    ("钢琴", "钢琴"),
+    ("piano", "钢琴"),
+    ("器乐", "钢琴"),
+    ("电子", "电子"),
+    ("氛围", "电子"),
+    ("synth", "电子"),
+    ("爵士", "爵士"),
+    ("jazz", "爵士"),
+    ("蓝调", "爵士"),
+)
+
+
+def normalize_style(value: str) -> str | None:
+    """把模型返回的风格说法归一到受控词表。
+
+    归一顺序：
+
+    1. 精确匹配受控词表的 label / concept / alias
+    2. 按 ``STYLE_NORMALIZATION_HINTS`` 做子串匹配（覆盖「日系流行」这类复合说法）
+    3. 兜底：扫描受控词表的概念名是否作为子串出现（「流行民谣」→ 命中最靠前者）
+
+    :return: 受控词表内的概念名；无法归一时返回 ``None``
+
+        **宁可返回 None 也不返回自由文本** —— 下游会走默认值，
+        比让「City Pop / 都市流行」这种没有通俗说明的字符串流到零基础用户面前要好。
+    """
+    if not value or not value.strip():
+        return None
+
+    # 1) 精确匹配
+    option = style_option(value)
+    if option:
+        return option.concept
+
+    lowered = value.strip().lower()
+
+    # 2) 补充别名（子串匹配）
+    for token, concept in STYLE_NORMALIZATION_HINTS:
+        if token in lowered:
+            return concept
+
+    # 3) 受控概念名作为子串出现
+    for candidate in STYLE_OPTIONS:
+        if candidate.concept in value:
+            return candidate.concept
+
+    return None
+
+
 def _extract_json(text: str) -> Any:
+    """从可能带 markdown 围栏或前后缀的文本中抽出 JSON。"""
+    fenced = re.search(r"```(?:json)?\s*(.+?)\s*```", text, flags=re.DOTALL)
+    if fenced:
+        text = fenced.group(1).strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    # 退一步：抓第一个 { ... } 片段
+    start, end = text.find("{"), text.rfind("}")
+    if start != -1 and end > start:
+        try:
+            return json.loads(text[start : end + 1])
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"无法解析 JSON：{exc}") from exc
+    raise ValueError("未找到 JSON 内容")
     """从可能带 markdown 围栏或前后缀的文本中抽出 JSON。"""
     fenced = re.search(r"```(?:json)?\s*(.+?)\s*```", text, flags=re.DOTALL)
     if fenced:

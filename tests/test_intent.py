@@ -186,6 +186,96 @@ def test_parse_llm_intent_ignores_unknown_keys():
     assert not hasattr(intent, "vibe")
 
 
+# --------------------------------------------------------------------------- #
+# 风格归一化（回归：真实 LLM 暴露的受控词表污染）
+# --------------------------------------------------------------------------- #
+
+
+def test_llm_style_is_normalized_to_controlled_vocabulary():
+    """回归：LLM 返回的风格必须归一到受控词表。
+
+    实测教训（接入真实 DeepSeek 后暴露）：模型返回「流行民谣」「日系流行」
+    「City Pop / 都市流行」这类**混合说法**，早期实现匹配不到就原样保留，
+    于是自由文本直接进入契约与界面。
+
+    后果有两层：
+    1. 零基础用户看到「City Pop / 都市流行」等于没有通俗说明 ——
+       而受控词表的每个选项都配了日常类比（§3.10.2 的硬性要求）；
+    2. 按风格过滤知识库时会漏召（``STYLE_QUERIES`` 只认词表内的值）。
+    """
+    from app.core.options import style_option
+
+    for raw in ("流行民谣", "日系流行", "City Pop / 都市流行", "纯钢琴曲", "电子氛围"):
+        intent = parse_llm_intent(json.dumps({"style": raw}, ensure_ascii=False))
+        assert intent.style is not None, f"{raw} 应能归一"
+        assert style_option(intent.style), f"{raw} 归一后 {intent.style!r} 仍不在受控词表内"
+
+
+@pytest.mark.parametrize(
+    "raw,expected",
+    [
+        ("流行民谣", "民谣"),
+        ("日系流行", "流行"),
+        ("City Pop / 都市流行", "流行"),
+        ("民谣", "民谣"),
+        ("folk", "民谣"),
+        ("纯钢琴曲", "钢琴"),
+        ("摇滚", "摇滚"),
+        ("爵士小调", "爵士"),
+        ("电子氛围", "电子"),
+    ],
+)
+def test_normalize_style_maps_composite_phrasings(raw, expected):
+    from app.services.intent import normalize_style
+
+    assert normalize_style(raw) == expected
+
+
+def test_normalize_style_returns_none_for_unknown():
+    """归一不了就返回 None，**不得返回自由文本**。
+
+    宁可让下游走默认值，也不要让没有通俗说明的字符串
+    流到零基础用户面前。
+    """
+    from app.services.intent import normalize_style
+
+    assert normalize_style("完全不认识的东西") is None
+    assert normalize_style("") is None
+    assert normalize_style(None) is None
+
+
+def test_llm_intent_with_unknown_style_leaves_it_empty():
+    """无法归一的风格应留空，由下游兜底，而不是透传。"""
+    intent = parse_llm_intent(json.dumps({"style": "某种不存在的风格"}, ensure_ascii=False))
+    assert intent.style is None
+
+
+def test_tempo_feel_is_normalized_too():
+    """速度感同样要归一 —— 否则界面无法高亮用户的选择。"""
+    from app.core.options import tempo_option_by_label
+
+    intent = parse_llm_intent(json.dumps({"tempo_feel": "中等偏慢，像散步"}, ensure_ascii=False))
+    assert intent.tempo_feel == "中等偏慢"
+    assert tempo_option_by_label(intent.tempo_feel)
+
+
+def test_end_to_end_style_is_always_in_vocabulary():
+    """端到端：无论输入什么，最终 style 要么为 None，要么在受控词表内。"""
+    from app.core.options import style_option
+    from app.providers.mock import MockLLMProvider
+
+    for text in (
+        "我想写一首关于毕业的歌，有点伤感但最后是释然的感觉。",
+        "想写一首日系感觉的歌",
+        "想要 City Pop 那种都市感",
+        "随便写首歌",
+    ):
+        intent = resolve_intent(text, None, llm=MockLLMProvider())
+        assert intent.style is None or style_option(intent.style), (
+            f"{text!r} 得到了词表外的风格：{intent.style!r}"
+        )
+
+
 def test_parse_llm_intent_rejects_non_json():
     with pytest.raises(ValueError):
         parse_llm_intent("我很乐意帮你创作一首歌！")
