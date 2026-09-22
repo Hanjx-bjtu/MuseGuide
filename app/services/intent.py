@@ -465,7 +465,7 @@ def resolve_intent(
     need_llm = _needs_llm(rule_intent)
     if need_llm and llm is not None:
         if not getattr(llm, "available", False):
-            log.add(
+            log.add_once(
                 "llm_unavailable",
                 "LLM 未配置或不可用，Intent Mapping 回落规则层",
                 fallback_to="rule+selection",

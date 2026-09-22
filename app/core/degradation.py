@@ -41,6 +41,29 @@ class DegradationLog:
     def add(self, kind: DegradationKind, detail: str = "", fallback_to: str = "") -> None:
         self._items.append(Degradation(kind=kind, detail=detail, fallback_to=fallback_to))
 
+    def add_once(self, kind: DegradationKind, detail: str = "", fallback_to: str = "") -> bool:
+        """只在同类事件尚未记录时添加。
+
+        **为什么需要它：** 一次请求会经过 Intent Mapping、Query 分解、生成
+        三个都会检测 LLM 可用性的环节。若各自无条件记录，同一次请求会留下
+        多条 ``llm_unavailable``，使「降级次数」这类统计指标失真 ——
+        P6 的报告要按降级类型计数，重复计数会直接污染结论。
+
+        :return: 是否真的添加了（``False`` 表示已有同类事件）
+        """
+        if self.has(kind):
+            return False
+        self.add(kind, detail, fallback_to)
+        return True
+
+    def has(self, kind: DegradationKind) -> bool:
+        """是否已记录过某类事件。"""
+        return any(item.kind == kind for item in self._items)
+
+    def kinds(self) -> list[str]:
+        """事件类型列表（供展示与统计）。"""
+        return [item.kind for item in self._items]
+
     def items(self) -> list[Degradation]:
         return list(self._items)
 

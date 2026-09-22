@@ -38,6 +38,7 @@ from app.services.generation import prompts
 from app.services.generation.grounding import verify_advice
 from app.services.generation.parser import OutputParseError, parse_advice
 from app.services.layman import adapt_advice
+from app.services.retrieval import service as retrieval_service
 from app.services.retrieval.offline import OfflineKnowledgeBase, default_kb
 
 #: 方案之间和弦重叠率超过此值即认为缺乏多样性（§7.2 的 Diversity 维度）
@@ -422,17 +423,20 @@ def generate_advice(
         )
     timings["analyze"] = int((time.perf_counter() - started) * 1000)
 
-    # --- ② 检索知识 ---
+    # --- ② 检索知识（P3 起走 Hybrid，失败自动回落离线直出）---
     started = time.perf_counter()
-    evidence: list[Evidence] = []
-    try:
-        evidence = kb.search(
-            _evidence_queries(goal, analysis),
-            emotions=goal_intent.emotion,
-            top_k=top_k,
-        )
-    except Exception as exc:  # noqa: BLE001 - 检索失败不得中断链路
-        log.add("retrieval_unavailable", f"知识检索失败：{exc}", fallback_to="no_evidence")
+    retrieval = retrieval_service.retrieve(
+        goal_text=goal.text,
+        intent=goal_intent,
+        artifact_summary=(
+            f"{analysis.key or ''} {' '.join(analysis.raw)} {analysis.layman.progression or ''}"
+        ),
+        user_level=payload.user_level,
+        emotions=goal_intent.emotion,
+        llm=llm,
+        log=log,
+    )
+    evidence = retrieval.evidence
     timings["retrieve"] = int((time.perf_counter() - started) * 1000)
 
     # --- ③ 组装 Prompt ---
@@ -450,8 +454,9 @@ def generate_advice(
     started = time.perf_counter()
 
     if llm is None or not getattr(llm, "available", False):
-        if llm is not None and not any(d.kind == "llm_unavailable" for d in log.items()):
-            log.add(
+        # 用 add_once：intent 层与 query 分解层可能已记录过同类事件。
+        if llm is not None:
+            log.add_once(
                 "llm_unavailable",
                 "LLM 未配置或不可用，修改建议回落知识库直出",
                 fallback_to="fallback_advice",

@@ -1,0 +1,528 @@
+{
+  "_comment": "自动生成的初稿 —— 必须人工复核并补充多 gold 后，再冻结为 v1.json",
+  "count": 58,
+  "cases": [
+    {
+      "question": "怎么让和弦听起来更有色彩但不改变整体感觉",
+      "gold": [
+        "harmony.modal_interchange.01"
+      ],
+      "_draft_from": "harmony.modal_interchange.01",
+      "_category": "harmony",
+      "_title": "Modal Interchange（调式借用）"
+    },
+    {
+      "question": "从别的调借和弦是什么手法",
+      "gold": [
+        "harmony.modal_interchange.01"
+      ],
+      "_draft_from": "harmony.modal_interchange.01",
+      "_category": "harmony",
+      "_title": "Modal Interchange（调式借用）"
+    },
+    {
+      "question": "给和弦加七音会有什么效果",
+      "gold": [
+        "harmony.seventh_chords.01"
+      ],
+      "_draft_from": "harmony.seventh_chords.01",
+      "_category": "harmony",
+      "_title": "七和弦与和弦色彩"
+    },
+    {
+      "question": "Cmaj7 和 C 有什么区别",
+      "gold": [
+        "harmony.seventh_chords.01"
+      ],
+      "_draft_from": "harmony.seventh_chords.01",
+      "_category": "harmony",
+      "_title": "七和弦与和弦色彩"
+    },
+    {
+      "question": "和弦进行的基本逻辑是什么",
+      "gold": [
+        "harmony.progression_basics.01"
+      ],
+      "_draft_from": "harmony.progression_basics.01",
+      "_category": "harmony",
+      "_title": "和弦进行的基础逻辑"
+    },
+    {
+      "question": "为什么和弦有稳定和不稳定的区别",
+      "gold": [
+        "harmony.progression_basics.01"
+      ],
+      "_draft_from": "harmony.progression_basics.01",
+      "_category": "harmony",
+      "_title": "和弦进行的基础逻辑"
+    },
+    {
+      "question": "怎样让歌曲结尾有结束感",
+      "gold": [
+        "harmony.cadence_function.01"
+      ],
+      "_draft_from": "harmony.cadence_function.01",
+      "_category": "harmony",
+      "_title": "终止式：音乐怎么「把话说完」"
+    },
+    {
+      "question": "终止式有哪几种",
+      "gold": [
+        "harmony.cadence_function.01"
+      ],
+      "_draft_from": "harmony.cadence_function.01",
+      "_category": "harmony",
+      "_title": "终止式：音乐怎么「把话说完」"
+    },
+    {
+      "question": "副属和弦怎么用",
+      "gold": [
+        "harmony.secondary_dominant.01"
+      ],
+      "_draft_from": "harmony.secondary_dominant.01",
+      "_category": "harmony",
+      "_title": "副属和弦：临时借来的紧张感"
+    },
+    {
+      "question": "想在副歌前推一下情绪该用什么和弦",
+      "gold": [
+        "harmony.secondary_dominant.01"
+      ],
+      "_draft_from": "harmony.secondary_dominant.01",
+      "_category": "harmony",
+      "_title": "副属和弦：临时借来的紧张感"
+    },
+    {
+      "question": "让和弦不那么普通的办法有哪些",
+      "gold": [
+        "harmony.chord_color.01"
+      ],
+      "_draft_from": "harmony.chord_color.01",
+      "_category": "harmony",
+      "_title": "和弦色彩的四种加法"
+    },
+    {
+      "question": "如何在保持原有走向的前提下增加色彩",
+      "gold": [
+        "harmony.chord_color.01"
+      ],
+      "_draft_from": "harmony.chord_color.01",
+      "_category": "harmony",
+      "_title": "和弦色彩的四种加法"
+    },
+    {
+      "question": "旋律怎么做出紧张和释放的感觉",
+      "gold": [
+        "melody.tension_release.01"
+      ],
+      "_draft_from": "melody.tension_release.01",
+      "_category": "melody",
+      "_title": "旋律的紧张与释放"
+    },
+    {
+      "question": "怎样让旋律听起来有收尾感",
+      "gold": [
+        "melody.tension_release.01"
+      ],
+      "_draft_from": "melody.tension_release.01",
+      "_category": "melody",
+      "_title": "旋律的紧张与释放"
+    },
+    {
+      "question": "旋律往上走和往下走有什么区别",
+      "gold": [
+        "melody.contour.01"
+      ],
+      "_draft_from": "melody.contour.01",
+      "_category": "melody",
+      "_title": "旋律轮廓：走向决定情绪"
+    },
+    {
+      "question": "怎么让副歌的旋律更突出",
+      "gold": [
+        "melody.contour.01"
+      ],
+      "_draft_from": "melody.contour.01",
+      "_category": "melody",
+      "_title": "旋律轮廓：走向决定情绪"
+    },
+    {
+      "question": "音域宽窄会影响情绪吗",
+      "gold": [
+        "melody.range_emotion.01"
+      ],
+      "_draft_from": "melody.range_emotion.01",
+      "_category": "melody",
+      "_title": "音域与音区如何影响情绪"
+    },
+    {
+      "question": "副歌应该唱得更高吗",
+      "gold": [
+        "melody.range_emotion.01"
+      ],
+      "_draft_from": "melody.range_emotion.01",
+      "_category": "melody",
+      "_title": "音域与音区如何影响情绪"
+    },
+    {
+      "question": "怎么让旋律好记又不重复",
+      "gold": [
+        "melody.motif_development.01"
+      ],
+      "_draft_from": "melody.motif_development.01",
+      "_category": "melody",
+      "_title": "动机发展：怎么让旋律「好记又耐听」"
+    },
+    {
+      "question": "什么是模进",
+      "gold": [
+        "melody.motif_development.01"
+      ],
+      "_draft_from": "melody.motif_development.01",
+      "_category": "melody",
+      "_title": "动机发展：怎么让旋律「好记又耐听」"
+    },
+    {
+      "question": "怎样让歌听起来温暖",
+      "gold": [
+        "emotion.warm_harmony.01"
+      ],
+      "_draft_from": "emotion.warm_harmony.01",
+      "_category": "emotion",
+      "_title": "「温暖」是怎么做出来的"
+    },
+    {
+      "question": "想做出治愈的感觉该怎么做",
+      "gold": [
+        "emotion.warm_harmony.01"
+      ],
+      "_draft_from": "emotion.warm_harmony.01",
+      "_category": "emotion",
+      "_title": "「温暖」是怎么做出来的"
+    },
+    {
+      "question": "怎样让歌听起来忧郁",
+      "gold": [
+        "emotion.melancholy.01"
+      ],
+      "_draft_from": "emotion.melancholy.01",
+      "_category": "emotion",
+      "_title": "「忧郁」是怎么做出来的"
+    },
+    {
+      "question": "想写一首很丧的歌",
+      "gold": [
+        "emotion.melancholy.01"
+      ],
+      "_draft_from": "emotion.melancholy.01",
+      "_category": "emotion",
+      "_title": "「忧郁」是怎么做出来的"
+    },
+    {
+      "question": "伤感但最后释然的感觉怎么实现",
+      "gold": [
+        "emotion.sad_to_hopeful.01"
+      ],
+      "_draft_from": "emotion.sad_to_hopeful.01",
+      "_category": "emotion",
+      "_title": "「伤感→释然」的情绪转折实现"
+    },
+    {
+      "question": "怎样让歌曲从悲伤转向希望",
+      "gold": [
+        "emotion.sad_to_hopeful.01"
+      ],
+      "_draft_from": "emotion.sad_to_hopeful.01",
+      "_category": "emotion",
+      "_title": "「伤感→释然」的情绪转折实现"
+    },
+    {
+      "question": "怎么做出高潮感",
+      "gold": [
+        "emotion.tension_resolution.01"
+      ],
+      "_draft_from": "emotion.tension_resolution.01",
+      "_category": "emotion",
+      "_title": "张力与释放：音乐怎么「推上去再放开」"
+    },
+    {
+      "question": "张力与释放是什么意思",
+      "gold": [
+        "emotion.tension_resolution.01"
+      ],
+      "_draft_from": "emotion.tension_resolution.01",
+      "_category": "emotion",
+      "_title": "张力与释放：音乐怎么「推上去再放开」"
+    },
+    {
+      "question": "写一首关于毕业告别的歌",
+      "gold": [
+        "emotion.farewell_scene.01"
+      ],
+      "_draft_from": "emotion.farewell_scene.01",
+      "_category": "emotion",
+      "_title": "告别 / 毕业这类主题怎么写"
+    },
+    {
+      "question": "离别主题的歌应该怎么写",
+      "gold": [
+        "emotion.farewell_scene.01"
+      ],
+      "_draft_from": "emotion.farewell_scene.01",
+      "_category": "emotion",
+      "_title": "告别 / 毕业这类主题怎么写"
+    },
+    {
+      "question": "我想写歌但完全不知道从哪开始",
+      "gold": [
+        "starter.how_to_start.01"
+      ],
+      "_draft_from": "starter.how_to_start.01",
+      "_category": "starter",
+      "_title": "从零开始写第一首歌的四个决定"
+    },
+    {
+      "question": "写第一首歌需要做哪些决定",
+      "gold": [
+        "starter.how_to_start.01"
+      ],
+      "_draft_from": "starter.how_to_start.01",
+      "_category": "starter",
+      "_title": "从零开始写第一首歌的四个决定"
+    },
+    {
+      "question": "第一首歌选什么调比较好",
+      "gold": [
+        "starter.choosing_key_and_tempo.01"
+      ],
+      "_draft_from": "starter.choosing_key_and_tempo.01",
+      "_category": "starter",
+      "_title": "怎么选调性和速度"
+    },
+    {
+      "question": "速度应该怎么定",
+      "gold": [
+        "starter.choosing_key_and_tempo.01"
+      ],
+      "_draft_from": "starter.choosing_key_and_tempo.01",
+      "_category": "starter",
+      "_title": "怎么选调性和速度"
+    },
+    {
+      "question": "民谣常用的和弦走向是什么",
+      "gold": [
+        "starter.common_progressions.01"
+      ],
+      "_draft_from": "starter.common_progressions.01",
+      "_category": "starter",
+      "_title": "按风格选和弦走向"
+    },
+    {
+      "question": "有哪些不会出错的和弦进行",
+      "gold": [
+        "starter.common_progressions.01"
+      ],
+      "_draft_from": "starter.common_progressions.01",
+      "_category": "starter",
+      "_title": "按风格选和弦走向"
+    },
+    {
+      "question": "一首歌的基本结构是怎样的",
+      "gold": [
+        "starter.song_structure.01"
+      ],
+      "_draft_from": "starter.song_structure.01",
+      "_category": "starter",
+      "_title": "一首歌的基本结构"
+    },
+    {
+      "question": "主歌和副歌有什么区别",
+      "gold": [
+        "starter.song_structure.01"
+      ],
+      "_draft_from": "starter.song_structure.01",
+      "_category": "starter",
+      "_title": "一首歌的基本结构"
+    },
+    {
+      "question": "拿到和弦之后下一步该做什么",
+      "gold": [
+        "starter.first_song_landing.01"
+      ],
+      "_draft_from": "starter.first_song_landing.01",
+      "_category": "starter",
+      "_title": "拿到方案之后怎么落地"
+    },
+    {
+      "question": "怎么把和弦变成一首歌",
+      "gold": [
+        "starter.first_song_landing.01"
+      ],
+      "_draft_from": "starter.first_song_landing.01",
+      "_category": "starter",
+      "_title": "拿到方案之后怎么落地"
+    },
+    {
+      "question": "流行歌常用的和弦进行有哪些",
+      "gold": [
+        "examples.pop_progressions.01"
+      ],
+      "_draft_from": "examples.pop_progressions.01",
+      "_category": "examples",
+      "_title": "流行乐常见和弦进行案例"
+    },
+    {
+      "question": "C G Am F 是不是很常见",
+      "gold": [
+        "examples.pop_progressions.01"
+      ],
+      "_draft_from": "examples.pop_progressions.01",
+      "_category": "examples",
+      "_title": "流行乐常见和弦进行案例"
+    },
+    {
+      "question": "民谣和弦进行案例",
+      "gold": [
+        "examples.folk_progressions.01"
+      ],
+      "_draft_from": "examples.folk_progressions.01",
+      "_category": "examples",
+      "_title": "民谣常见和弦进行案例"
+    },
+    {
+      "question": "吉他弹唱常用的和弦走向",
+      "gold": [
+        "examples.folk_progressions.01"
+      ],
+      "_draft_from": "examples.folk_progressions.01",
+      "_category": "examples",
+      "_title": "民谣常见和弦进行案例"
+    },
+    {
+      "question": "日系歌曲的和声有什么特点",
+      "gold": [
+        "examples.jpop_progressions.01"
+      ],
+      "_draft_from": "examples.jpop_progressions.01",
+      "_category": "examples",
+      "_title": "日系 / City Pop 常见和弦进行案例"
+    },
+    {
+      "question": "什么是王道进行",
+      "gold": [
+        "examples.jpop_progressions.01"
+      ],
+      "_draft_from": "examples.jpop_progressions.01",
+      "_category": "examples",
+      "_title": "日系 / City Pop 常见和弦进行案例"
+    },
+    {
+      "question": "低音线怎么走比较好听",
+      "gold": [
+        "examples.bass_line.01"
+      ],
+      "_draft_from": "examples.bass_line.01",
+      "_category": "examples",
+      "_title": "低音线进行案例"
+    },
+    {
+      "question": "如何让和弦连接更连贯",
+      "gold": [
+        "examples.bass_line.01"
+      ],
+      "_draft_from": "examples.bass_line.01",
+      "_category": "examples",
+      "_title": "低音线进行案例"
+    },
+    {
+      "question": "和弦是什么",
+      "gold": [
+        "layman.what_is_chord.01"
+      ],
+      "_draft_from": "layman.what_is_chord.01",
+      "_category": "layman",
+      "_title": "和弦是什么"
+    },
+    {
+      "question": "完全不懂乐理，和弦是什么意思",
+      "gold": [
+        "layman.what_is_chord.01"
+      ],
+      "_draft_from": "layman.what_is_chord.01",
+      "_category": "layman",
+      "_title": "和弦是什么"
+    },
+    {
+      "question": "调性是什么意思",
+      "gold": [
+        "layman.what_is_key.01"
+      ],
+      "_draft_from": "layman.what_is_key.01",
+      "_category": "layman",
+      "_title": "调性是什么"
+    },
+    {
+      "question": "大调和小调有什么区别",
+      "gold": [
+        "layman.what_is_key.01"
+      ],
+      "_draft_from": "layman.what_is_key.01",
+      "_category": "layman",
+      "_title": "调性是什么"
+    },
+    {
+      "question": "和弦进行是什么",
+      "gold": [
+        "layman.what_is_progression.01"
+      ],
+      "_draft_from": "layman.what_is_progression.01",
+      "_category": "layman",
+      "_title": "和弦进行是什么"
+    },
+    {
+      "question": "为什么歌里要换和弦",
+      "gold": [
+        "layman.what_is_progression.01"
+      ],
+      "_draft_from": "layman.what_is_progression.01",
+      "_category": "layman",
+      "_title": "和弦进行是什么"
+    },
+    {
+      "question": "终止式是什么",
+      "gold": [
+        "layman.what_is_cadence.01"
+      ],
+      "_draft_from": "layman.what_is_cadence.01",
+      "_category": "layman",
+      "_title": "终止式是什么"
+    },
+    {
+      "question": "为什么我的歌结尾感觉没说完",
+      "gold": [
+        "layman.what_is_cadence.01"
+      ],
+      "_draft_from": "layman.what_is_cadence.01",
+      "_category": "layman",
+      "_title": "终止式是什么"
+    },
+    {
+      "question": "为什么换个和弦情绪就变了",
+      "gold": [
+        "layman.emotion_and_harmony.01"
+      ],
+      "_draft_from": "layman.emotion_and_harmony.01",
+      "_category": "layman",
+      "_title": "情绪和音乐是怎么连起来的"
+    },
+    {
+      "question": "音乐是怎么影响情绪的",
+      "gold": [
+        "layman.emotion_and_harmony.01"
+      ],
+      "_draft_from": "layman.emotion_and_harmony.01",
+      "_category": "layman",
+      "_title": "情绪和音乐是怎么连起来的"
+    }
+  ]
+}

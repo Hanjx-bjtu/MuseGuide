@@ -40,6 +40,7 @@ from app.core.trace import Trace
 from app.services import intent as intent_service
 from app.services.generation import prompts
 from app.services.generation.parser import OutputParseError, parse_starter_plan
+from app.services.retrieval import service as retrieval_service
 from app.services.retrieval.offline import OfflineKnowledgeBase, default_kb
 
 #: 兜底方案的段落模板（按情绪方向选择）
@@ -232,13 +233,17 @@ def generate_starter_plan(
     )
     timings["intent"] = int((time.perf_counter() - started) * 1000)
 
-    # --- ② 检索知识（P2 用离线直出）---
+    # --- ② 检索知识（P3 起走 Hybrid，失败自动回落离线直出）---
     started = time.perf_counter()
-    evidence: list[Evidence] = []
-    try:
-        evidence = kb.search_for_intent(creative_intent, payload.raw_text, top_k=top_k)
-    except Exception as exc:  # noqa: BLE001 - 知识库不可用不得中断链路
-        log.add("retrieval_unavailable", f"离线知识库检索失败：{exc}", fallback_to="no_evidence")
+    retrieval = retrieval_service.retrieve(
+        goal_text=payload.raw_text,
+        intent=creative_intent,
+        user_level=payload.user_level,
+        emotions=creative_intent.emotion,
+        llm=llm,
+        log=log,
+    )
+    evidence = retrieval.evidence
     timings["retrieve"] = int((time.perf_counter() - started) * 1000)
 
     # --- ③ 组装 Prompt ---
@@ -257,10 +262,10 @@ def generate_starter_plan(
     started = time.perf_counter()
 
     if llm is None or not getattr(llm, "available", False):
-        # 只在 intent 层没有记录过时才补记 —— 否则同一次请求会留下两条
-        # 相同的 llm_unavailable，使「降级次数」这类统计指标失真。
-        if llm is not None and _has_kind(log, "llm_unavailable") is False:
-            log.add(
+        # 用 add_once：intent 层与 query 分解层可能已记录过同类事件，
+        # 重复留痕会让 P6 报告里的「降级次数」统计失真。
+        if llm is not None:
+            log.add_once(
                 "llm_unavailable",
                 "LLM 未配置或不可用，起步方案回落知识库直出",
                 fallback_to="fallback_plan",
