@@ -332,6 +332,132 @@ def test_starter_uses_selections_when_text_is_empty():
     assert result.plan.tempo == 60, "应使用「很慢」对应的 60 BPM"
 
 
+# --------------------------------------------------------------------------- #
+# 用户显式选择不得被模型覆盖（回归）
+# --------------------------------------------------------------------------- #
+
+
+def test_user_tempo_selection_overrides_llm_output():
+    """回归：用户选定的速度必须覆盖模型的返回值。
+
+    实测教训（接入真实 DeepSeek 后才暴露）：用户选「很慢，像翻相册」= 60 BPM，
+    但模型返回了 ``tempo: 72``（因为 72 也勉强算「慢」）。
+    只把选择写进 Prompt 是**不够的** —— 模型会把它当建议。
+
+    **用户的显式选择是输入，模型给的数字是输出；输入不应被输出覆盖。**
+    这与 ADR-0009「选择层优先于 LLM 层」是同一条原则，
+    只是发生在生成之后而不是之前。
+    """
+
+    class WrongTempoLLM:
+        """故意返回错误速度的模型。"""
+
+        name = "wrong-tempo"
+        available = True
+
+        def complete(self, prompt, *, system=None, json_mode=False):
+            import json
+
+            return json.dumps(
+                {
+                    "key": "C Major",
+                    "key_explanation": "明亮温暖。",
+                    "tempo": 72,  # 用户选的是 60
+                    "tempo_explanation": "中慢速。",
+                    "sections": [
+                        {
+                            "name": "主歌",
+                            "chords": ["Am", "F"],
+                            "emotion": "伤感",
+                            "explanation": "柔和。",
+                        },
+                        {
+                            "name": "副歌",
+                            "chords": ["C", "G"],
+                            "emotion": "释然",
+                            "explanation": "开阔。",
+                        },
+                    ],
+                    "why": "小调转大调。",
+                    "adjust_hints": [],
+                },
+                ensure_ascii=False,
+            )
+
+    payload = CreationInput(
+        raw_text="",
+        selections=SelectionInput(emotion="温柔", tempo_label="很慢，像翻相册"),
+    )
+    result = generate_starter_plan(payload, llm=WrongTempoLLM())
+
+    assert result.plan.tempo == 60, "用户的显式选择应覆盖模型给出的 72"
+    assert any("覆盖" in w for w in result.warnings), (
+        "覆盖模型输出这件事必须留痕，不能静默修改"
+    )
+
+
+def test_enforce_user_selections_is_noop_when_model_agrees():
+    """模型本来就对时，不应产生多余的修正记录。"""
+    from app.core.plan import StarterSection
+    from app.services.starter import enforce_user_selections
+
+    plan = StarterPlan(
+        key="C Major",
+        key_explanation="k",
+        tempo=60,
+        tempo_explanation="t",
+        sections=[
+            StarterSection(name="主歌", chords=["C"], explanation="a"),
+            StarterSection(name="副歌", chords=["G"], explanation="b"),
+        ],
+    )
+    fixed, adjustments = enforce_user_selections(
+        plan, CreativeIntent(tempo_feel="很慢"), SelectionInput(tempo_label="很慢，像翻相册")
+    )
+    assert fixed.tempo == 60
+    assert adjustments == [], "无需修正时不应产生记录"
+
+
+def test_enforce_user_selections_skips_when_no_selection():
+    """用户没选速度时不做任何覆盖 —— 此时模型的判断才是唯一依据。"""
+    from app.core.plan import StarterSection
+    from app.services.starter import enforce_user_selections
+
+    plan = StarterPlan(
+        key="C Major",
+        key_explanation="k",
+        tempo=95,
+        tempo_explanation="t",
+        sections=[
+            StarterSection(name="主歌", chords=["C"], explanation="a"),
+            StarterSection(name="副歌", chords=["G"], explanation="b"),
+        ],
+    )
+    fixed, adjustments = enforce_user_selections(plan, CreativeIntent(), SelectionInput())
+    assert fixed.tempo == 95
+    assert adjustments == []
+
+
+def test_starter_prompt_locks_tempo_when_user_selected():
+    """Prompt 中必须给出确切数值并声明为硬约束。"""
+    from app.services.generation import prompts
+
+    prompt = prompts.starter_prompt(
+        raw_text="", intent=CreativeIntent(tempo_feel="很慢"), evidence=[], locked_tempo=60
+    )
+    assert "[必须遵守的数值]" in prompt
+    assert "恰好是 60" in prompt
+
+
+def test_starter_prompt_omits_lock_without_selection():
+    from app.services.generation import prompts
+
+    prompt = prompts.starter_prompt(
+        raw_text="写首歌", intent=CreativeIntent(), evidence=[], locked_tempo=None
+    )
+    assert "[必须遵守的数值]" not in prompt
+
+
 def test_starter_evidence_is_attached():
     """§3.9.3 要求展示理论依据，方案必须带 evidence。"""
     payload = CreationInput(raw_text="我想写一首关于毕业的歌，有点伤感但最后释然")

@@ -127,44 +127,158 @@ def check_chords_in_key(option: AdviceOption, key: str | None) -> list[Grounding
         if is_in_key(chord, key):
             continue
 
-        # 判断是否为常见的借用和弦（同主音小调的 iv / bVI / bVII / bIII）
+        # 判断是否为**常见且合法**的调外用法。
+        # 这些手法知识库里就有专门条目（modal_interchange / secondary_dominant），
+        # 把它们判为幻觉等于让校验器否定自家知识库。
         borrowed = _is_common_borrowed_chord(chord, key)
+        secondary = _is_secondary_dominant(chord, key)
+
+        if secondary:
+            label = "属于副属和弦（V/x）或和声小调属和弦，是标准的张力手法"
+            severity = "warning"
+        elif borrowed:
+            label = "属于常见的借用和弦，属正常手法"
+            severity = "warning"
+        elif _root_is_in_key(chord, key):
+            # 根音在调内但和弦性质不符（如 A 小调里的 Fm）。
+            # 这**通常**是模型的小失误，但它不构成幻觉 ——
+            # 判为 warning 让人复核即可，判 error 会拦掉一个可能有趣的创意。
+            label = "根音在调内但和弦性质与调式不符，建议复核"
+            severity = "warning"
+        else:
+            label = "且根音也不在调内，疑似编造"
+            severity = "error"
+
         issues.append(
             GroundingIssue(
                 kind="out_of_key",
-                detail=(
-                    f"{chord_name} 不属于 {key}"
-                    + ("（属于常见的借用和弦，属正常手法）" if borrowed else "（且不是常见借用和弦）")
-                ),
-                severity="warning" if borrowed else "error",
+                detail=f"{chord_name} 不属于 {key}（{label}）",
+                severity=severity,  # type: ignore[arg-type]
             )
         )
     return issues
 
 
-#: 常见借用和弦：从同主音小调借来的 iv / bVI / bVII / bIII
-_BORROWED_DEGREE_INTERVALS = {3: "bIII", 5: "iv", 8: "bVI", 10: "bVII"}
-
-
-def _is_common_borrowed_chord(chord, key: str) -> bool:
-    """是否为常见的调式借用和弦（大调借用同主音小调的和弦）。"""
-    from app.services.analyzer.key import parse_key
+def _root_is_in_key(chord, key: str) -> bool:
+    """和弦根音是否落在该调的音级内（不检查和弦性质）。"""
+    from app.services.analyzer.key import MAJOR_INTERVALS, NATURAL_MINOR_INTERVALS, parse_key
     from app.services.parser.chords import NOTE_TO_PITCH
 
     tonic, mode = parse_key(key)
-    if mode != "Major":
-        # 小调借用大调的情况较少，仅放行 I（Picardy third）
-        return chord.quality == "major" and chord.root == tonic
+    tonic_pitch = NOTE_TO_PITCH.get(tonic)
+    root_pitch = NOTE_TO_PITCH.get(chord.root)
+    if tonic_pitch is None or root_pitch is None:
+        return False
+    intervals = MAJOR_INTERVALS if mode == "Major" else NATURAL_MINOR_INTERVALS
+    return (root_pitch - tonic_pitch) % 12 in intervals
 
+
+#: 常见借用和弦：从同主音小调借来的 iv / bVI / bVII / bIII
+_BORROWED_DEGREE_INTERVALS = {3: "bIII", 5: "iv", 8: "bVI", 10: "bVII"}
+
+#: 常见副属和弦（secondary dominant）指向的级数。
+#:
+#: ``V/x`` 会引入一个调外音，是**标准且常用的**手法
+#: （``MVP计划.md`` §3.9.3 与知识库 ``harmony.secondary_dominant.01`` 都把它
+#: 列为推荐方向）。若不识别它们，校验器会把知识库自己教的手法判为「幻觉」。
+_SECONDARY_DOMINANT_TARGETS = (1, 2, 3, 4, 5, 6)  # 指向 ii/iii/IV/V/vi 等
+
+
+def _is_secondary_dominant(chord, key: str) -> bool:
+    """是否为副属和弦（``V/x``），或小调中的**和声小调属和弦**。
+
+    判定方式：这是一个**大性质的和弦**（大三 / 属七 / 大七），
+    且其根音是某个调内和弦的**纯五度上方**。
+
+    实测教训（两次）：
+    1. 接入真实 LLM 后，「C | G | E7 | Am | F」（即 ``V/vi``，E7 → Am）
+       被校验器判为「调外和弦」而报错。**E7 是教科书级的副属和弦用法，
+       而且本项目知识库里就有专门一篇讲它。**
+    2. 小调场景下，「Am | F | C | E7 | Am」同样被误报 ——
+       但 **E7 是小调的「和声小调属和弦」，是小调终止式最标准的写法**，
+       它引入的 G# 正是和声小调的定义特征。
+
+    :param key: 大调与小调都支持 —— 两者都需要能识别调外的属功能和弦。
+    """
+    from app.services.analyzer.key import MAJOR_INTERVALS, NATURAL_MINOR_INTERVALS, parse_key
+    from app.services.parser.chords import NOTE_TO_PITCH
+
+    tonic, mode = parse_key(key)
+    tonic_pitch = NOTE_TO_PITCH.get(tonic)
+    root_pitch = NOTE_TO_PITCH.get(chord.root)
+    if tonic_pitch is None or root_pitch is None:
+        return False
+
+    # 只承认大性质的和弦 —— 属功能和弦必须是大三和弦或属七
+    if chord.quality not in ("major", "dom7", "maj7"):
+        return False
+
+    offset = (root_pitch - tonic_pitch) % 12
+
+    # --- 情形一：小调的和声小调属和弦（V 级大三/属七）---
+    # 自然小调的 V 级是小三和弦，但实际创作中几乎总是升高七度音变成大三和弦。
+    # 这是小调最标准的终止写法，必须放行。
+    if mode == "Minor" and offset == NATURAL_MINOR_INTERVALS[4]:  # 第 5 级（纯五度）
+        return True
+
+    intervals = MAJOR_INTERVALS if mode == "Major" else NATURAL_MINOR_INTERVALS
+
+    # --- 情形二：副属和弦 V/x ---
+    # 根音应在调内（它是「临时」的属，不是随机调外音）
+    if offset not in intervals:
+        return False
+
+    # 它指向的目标 = 根音上方纯四度
+    target_pitch = (root_pitch + 5) % 12
+    target_offset = (target_pitch - tonic_pitch) % 12
+    if target_offset not in intervals:
+        return False
+
+    target_degree = intervals.index(target_offset)
+    if target_degree not in _SECONDARY_DOMINANT_TARGETS:
+        return False
+
+    # 目标是主和弦（I/i）时属于「本来就在调内」的 V，不算副属
+    if target_degree == 0:
+        return False
+
+    return True
+
+
+def _is_common_borrowed_chord(chord, key: str) -> bool:
+    """是否为常见的调式借用和弦。
+
+    大调：借用同主音小调的 iv / bVI / bVII / bIII。
+    小调：借用同主音大调的 IV / I（Picardy third）等。
+
+    **判定只看根音与性质，不看低音。** 实测教训：``Fm/Ab`` 是 iv 级借用和弦的
+    第一转位，但早期实现把整个斜杠符号拿去判定，导致它被判为
+    「既不在调内、也不是常见借用和弦」而报错。**转位不改变和弦的功能。**
+    """
+    from app.services.analyzer.key import MAJOR_INTERVALS, parse_key
+    from app.services.parser.chords import NOTE_TO_PITCH
+
+    tonic, mode = parse_key(key)
     tonic_pitch = NOTE_TO_PITCH.get(tonic)
     root_pitch = NOTE_TO_PITCH.get(chord.root)
     if tonic_pitch is None or root_pitch is None:
         return False
 
     offset = (root_pitch - tonic_pitch) % 12
-    if offset == 5:  # iv：小三和弦
-        return chord.quality in ("minor", "min7")
-    if offset in (8, 10, 3):  # bVI / bVII / bIII：大三和弦
+
+    if mode == "Major":
+        if offset == 5:  # iv：小三和弦
+            return chord.quality in ("minor", "min7")
+        if offset in (8, 10, 3):  # bVI / bVII / bIII：大三和弦
+            return chord.quality in ("major", "maj7", "dom7")
+        return False
+
+    # 小调：常见借用来自同主音大调
+    if offset == 5:  # IV：大三和弦（大调下属，多利安色彩）
+        return chord.quality in ("major", "maj7", "dom7")
+    if offset == 0:  # I：Picardy third（同主音大三和弦收尾）
+        return chord.quality in ("major", "maj7")
+    if offset in (2, 9):  # ii / VI：大调借用
         return chord.quality in ("major", "maj7", "dom7")
     return False
 

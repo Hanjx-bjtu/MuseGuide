@@ -93,9 +93,27 @@ def starter_prompt(
     evidence: list[Evidence],
     level: UserLevel = "zero",
     selections_note: str = "",
+    locked_tempo: int | None = None,
 ) -> str:
-    """组装起步方案 Prompt —— 严格对齐 §3.3.4 的四段结构。"""
+    """组装起步方案 Prompt —— 严格对齐 §3.3.4 的四段结构。
+
+    :param locked_tempo: 用户在界面上明确选定的 BPM。
+
+        **为什么要有这个参数（实测教训）：** 早期版本只把「速度：很慢，像翻相册」
+        写进 Prompt，模型仍然返回了 ``tempo: 72``（因为 72 也是「慢」）。
+        **用户的显式选择应当被当作约束，而不是建议。**
+        因此这里直接给出确切数字并明确要求不得更改，
+        生成后还会由 ``validate_plan`` 再校验一次。
+    """
     selection_block = f"\n[用户的选择式补充]\n{selections_note}\n" if selections_note else ""
+
+    tempo_constraint = ""
+    if locked_tempo is not None:
+        tempo_constraint = (
+            f"\n[必须遵守的数值]\n"
+            f"- tempo 必须**恰好是 {locked_tempo}**，不得改成其它数值。\n"
+            f"（这是用户在界面上亲手选定的速度，属于硬约束）\n"
+        )
 
     return f"""{prompt_style_block(level)}
 
@@ -104,7 +122,7 @@ def starter_prompt(
 {selection_block}
 [Intent Mapping 结果]
 {render_intent(intent)}
-
+{tempo_constraint}
 [检索到的知识]
 {render_evidence(evidence, level)}
 

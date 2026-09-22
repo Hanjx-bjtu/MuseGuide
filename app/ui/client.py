@@ -89,6 +89,18 @@ class MuseGuideClient:
             ) from exc
         except httpx.TimeoutException as exc:
             raise APIError("请求超时。生成较慢时可以稍后重试，或先填写更简短的内容。") from exc
+        except httpx.HTTPError as exc:
+            # 兜底：把**任何**传输层异常都转成可读提示。
+            #
+            # ⚠️ 实测教训：早期只捕获 ConnectError 与 TimeoutException，
+            # 结果受限网络环境下出现的 ``ReadError``（WinError 10054
+            # 远程主机强迫关闭连接）直接穿透到 Streamlit，
+            # 导致**整个页面渲染为空** —— 用户什么都看不到，也得不到提示。
+            # 传输层失败的种类因环境而异，不该逐个枚举。
+            raise APIError(
+                f"与后端通信失败（{type(exc).__name__}）。请确认服务正在运行：\n"
+                f"uvicorn app.api.server:app --port 8000"
+            ) from exc
 
         if response.status_code >= 400:
             detail = ""
@@ -97,7 +109,9 @@ class MuseGuideClient:
                 detail = payload.get("detail") or payload.get("message") or ""
             except Exception:  # noqa: BLE001 - 非 JSON 错误体
                 detail = response.text[:200]
-            raise APIError(detail or f"后端返回错误（{response.status_code}）", status_code=response.status_code)
+            raise APIError(
+                detail or f"后端返回错误（{response.status_code}）", status_code=response.status_code
+            )
 
         return response.json()
 

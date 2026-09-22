@@ -306,6 +306,54 @@ def test_client_surfaces_backend_error_detail():
     assert "无法识别的和弦符号" in str(excinfo.value)
 
 
+def test_client_handles_any_transport_error():
+    """回归：**任何**传输层异常都必须转成可读提示。
+
+    实测教训：早期只捕获 ``ConnectError`` 与 ``TimeoutException``，
+    结果受限网络环境下出现的 ``ReadError``（WinError 10054
+    远程主机强迫关闭连接）直接穿透，导致 **Streamlit 整页渲染为空** ——
+    界面上什么都看不到，用户也得不到任何提示。
+
+    传输层失败的种类因环境而异，不该逐个枚举，必须兜住 ``httpx.HTTPError``。
+    """
+    import httpx
+
+    from app.ui.client import APIError, MuseGuideClient
+
+    class ExplodingTransport(httpx.BaseTransport):
+        def handle_request(self, request: httpx.Request) -> httpx.Response:
+            raise httpx.ReadError("远程主机强迫关闭了一个现有的连接")
+
+    client = MuseGuideClient(FAKE_API, transport=ExplodingTransport())
+    with pytest.raises(APIError) as excinfo:
+        client.health()
+
+    message = str(excinfo.value)
+    assert "后端" in message
+    assert "uvicorn" in message, "应告诉用户怎么启动后端"
+
+
+@pytest.mark.parametrize(
+    "exc_type",
+    ["ConnectError", "ReadError", "RemoteProtocolError", "WriteError"],
+)
+def test_client_transport_error_types_are_all_wrapped(exc_type):
+    """逐个枚举常见传输层异常类型，确保都被兜住。"""
+    import httpx
+
+    from app.ui.client import APIError, MuseGuideClient
+
+    error_class = getattr(httpx, exc_type)
+
+    class ExplodingTransport(httpx.BaseTransport):
+        def handle_request(self, request: httpx.Request) -> httpx.Response:
+            raise error_class("transport failure")
+
+    client = MuseGuideClient(FAKE_API, transport=ExplodingTransport())
+    with pytest.raises(APIError):
+        client.health()
+
+
 def test_client_parses_starter_response_shape():
     """客户端必须把响应映射为界面态对象，字段齐全。"""
     import httpx

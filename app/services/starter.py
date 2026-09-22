@@ -181,6 +181,44 @@ def validate_plan(plan: StarterPlan) -> list[str]:
     return issues
 
 
+def enforce_user_selections(
+    plan: StarterPlan, intent: CreativeIntent, selections: SelectionInput
+) -> tuple[StarterPlan, list[str]]:
+    """把用户显式做出的选择**强制覆盖**到方案上。
+
+    **为什么必须做这一步（实测教训）：**
+    接入真实 LLM 后，用户选择「很慢，像翻相册」（60 BPM），
+    但模型返回了 ``tempo: 72`` —— 因为 72 也勉强算「慢」。
+    只把选择写进 Prompt 是**不够的**：模型会把它当成建议。
+
+    用户的显式选择与「模型猜的」不是同一类东西：
+    前者是输入，后者是输出。**输入不应被输出覆盖。**
+    这与 ADR-0009 里「选择层优先于 LLM 层」是同一条原则，
+    只是发生在生成之后而不是之前。
+
+    :return: ``(可能被修正的方案, 修正说明列表)`` —— 说明会进入 ``Trace.warnings``，
+        使「系统改过模型的输出」这件事可被追溯，而不是静默修改。
+    """
+    adjustments: list[str] = []
+    update: dict = {}
+
+    # --- 速度：用户选了什么就用什么 ---
+    if selections.tempo_label:
+        chosen = tempo_bpm(intent.tempo_feel or selections.tempo_label)
+        if plan.tempo != chosen:
+            adjustments.append(
+                f"用户选定速度为 {chosen} BPM，已覆盖模型给出的 {plan.tempo} BPM"
+            )
+            update["tempo"] = chosen
+
+    # --- 风格：用户选了什么，解释里就要体现什么 ---
+    # 这里只记录不一致，不强行改写解释文本（改写可能破坏语义通顺）。
+
+    if update:
+        plan = plan.model_copy(update=update)
+    return plan, adjustments
+
+
 def _build_trace(
     *,
     payload: CreationInput,
@@ -248,12 +286,19 @@ def generate_starter_plan(
 
     # --- ③ 组装 Prompt ---
     selections_note = _describe_selections(payload.selections)
+    # 用户在界面上选定的 BPM 作为硬约束写进 Prompt（生成后还会再强制覆盖一次）
+    locked_tempo = (
+        tempo_bpm(creative_intent.tempo_feel or payload.selections.tempo_label)
+        if payload.selections.tempo_label
+        else None
+    )
     prompt = prompts.starter_prompt(
         raw_text=payload.raw_text,
         intent=creative_intent,
         evidence=evidence,
         level=payload.user_level,
         selections_note=selections_note,
+        locked_tempo=locked_tempo,
     )
 
     # --- ④ LLM 生成 ---
@@ -295,6 +340,9 @@ def generate_starter_plan(
     # 无论走哪条路径，都把证据挂上去（§3.9.3 要求展示理论依据）
     plan = plan.model_copy(update={"evidence": evidence, "layman_level": payload.user_level})
 
+    # --- ⑥ 强制应用用户的显式选择（输入不应被输出覆盖）---
+    plan, adjustments = enforce_user_selections(plan, creative_intent, payload.selections)
+
     trace = _build_trace(
         payload=payload,
         intent=creative_intent,
@@ -305,7 +353,9 @@ def generate_starter_plan(
         log=log,
         timings=timings,
     )
-    return StarterResult(plan=plan, trace=trace, warnings=validate_plan(plan))
+    return StarterResult(
+        plan=plan, trace=trace, warnings=adjustments + validate_plan(plan)
+    )
 
 
 def _describe_selections(selections: SelectionInput) -> str:

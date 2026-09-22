@@ -200,6 +200,87 @@ def test_check_chords_in_key_skips_when_no_key():
     assert check_chords_in_key(option, None) == []
 
 
+# --------------------------------------------------------------------------- #
+# 借用和弦与副属和弦的识别（回归：真实 LLM 暴露的假阳性）
+# --------------------------------------------------------------------------- #
+
+
+def test_secondary_dominant_is_not_flagged_as_hallucination():
+    """回归：副属和弦 ``V/vi`` 不得被误判为幻觉。
+
+    实测教训（接入真实 DeepSeek 后暴露）：模型给出「C | G | E7 | Am | F」，
+    E7 是标准的 ``V/vi``，却被校验器判为 error。
+
+    **E7 是教科书级用法，而且本项目知识库里就有专门一篇讲它**
+    （``harmony.secondary_dominant.01``）。一个把自家知识库推荐的手法
+    判为幻觉的校验器，比没有校验器更糟。
+    """
+    option = AdviceOption(
+        label="A", chords=["C", "G", "E7", "Am", "F"], feature="f", reason="r", theory=[]
+    )
+    issues = check_chords_in_key(option, "C Major")
+    e7_issues = [i for i in issues if "E7" in i.detail]
+    assert e7_issues, "E7 应被识别为调外和弦并记录"
+    assert e7_issues[0].severity == "warning", "副属和弦不应判为 error"
+
+
+def test_harmonic_minor_dominant_is_not_flagged():
+    """回归：小调的和声小调属和弦（A 小调里的 E7）必须放行。
+
+    自然小调的 V 级是小三和弦，但实际创作几乎总是升高七度音变成大三和弦。
+    这是小调最标准的终止写法，引入的 G# 正是和声小调的定义特征。
+    """
+    option = AdviceOption(
+        label="A", chords=["Am", "F", "C", "E7", "Am"], feature="f", reason="r", theory=[]
+    )
+    issues = check_chords_in_key(option, "A Minor")
+    e7_issues = [i for i in issues if "E7" in i.detail]
+    assert e7_issues, "E7 在自然小调音阶外，应被记录"
+    assert e7_issues[0].severity == "warning", "和声小调属和弦不应判为 error"
+
+
+def test_borrowed_chord_inversion_is_recognized():
+    """回归：``Fm/Ab`` 是 iv 借用和弦的第一转位，转位不改变功能。
+
+    早期实现把整个斜杠符号拿去判定，导致转位形态被漏掉并报 error。
+    """
+    option = AdviceOption(label="A", chords=["Fm/Ab"], feature="f", reason="r", theory=[])
+    issues = check_chords_in_key(option, "C Major")
+    assert issues
+    assert issues[0].severity == "warning", "借用和弦的转位不应判为 error"
+
+
+def test_diatonic_chord_in_minor_key_is_not_flagged():
+    """A 小调自然音阶里的 F 大三和弦属调内，不应被标记。"""
+    option = AdviceOption(label="A", chords=["F"], feature="f", reason="r", theory=[])
+    assert check_chords_in_key(option, "A Minor") == []
+
+
+def test_root_in_key_but_wrong_quality_is_warning_not_error():
+    """根音在调内但性质不符（A 小调里的 Fm）判 warning 而非 error。
+
+    它**通常**是模型的小失误，但不构成幻觉 ——
+    判 error 会拦掉一个可能有趣的创意。
+    """
+    option = AdviceOption(label="A", chords=["Fm"], feature="f", reason="r", theory=[])
+    issues = check_chords_in_key(option, "A Minor")
+    assert issues
+    assert issues[0].severity == "warning"
+
+
+def test_truly_foreign_chord_is_still_an_error():
+    """**没被削弱**：真正编造的和弦仍必须判 error。
+
+    上面几处放宽都是为了放过「合法但调外」的手法；
+    这条测试确保放宽没有把幻觉检测一起放掉。
+    """
+    for chord in ("Abm", "F#m", "Bbm"):
+        option = AdviceOption(label="A", chords=[chord], feature="f", reason="r", theory=[])
+        issues = check_chords_in_key(option, "C Major")
+        assert issues, f"{chord} 应被标记"
+        assert issues[0].severity == "error", f"{chord} 根音不在调内，应判 error"
+
+
 def test_check_layman_only_applies_to_zero_level():
     """零基础档才会检查通俗解释。
 

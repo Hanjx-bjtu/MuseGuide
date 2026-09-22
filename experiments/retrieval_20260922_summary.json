@@ -50,7 +50,7 @@
       "ndcg@k": 0.582,
       "context_precision": 0.171
     },
-    "elapsed_s": 0.14,
+    "elapsed_s": 0.08,
     "notes": [
       "嵌入后端：hash"
     ]
@@ -78,7 +78,7 @@
       "ndcg@k": 0.6437,
       "context_precision": 0.1815
     },
-    "elapsed_s": 0.29,
+    "elapsed_s": 0.2,
     "notes": [
       "嵌入后端：hash"
     ]
@@ -106,7 +106,7 @@
       "ndcg@k": 0.7375,
       "context_precision": 0.2097
     },
-    "elapsed_s": 0.43,
+    "elapsed_s": 0.27,
     "notes": [
       "嵌入后端：hash"
     ]
@@ -134,7 +134,7 @@
       "ndcg@k": 0.7423,
       "context_precision": 0.2097
     },
-    "elapsed_s": 0.45,
+    "elapsed_s": 0.26,
     "notes": [
       "嵌入后端：hash"
     ]
@@ -162,7 +162,7 @@
       "ndcg@k": 0.7344,
       "context_precision": 0.2065
     },
-    "elapsed_s": 0.41,
+    "elapsed_s": 0.27,
     "notes": [
       "嵌入后端：hash"
     ]
@@ -190,7 +190,7 @@
       "ndcg@k": 0.7423,
       "context_precision": 0.2097
     },
-    "elapsed_s": 0.45,
+    "elapsed_s": 0.26,
     "notes": [
       "嵌入后端：hash"
     ]
