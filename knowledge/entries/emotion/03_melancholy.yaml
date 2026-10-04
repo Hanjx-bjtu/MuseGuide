@@ -1,0 +1,60 @@
+---
+id: emotion.melancholy.01
+title: 「忧郁」是怎么做出来的
+title_en: Techniques for Melancholy
+category: emotion
+subcategory: melancholy
+layman_title: 让歌听起来「有点丧」
+layman_content: |
+  忧郁主要靠小调和弦（Am、Dm、Em 这类）实现，它们天生听起来柔和、偏低落。
+  再配合往下走的旋律，就像叹气一样。
+  要注意：纯粹的忧郁容易听得闷，如果想「丧但还留着一点温度」，
+  就保留一部分明亮的和弦，只在局部用一点小调色彩。
+content: |
+  忧郁感由四类手段叠加实现：
+  和声层面，使用小三和弦与小调（尤其 i、iv、VI 级）；引入小下属和弦 iv、
+  使用 bVI 制造阴影色彩；采用叹息进行等下行低声线条。
+  旋律层面，使用下行轮廓（模仿叹息）；停留在小三度与小六度音程上；
+  运用延留音制造延迟与留恋感。
+  节奏层面，使用较慢的速度与宽松的和声节奏，减少切分带来的动力。
+  速度层面，中慢速（约 60-85 BPM）最有利于忧郁听感。
+  微妙之处在于：纯粹的忧郁容易显得沉闷。若希望忧郁中带有温度，
+  应保留大调框架（如 I、V 级仍在），只在局部引入小调色彩 ——
+  这正是「忧郁但温暖」的技术路径。
+tags: [emotion, melancholy, minor, borrowed chord, descending]
+emotions: [忧郁, 伤感]
+examples: ["Am | F | C | G", "Am | Dm | E7 | Am", "C | G | Am | Fm"]
+key_context: A Minor
+roman_numerals: ["i", "iv", "bVI", "V"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, rock]
+source:
+  title: MuseGuide 情绪映射表（综合 Open Music Theory 条目整理）
+  url: https://openmusictheory.github.io/modalMixture.html
+  license: CC BY-SA 4.0
+related: [emotion.sad_to_hopeful.01, emotion.warm_harmony.01, emotion.farewell_scene.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户说「想要更伤感」「想丧一点」「失恋的歌」。
+注意「伤感」与「忧郁」在中文里高度重叠，
+但用户真正想要的往往不同：伤感偏叙事与释放，忧郁偏氛围与沉浸。
+
+## 四个层面
+
+| 层面 | 做法 | 效果 |
+|---|---|---|
+| 和声 | 小三和弦、iv、bVI | 柔和、低落 |
+| 旋律 | 下行轮廓、小三度停留 | 叹息感 |
+| 节奏 | 宽松、少切分 | 沉静 |
+| 速度 | 60~85 BPM | 沉浸 |
+
+## 与「伤感→释然」的关系
+
+**忧郁是目的地，伤感→释然是过程。**
+如果用户说「伤感但最后释然」，见 `emotion.sad_to_hopeful.01`；
+如果说「一直很忧郁」「想沉浸在这种情绪里」，才是本条目。
+混淆这两者会让系统给出「多余的转折」，破坏用户想要的氛围。

@@ -1,0 +1,59 @@
+---
+id: examples.folk_progressions.01
+title: 民谣常见和弦进行案例
+title_en: Folk Progression Examples
+category: examples
+subcategory: chord_progressions
+layman_title: 民谣歌常用的那几套和弦
+layman_content: |
+  民谣的和弦通常很简单，一般就三四个来回用。
+  最常见的是「一 → 四 → 五 → 一」，听起来像把事情从头讲到尾。
+  段落之间的变化也不大，靠歌词和演唱来推动。
+  所以如果你想写民谣，和弦不用复杂，简单反而更对味。
+content: |
+  民谣的和声特点是用和弦少、功能清晰、坚持使用三和弦。
+  I → IV → V → I（C → F → G → C）：最经典的民谣走向，
+  功能完整，有明确的起承转合，常用作整段的主干。
+  I → V → vi → IV（C → G → Am → F）：更偏流行化的民谣，副歌常用。
+  vi → IV → I → V（Am → F → C → G）：从小调切入，带一点忧郁的民谣叙事。
+  I → IV → I → V（C → F → C → G）：半终止收尾，产生「还要继续」的推进感，
+  适合主歌段落衔接。
+  编配上，民谣常用分解和弦（指弹）而非柱式和弦，且和声节奏较宽松。
+  增色手段以加音（Cadd9、Gsus4）和低音级进为主，
+  较少使用调式借用与副属和弦 —— 那会削弱民谣的朴素感。
+tags: [examples, folk, progression, acoustic, simple]
+emotions: [温暖, 温柔, 伤感]
+examples: ["C | F | G | C", "C | G | Am | F", "Am | F | C | G", "C | F | C | G"]
+key_context: C Major
+roman_numerals: ["I", "IV", "V", "I"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [folk, pop, ballad]
+source:
+  title: MuseGuide 案例库（公开和弦进行数据整理）
+  url: https://openmusictheory.github.io/
+  license: CC BY-SA 4.0
+related: [starter.common_progressions.01, examples.pop_progressions.01, emotion.warm_harmony.01]
+priority: 4
+---
+
+## 什么时候会用到
+
+用户在意图里提到「民谣」「吉他」「弹唱」，或选择了风格选项「温柔民谣」。
+
+## 四套走向
+
+| 走向 | 和弦 | 听感 | 用途 |
+|---|---|---|---|
+| I–IV–V–I | C F G C | 完整、叙事 | 整段主干 |
+| I–V–vi–IV | C G Am F | 流行化 | 副歌 |
+| vi–IV–I–V | Am F C G | 忧郁叙事 | 主歌 |
+| I–IV–I–V | C F C G | 悬而未决 | 段间衔接 |
+
+## 民谣的增色原则
+
+**改动越小越像民谣。** 调式借用（Fm）和副属和弦（E7）在民谣里会显得「用力过猛」。
+推荐只用：加音（Cadd9、Gsus4）、低音级进、以及分解和弦的节奏变化。
+
+这条判断直接服务于 P4 的建议生成：当用户选择民谣风格时，
+应优先给出**低改动量**的方案，而不是把流行 / 爵士的手法套过来。

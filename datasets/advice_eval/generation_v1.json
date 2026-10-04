@@ -1,0 +1,133 @@
+{
+  "_comment": "生成质量评测集（P6 的 45 个人工评分用例中，可自动化的部分）。真实 LLM 接入后建立。每题给出输入与**可机器判定的检查项**，把原先只能人工判断的维度尽可能自动化。",
+  "_version": "v1",
+  "_scope": "本集只覆盖可自动判定的维度：结构合规、接地性、术语通俗度、数值约束遵守、延迟。主观维度（Usefulness / Comprehensibility 等）仍需人工评分，见 README 的诚实清单。",
+  "starter_cases": [
+    {
+      "id": "gen.starter.001",
+      "note": "§3.1.2 的核心示例",
+      "text": "我想写一首关于毕业的歌，有点伤感但最后是释然的感觉。",
+      "expect_emotions": ["伤感", "释然"],
+      "expect_sections_at_least": 2
+    },
+    {
+      "id": "gen.starter.002",
+      "note": "只做选择、不写字（§8 兜底路径）",
+      "text": "",
+      "emotion": "温柔",
+      "style": "民谣",
+      "tempo_label": "中等偏慢，像散步",
+      "expect_tempo": 82
+    },
+    {
+      "id": "gen.starter.003",
+      "note": "速度硬约束：用户选定 60 BPM，模型不得改成别的数",
+      "text": "",
+      "emotion": "伤感",
+      "tempo_label": "很慢，像翻相册",
+      "expect_tempo": 60
+    },
+    {
+      "id": "gen.starter.004",
+      "note": "速度硬约束：用户选定 100 BPM",
+      "text": "想要轻快一点的感觉",
+      "tempo_label": "中等，像走路",
+      "expect_tempo": 100
+    },
+    {
+      "id": "gen.starter.005",
+      "note": "明确风格诉求",
+      "text": "想写一首关于夏天的民谣，用吉他弹唱的",
+      "style": "民谣",
+      "expect_style": "民谣"
+    },
+    {
+      "id": "gen.starter.006",
+      "note": "情绪复合诉求",
+      "text": "想写一首又温柔又有点忧伤的歌",
+      "expect_emotions_any": ["温柔", "伤感", "忧郁"]
+    },
+    {
+      "id": "gen.starter.007",
+      "note": "信息极少，测试兜底质量",
+      "text": "随便写首歌",
+      "expect_sections_at_least": 2
+    },
+    {
+      "id": "gen.starter.008",
+      "note": "零基础用户的常见起点",
+      "text": "我完全不会乐理，想写第一首歌",
+      "expect_sections_at_least": 2
+    }
+  ],
+  "advice_cases": [
+    {
+      "id": "gen.advice.001",
+      "note": "§3.9.2 的核心示例",
+      "goal": "保持温暖，但不要太普通",
+      "chords": "C | G | Am | F",
+      "constraints": ["保持温暖"],
+      "expect_options_min": 2,
+      "expect_options_max": 3
+    },
+    {
+      "id": "gen.advice.002",
+      "note": "明确的修改方向：增加收尾感",
+      "goal": "想要结尾更有收束感",
+      "chords": "C | G | Am | F",
+      "expect_options_min": 2
+    },
+    {
+      "id": "gen.advice.003",
+      "note": "小调作品",
+      "goal": "想让它更有层次，不要太平",
+      "chords": "Am | F | C | G",
+      "expect_options_min": 2
+    },
+    {
+      "id": "gen.advice.004",
+      "note": "带旋律输入（§3.1.3 的进阶示例）",
+      "goal": "保持温暖但更有记忆点",
+      "chords": "C | G | Am | F",
+      "melody": "E4 G4 A4 G4 E4",
+      "expect_options_min": 2
+    },
+    {
+      "id": "gen.advice.005",
+      "note": "已含七和弦的进阶作品",
+      "goal": "再丰富一点",
+      "chords": "Cmaj7 | G | Am7 | Fmaj7",
+      "expect_options_min": 2
+    },
+    {
+      "id": "gen.advice.006",
+      "note": "零基础用户使用进阶入口",
+      "goal": "我不懂乐理，就是觉得听着有点平淡",
+      "chords": "C | G | Am | F",
+      "user_level": "zero",
+      "expect_options_min": 2
+    },
+    {
+      "id": "gen.advice.007",
+      "note": "目标与和弦关系较弱",
+      "goal": "想让它更适合毕业的感觉",
+      "chords": "C | G | Am | F",
+      "expect_options_min": 2
+    },
+    {
+      "id": "gen.advice.008",
+      "note": "指定调性",
+      "goal": "想增加色彩",
+      "chords": "G | D | Em | C",
+      "key": "G Major",
+      "expect_options_min": 2
+    }
+  ],
+  "_automated_checks": [
+    "结构合规：方案含 key/key_explanation/tempo/tempo_explanation + >=2 段，每段 explanation 非空",
+    "接地性：编造引用数 = 0、调外和弦数 = 0（由 Grounding 判定）",
+    "术语通俗度：零基础档输出不含禁区术语",
+    "数值约束：用户选定的 BPM 被遵守",
+    "延迟：单次端到端 <= 60s（MVP计划 §9 第 8 条）"
+  ]
+}

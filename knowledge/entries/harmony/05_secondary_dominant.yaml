@@ -1,0 +1,61 @@
+---
+id: harmony.secondary_dominant.01
+title: 副属和弦：临时借来的紧张感
+title_en: Secondary Dominants
+category: harmony
+subcategory: secondary_dominant
+layman_title: 临时「借」一次紧张感
+layman_content: |
+  除了最终的那个「回家」，你还可以在中间临时制造一次小紧张 ——
+  就像走路时特意绕一下，让最后到达更有感觉。
+  做法是：在某个和弦前面先插一个「不太稳」的和弦，把它推出来。
+  听感上会觉得这个和弦是被「引」出来的，而不是随便接上去的。
+content: |
+  副属和弦（Secondary Dominant）是某个非主和弦的属和弦，用 V/x 标记，
+  读作「x 的属和弦」。它临时把目标和弦当作「临时主音」，制造局部紧张。
+  在 C 大调中最常用的是 V/vi（E 或 E7 → Am）和 V/IV（C7 → F）：
+  E7 本不属于 C 大调（含 G#），但它强烈指向 Am，因此听起来是「借来的紧张」。
+  使用要点：副属和弦通常解决到它指向的和弦；它引入调外音，因此色彩鲜明，
+  一次用一到两个就够，用多了会让调性模糊。
+tags: [harmony, secondary dominant, chromatic, tension, color]
+emotions: [激昂, 伤感, 忧郁]
+examples: ["C | E7 | Am | F", "C | C7 | F | G", "Am | E7 | Am"]
+key_context: C Major
+roman_numerals: ["V/vi", "V/IV", "V/V"]
+difficulty: intermediate
+confidence_level: high
+applicable_genres: [pop, jazz, jpop, citypop]
+source:
+  title: Open Music Theory — Secondary Dominants
+  url: https://openmusictheory.github.io/secondaryDominants.html
+  license: CC BY-SA 4.0
+related: [harmony.modal_interchange.01, harmony.progression_basics.01, examples.jpop_progressions.01]
+priority: 4
+---
+
+## 什么时候会用到
+
+用户说「想在副歌前推一下」「想让它更有推进感」「感觉太平了」时，
+副属和弦是最直接的手法之一。
+
+## 常用副属和弦（C 大调）
+
+| 标记 | 实际和弦 | 指向 | 听感 |
+|---|---|---|---|
+| V/vi | E7 | Am | 强烈的推进，常用于副歌前 |
+| V/IV | C7 | F | 松弛中带一点蓝调味 |
+| V/V | D7 | G | 双重推进，张力更强 |
+
+## 与调式借用的区别
+
+两者都会引入调外音，但目的不同：
+
+- **副属和弦**：制造**指向性**（强烈想要解决到某个和弦）
+- **调式借用**：制造**色彩**（不强调解决，只是换了一种颜色）
+
+用户说「想要推进感」→ 副属；说「想要更温暖 / 更忧伤」→ 借用。
+
+## 要注意
+
+副属和弦后面**应当解决到它指向的和弦**。若解决到别处，听感会变成「跑调」
+而不是「色彩」——这是初学者最常见的误用。

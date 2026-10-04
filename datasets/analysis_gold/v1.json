@@ -1,0 +1,229 @@
+{
+  "_comment": "分析层金标准数据集（P2.3 交付物）。每条为一个人工标注的片段：给定和弦进行/旋律，标注正确的调性、罗马数字与功能。任一分析器改动都要过这个集。",
+  "_version": "v1",
+  "_frozen": false,
+  "_source": "人工标注，依据 Open Music Theory 的功能与级数定义",
+  "cases": [
+    {
+      "id": "gold.001",
+      "note": "§3.4.1 的示例；最常见的流行走向",
+      "chords": "C | G | Am | F",
+      "key": "C Major",
+      "roman": ["I", "V", "vi", "IV"],
+      "functions": ["Tonic", "Dominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.002",
+      "note": "同一条走向的旋转，从 vi 切入。⚠️ 本条为**调性歧义**案例：这4个和弦不含大三度属和弦，C 大调与 A 小调共享全部音级，理论上无法唯一确定。gold 列出两个可接受答案。",
+      "chords": "Am | F | C | G",
+      "key": "C Major",
+      "acceptable_keys": ["C Major", "A Minor"],
+      "roman": ["vi", "IV", "I", "V"],
+      "functions": ["Tonic", "Subdominant", "Tonic", "Dominant"]
+    },
+    {
+      "id": "gold.003",
+      "note": "民谣主干，明确的终止式",
+      "chords": "C | F | G | C",
+      "key": "C Major",
+      "roman": ["I", "IV", "V", "I"],
+      "functions": ["Tonic", "Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.004",
+      "note": "自然小调，i-iv-v-i",
+      "chords": "Am | Dm | Em | Am",
+      "key": "A Minor",
+      "roman": ["i", "iv", "v", "i"],
+      "functions": ["Tonic", "Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.005",
+      "note": "G 大调：I-V-vi-IV",
+      "chords": "G | D | Em | C",
+      "key": "G Major",
+      "roman": ["I", "V", "vi", "IV"],
+      "functions": ["Tonic", "Dominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.006",
+      "note": "F 大调：I-IV-V-I",
+      "chords": "F | Bb | C | F",
+      "key": "F Major",
+      "roman": ["I", "IV", "V", "I"],
+      "functions": ["Tonic", "Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.007",
+      "note": "D 大调：I-V-vi-IV",
+      "chords": "D | A | Bm | G",
+      "key": "D Major",
+      "roman": ["I", "V", "vi", "IV"],
+      "functions": ["Tonic", "Dominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.008",
+      "note": "E 小调：i-VI-III-VII（自然小调常用走向）",
+      "chords": "Em | C | G | D",
+      "key": "E Minor",
+      "roman": ["i", "VI", "III", "VII"],
+      "functions": ["Tonic", "Subdominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.009",
+      "note": "D 小调：i-iv-v-i",
+      "chords": "Dm | Gm | Am | Dm",
+      "key": "D Minor",
+      "roman": ["i", "iv", "v", "i"],
+      "functions": ["Tonic", "Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.010",
+      "note": "A 大调：I-V-vi-IV",
+      "chords": "A | E | F#m | D",
+      "key": "A Major",
+      "roman": ["I", "V", "vi", "IV"],
+      "functions": ["Tonic", "Dominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.011",
+      "note": "转位低音不影响级数与功能判定",
+      "chords": "C | G/B | Am | F/A",
+      "key": "C Major",
+      "roman": ["I", "V/B", "vi", "IV/A"],
+      "functions": ["Tonic", "Dominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.012",
+      "note": "ii-V-I，爵士与流行的收尾",
+      "chords": "Dm | G | C",
+      "key": "C Major",
+      "roman": ["ii", "V", "I"],
+      "functions": ["Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.013",
+      "note": "vi-IV-I-V。⚠️ 调性歧义案例：不含属和弦，C 大调与 A 小调均成立。",
+      "chords": "Am | F | C | G",
+      "key": "C Major",
+      "acceptable_keys": ["C Major", "A Minor"],
+      "roman": ["vi", "IV", "I", "V"],
+      "functions": ["Tonic", "Subdominant", "Tonic", "Dominant"]
+    },
+    {
+      "id": "gold.014",
+      "note": "小调转向：从 i 开始但结束在关系大调",
+      "chords": "Am | F | C | C",
+      "key": "C Major",
+      "roman": ["vi", "IV", "I", "I"],
+      "functions": ["Tonic", "Subdominant", "Tonic", "Tonic"]
+    },
+    {
+      "id": "gold.015",
+      "note": "Bb 大调：I-IV-V-I",
+      "chords": "Bb | Eb | F | Bb",
+      "key": "Bb Major",
+      "roman": ["I", "IV", "V", "I"],
+      "functions": ["Tonic", "Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.016",
+      "note": "G 大调：vi-IV-I-V。⚠️ 调性歧义案例：G 大调与 E 小调共享全部音级。",
+      "chords": "Em | C | G | D",
+      "key": "G Major",
+      "acceptable_keys": ["G Major", "E Minor"],
+      "roman": ["vi", "IV", "I", "V"],
+      "functions": ["Tonic", "Subdominant", "Tonic", "Dominant"]
+    },
+    {
+      "id": "gold.017",
+      "note": "B 小调：i-iv-v-i",
+      "chords": "Bm | Em | F#m | Bm",
+      "key": "B Minor",
+      "roman": ["i", "iv", "v", "i"],
+      "functions": ["Tonic", "Subdominant", "Dominant", "Tonic"]
+    },
+    {
+      "id": "gold.018",
+      "note": "C 大调：I-vi-IV-V（老歌走向）",
+      "chords": "C | Am | F | G",
+      "key": "C Major",
+      "roman": ["I", "vi", "IV", "V"],
+      "functions": ["Tonic", "Tonic", "Subdominant", "Dominant"]
+    },
+    {
+      "id": "gold.019",
+      "note": "G 小调：i-VI-III-VII",
+      "chords": "Gm | Eb | Bb | F",
+      "key": "G Minor",
+      "roman": ["i", "VI", "III", "VII"],
+      "functions": ["Tonic", "Subdominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.020",
+      "note": "E 大调：I-V-vi-IV",
+      "chords": "E | B | C#m | A",
+      "key": "E Major",
+      "roman": ["I", "V", "vi", "IV"],
+      "functions": ["Tonic", "Dominant", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.021",
+      "note": "iii 级：作为主功能的延伸",
+      "chords": "C | Em | Am | F",
+      "key": "C Major",
+      "roman": ["I", "iii", "vi", "IV"],
+      "functions": ["Tonic", "Tonic", "Tonic", "Subdominant"]
+    },
+    {
+      "id": "gold.022",
+      "note": "vii° 的属功能",
+      "chords": "C | Bdim | C",
+      "key": "C Major",
+      "roman": ["I", "vii°", "I"],
+      "functions": ["Tonic", "Dominant", "Tonic"]
+    }
+  ],
+  "melody_cases": [
+    {
+      "id": "gold.mel.001",
+      "note": "§3.4.2 的示例（回文，contour 为拱形）",
+      "melody": "E4 G4 A4 G4 E4",
+      "range": ["E4", "A4"],
+      "contour": "up-down",
+      "repetition": true
+    },
+    {
+      "id": "gold.mel.002",
+      "note": "纯上行",
+      "melody": "C4 D4 E4 F4",
+      "range": ["C4", "F4"],
+      "contour": "up",
+      "repetition": false
+    },
+    {
+      "id": "gold.mel.003",
+      "note": "纯下行，叹息式",
+      "melody": "G4 F4 E4 D4",
+      "range": ["D4", "G4"],
+      "contour": "down",
+      "repetition": false
+    },
+    {
+      "id": "gold.mel.004",
+      "note": "同音反复",
+      "melody": "C4 C4 C4 C4",
+      "range": ["C4", "C4"],
+      "contour": "flat",
+      "repetition": true
+    },
+    {
+      "id": "gold.mel.005",
+      "note": "先下后上",
+      "melody": "G4 E4 C4 E4 G4",
+      "range": ["C4", "G4"],
+      "contour": "down-up",
+      "repetition": true
+    }
+  ]
+}

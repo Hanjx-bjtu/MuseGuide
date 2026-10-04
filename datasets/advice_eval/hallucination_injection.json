@@ -1,0 +1,196 @@
+{
+  "_comment": "幻觉注入测试集（P4.6 交付物）。主动构造「模型编造引用 / 编造理论 / 违反约束」的场景，验证 Grounding 校验器能捕获。这是简历上「我把幻觉变成了可测指标」的证据来源。",
+  "_version": "v1",
+  "_purpose": "验收口径：捕获率 >= 80%（docs/ACCEPTANCE.md §3.4）",
+  "evidence": [
+    {
+      "entry_id": "harmony.modal_interchange.01",
+      "title": "Modal Interchange（调式借用）",
+      "layman_title": "借用别的调的和弦",
+      "content": "从同主音的其他调式借用和弦。C 大调可借用 Fm、Ab、Bb。",
+      "layman_content": "就像画画时加一点冷色，音乐里借一个和弦过来，多一层色彩。",
+      "tags": ["harmony", "color", "borrowed chord"]
+    },
+    {
+      "entry_id": "harmony.seventh_chords.01",
+      "title": "七和弦与和弦色彩",
+      "layman_title": "给和弦「加点料」",
+      "content": "在三和弦之上再叠一个三度音得到七和弦，听感更柔和梦幻。",
+      "layman_content": "把 C 换成 Cmaj7，走向没变但听感多了一层质感。",
+      "tags": ["harmony", "color", "seventh chord"]
+    }
+  ],
+  "cases": [
+    {
+      "id": "inj.001",
+      "category": "编造引用",
+      "note": "引用了一个不存在的来源编号",
+      "key": "C Major",
+      "goal": "保持温暖，但不要太普通",
+      "advice": {
+        "analysis": "当前进行为 I → V → vi → IV [来源7]，属于常见流行和声。",
+        "problems": ["色彩较少。"],
+        "options": [
+          {
+            "label": "建议 A",
+            "chords": ["Cmaj7", "G/B", "Am7", "Fmaj7"],
+            "feature": "保持功能关系，通过七和弦增加色彩",
+            "reason": "听起来会更柔和梦幻。",
+            "theory": ["七和弦扩展色彩 [来源2]"]
+          },
+          {
+            "label": "建议 B",
+            "chords": ["C", "G", "Am", "Fm"],
+            "feature": "借用和弦引入阴影",
+            "reason": "多一丝忧伤。",
+            "theory": ["调式借用 [来源1]"]
+          }
+        ]
+      },
+      "expect_kinds": ["citation_out_of_range"]
+    },
+    {
+      "id": "inj.002",
+      "category": "编造和弦",
+      "note": "建议中的和弦既不在调内，也不是常见借用和弦",
+      "key": "C Major",
+      "goal": "保持温暖，但不要太普通",
+      "advice": {
+        "analysis": "当前进行常见 [来源1]。",
+        "problems": ["色彩不足。"],
+        "options": [
+          {
+            "label": "建议 A",
+            "chords": ["Cmaj7", "Abm", "C"],
+            "feature": "引入强烈色彩变化",
+            "reason": "会有戏剧性效果。",
+            "theory": ["色彩和声 [来源1]"]
+          },
+          {
+            "label": "建议 B",
+            "chords": ["C", "G", "Am", "Fm"],
+            "feature": "借用和弦增加色彩与阴影",
+            "reason": "多一丝忧伤但保持温暖。",
+            "theory": ["调式借用 [来源1]"]
+          }
+        ]
+      },
+      "expect_kinds": ["out_of_key"]
+    },
+    {
+      "id": "inj.003",
+      "category": "违反用户约束",
+      "note": "用户明确要求保持温暖，建议却把整体转向小调",
+      "key": "C Major",
+      "goal": "保持温暖，但不要太普通",
+      "constraints": ["保持温暖"],
+      "advice": {
+        "analysis": "当前进行 [来源1]。",
+        "problems": ["色彩不足。"],
+        "options": [
+          {
+            "label": "建议 A",
+            "chords": ["Am", "Dm", "Em"],
+            "feature": "把整体改成小调以增强情绪",
+            "reason": "听起来会更有深度。",
+            "theory": ["小调色彩 [来源1]"]
+          },
+          {
+            "label": "建议 B",
+            "chords": ["C", "G", "Am", "Fm"],
+            "feature": "借用和弦增加色彩",
+            "reason": "多一丝忧伤但保持温暖。",
+            "theory": ["调式借用 [来源1]"]
+          }
+        ]
+      },
+      "expect_kinds": ["goal_mismatch"]
+    },
+    {
+      "id": "inj.004",
+      "category": "零基础术语违规",
+      "note": "零基础模式下出现了禁区术语",
+      "key": "C Major",
+      "goal": "保持温暖",
+      "level": "zero",
+      "advice": {
+        "analysis": "当前进行 [来源1]。",
+        "problems": ["色彩不足。"],
+        "options": [
+          {
+            "label": "建议 A",
+            "chords": ["Cmaj7", "G7"],
+            "feature": "通过三度叠置与声部进行增加色彩",
+            "reason": "听起来更有层次。",
+            "theory": ["七和弦 [来源1]"]
+          },
+          {
+            "label": "建议 B",
+            "chords": ["C", "G", "Am", "Fm"],
+            "feature": "借用和弦增加色彩",
+            "reason": "多一丝忧伤但保持温暖。",
+            "theory": ["调式借用 [来源2]"]
+          }
+        ]
+      },
+      "expect_kinds": ["missing_layman"]
+    },
+    {
+      "id": "inj.005",
+      "category": "无依据建议",
+      "note": "建议内容与检索到的证据毫无关系",
+      "key": "C Major",
+      "goal": "保持温暖，但不要太普通",
+      "advice": {
+        "analysis": "当前进行 [来源1]。",
+        "problems": ["色彩不足。"],
+        "options": [
+          {
+            "label": "建议 A",
+            "chords": ["Cmaj7", "G/B", "Am7", "Fmaj7"],
+            "feature": "把整首歌改成三拍子圆舞曲节奏并加入弦乐编写",
+            "reason": "听起来会非常华丽。",
+            "theory": ["配器法"]
+          },
+          {
+            "label": "建议 B",
+            "chords": ["C", "G", "Am", "Fm"],
+            "feature": "借用和弦增加色彩",
+            "reason": "多一丝忧伤但保持温暖。",
+            "theory": ["调式借用 [来源1]"]
+          }
+        ]
+      },
+      "expect_kinds": ["weak_grounding"]
+    },
+    {
+      "id": "inj.clean",
+      "category": "对照组",
+      "note": "完全合规的建议 —— 不得产生任何 error 级问题",
+      "key": "C Major",
+      "goal": "保持温暖，但不要太普通",
+      "advice": {
+        "analysis": "当前进行为 I → V → vi → IV [来源1]，属于常见流行和声。",
+        "problems": ["色彩和弦较少。"],
+        "options": [
+          {
+            "label": "建议 A",
+            "chords": ["Cmaj7", "G/B", "Am7", "Fmaj7"],
+            "feature": "保持原有功能关系，通过七和弦增加色彩",
+            "reason": "听起来会更柔和、更梦幻。",
+            "theory": ["七和弦扩展色彩 [来源2]"]
+          },
+          {
+            "label": "建议 B",
+            "chords": ["C", "G", "Am", "Fm"],
+            "feature": "Fm 来自平行小调，引入阴影感",
+            "reason": "会突然多一丝忧伤，但整体还是暖的。",
+            "theory": ["调式借用 [来源1]"]
+          }
+        ]
+      },
+      "expect_kinds": [],
+      "expect_no_errors": true
+    }
+  ]
+}

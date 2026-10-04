@@ -1,0 +1,58 @@
+---
+id: layman.what_is_progression.01
+title: 和弦进行是什么
+title_en: What Is a Chord Progression
+category: layman
+subcategory: concept_explanation
+layman_title: 和弦进行是什么
+layman_content: |
+  一首歌不会只用一个和弦，而是在几个和弦之间来回走。
+  这个「走来走去」的顺序就叫和弦进行。
+  就像说话有起承转合，和弦的顺序也决定了这段话是平稳、
+  是悬着、还是终于落了地。
+  好消息是：大部分歌都在用那么几套现成的顺序，你直接挑一套就行。
+content: |
+  和弦进行（Chord Progression）是和弦按时间顺序的排列，
+  是一首歌的和声骨架。
+  它决定三件事：情绪的走向（稳定还是紧张）、
+  段落的划分（哪里是句号、哪里是逗号）、
+  以及歌曲的整体性格。
+  流行的和弦进行通常每小节换一个和弦，四个和弦构成一个循环。
+  写法上不需要原创：`starter.common_progressions.01` 里的几套走向
+  已经覆盖了绝大多数场景，新手从套用开始，比从零设计更快也更好听。
+tags: [layman, concept, progression, loop, beginner]
+emotions: [温暖, 轻快]
+examples: ["C | G | Am | F"]
+key_context: C Major
+roman_numerals: ["I", "V", "vi", "IV"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, rock, ballad]
+source:
+  title: MuseGuide 通俗解释层（项目自建）
+  url: https://openmusictheory.github.io/harmonicFunctions.html
+  license: CC BY-SA 4.0
+related: [layman.what_is_chord.01, layman.what_is_cadence.01, starter.common_progressions.01, harmony.progression_basics.01]
+priority: 5
+---
+
+## 使用场景
+
+用户看到起步方案里的 `Am → F → C → G`，不知道这串东西是干什么用的、
+要不要按顺序弹、能不能换。
+
+## 表述规则（§3.8.3）
+
+1. 类比：说话的起承转合
+2. 回答三个高频疑问：
+   - **要按顺序吗？** 要，顺序就是它的意义
+   - **能换吗？** 能，换掉一个往往就够了
+   - **必须四个吗？** 不用，三个也常见
+3. 落点：直接用现成的，想改再改
+
+## 零基础模式下的禁区
+
+**不出现**：功能圈、级数、T-S-D、和声节奏。
+
+「级数」这个概念对零基础用户没有增益 —— 他们不需要知道 `Am` 是 `vi` 级，
+只需要知道这个位置该放什么和弦（见 `layman.what_is_chord.01`）。

@@ -1,0 +1,198 @@
+[
+  {
+    "name": "baseline_no_retrieval",
+    "config": {
+      "mode": "none",
+      "fusion": "rrf",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": true,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.0,
+      "strict_recall@k": 0.0,
+      "mrr": 0.0,
+      "ndcg@k": 0.0,
+      "context_precision": 0.0
+    },
+    "elapsed_s": 0.0,
+    "notes": [
+      "对照组：不使用检索，全部指标为 0"
+    ]
+  },
+  {
+    "name": "dense_only",
+    "config": {
+      "mode": "dense",
+      "fusion": "none",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": false,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.8065,
+      "strict_recall@k": 0.6774,
+      "mrr": 0.5957,
+      "ndcg@k": 0.582,
+      "context_precision": 0.171
+    },
+    "elapsed_s": 0.08,
+    "notes": [
+      "嵌入后端：hash"
+    ]
+  },
+  {
+    "name": "sparse_only",
+    "config": {
+      "mode": "sparse",
+      "fusion": "none",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": false,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.8226,
+      "strict_recall@k": 0.7177,
+      "mrr": 0.6664,
+      "ndcg@k": 0.6437,
+      "context_precision": 0.1815
+    },
+    "elapsed_s": 0.2,
+    "notes": [
+      "嵌入后端：hash"
+    ]
+  },
+  {
+    "name": "hybrid_rrf",
+    "config": {
+      "mode": "hybrid",
+      "fusion": "rrf",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": false,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.9355,
+      "strict_recall@k": 0.8387,
+      "mrr": 0.7618,
+      "ndcg@k": 0.7375,
+      "context_precision": 0.2097
+    },
+    "elapsed_s": 0.27,
+    "notes": [
+      "嵌入后端：hash"
+    ]
+  },
+  {
+    "name": "hybrid_rrf_filter",
+    "config": {
+      "mode": "hybrid",
+      "fusion": "rrf",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": true,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.9355,
+      "strict_recall@k": 0.8306,
+      "mrr": 0.7667,
+      "ndcg@k": 0.7423,
+      "context_precision": 0.2097
+    },
+    "elapsed_s": 0.26,
+    "notes": [
+      "嵌入后端：hash"
+    ]
+  },
+  {
+    "name": "hybrid_weighted",
+    "config": {
+      "mode": "hybrid",
+      "fusion": "weighted",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": true,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.9194,
+      "strict_recall@k": 0.8226,
+      "mrr": 0.7468,
+      "ndcg@k": 0.7344,
+      "context_precision": 0.2065
+    },
+    "elapsed_s": 0.27,
+    "notes": [
+      "嵌入后端：hash"
+    ]
+  },
+  {
+    "name": "hybrid_rrf_layman_first",
+    "config": {
+      "mode": "hybrid",
+      "fusion": "rrf",
+      "candidate_k": 20,
+      "top_k": 5,
+      "rrf_k": 60,
+      "route_weights": {
+        "dense": 1.0,
+        "sparse": 1.0
+      },
+      "use_metadata_filter": true,
+      "prefer_layman": true
+    },
+    "metrics": {
+      "n_cases": 62,
+      "loose_recall@k": 0.9355,
+      "strict_recall@k": 0.8306,
+      "mrr": 0.7667,
+      "ndcg@k": 0.7423,
+      "context_precision": 0.2097
+    },
+    "elapsed_s": 0.26,
+    "notes": [
+      "嵌入后端：hash"
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+# --- 密钥与本地配置（ADR-0004：严禁提交）---
+.env
+.env.*
+!.env.example
+*.key
+*api*.json
+!knowledge/**/*.json
+!datasets/**/*.json
+!experiments/**/*.json
+!reports/**/*.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.scratch/
+.scratch-*/
+tmp_pytest*/
+.pytest_tmp/
+
+# --- 知识库构建产物（可由 build_kb.py 重建；向量文件体积大）---
+knowledge/build/*.npy
+knowledge/build/*.npz
+knowledge/build/embeddings_*
+knowledge/build/kb.jsonl
+
+# --- 实验存档（体积大，按需保留）---
+experiments/**/*.jsonl
+
+# --- IDE / OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --- Streamlit ---
+.streamlit/secrets.toml

@@ -1,0 +1,69 @@
+---
+id: examples.jpop_progressions.01
+title: 日系 / City Pop 常见和弦进行案例
+title_en: J-Pop and City Pop Progressions
+category: examples
+subcategory: chord_progressions
+layman_title: 那种「日系感」是怎么来的
+layman_content: |
+  日系歌听起来会比一般流行歌「更有味道」，原因通常有两个：
+  和弦用得更花（经常加七音、九音），以及中间爱绕一下再回来。
+  常见的写法是从一个不太稳的和弦开始，绕几个弯，最后才落到稳的地方。
+  想做出这种感觉，不用改旋律，改和弦就够了。
+content: |
+  日系流行与 City Pop 的和声特征是高密度使用七和弦与延伸音，
+  以及大量运用副属和弦与调式借用制造「绕路感」。
+  王道进行（Royal Road）：IVmaj7 → V7 → iii7 → vi，
+  是最具辨识度的日系走向，从下属开始、经过属、落到小调和弦，
+  听感明亮中带有淡淡的惆怅。
+  小室进行：vi → IV → V → I，从忧郁切入、最终回到大调，
+  常用于副歌高潮。
+  Just the Two of Us 进行：IVmaj7 → iii7 → vi → I（如 Fmaj7 → Em7 → Am → C），
+  City Pop 与 Lo-fi 的高频走向，听感松弛、带都市夜晚感。
+  增色要点：低音线级进下行、七和弦与九和弦交替、
+  在目标和弦前插入副属和弦（E7 → Am）。
+tags: [examples, jpop, citypop, seventh chord, royal road]
+emotions: [梦幻, 忧郁, 温暖]
+examples: ["Fmaj7 | G7 | Em7 | Am", "Am | F | G | C", "Fmaj7 | Em7 | Am | C"]
+key_context: C Major
+roman_numerals: ["IVmaj7", "V7", "iii7", "vi"]
+difficulty: advanced
+confidence_level: medium
+applicable_genres: [jpop, citypop, pop]
+source:
+  title: MuseGuide 案例库（公开和弦进行数据整理）
+  url: https://openmusictheory.github.io/seventhChords.html
+  license: CC BY-SA 4.0
+related: [examples.pop_progressions.01, harmony.seventh_chords.01, harmony.secondary_dominant.01, examples.bass_line.01]
+priority: 3
+---
+
+## 什么时候会用到
+
+用户说「想要日系一点」「想要 City Pop 的感觉」「想要有都市感」。
+这类诉求无法靠「更温暖 / 更伤感」这类通用情绪词覆盖，需要风格专属的知识。
+
+## 三套典型走向
+
+| 名称 | 和弦 | 特征 |
+|---|---|---|
+| 王道进行 | Fmaj7 G7 Em7 Am | 从下属起，明亮中带惆怅 |
+| 小室进行 | Am F G C | 从忧郁转向开阔 |
+| Just the Two of Us | Fmaj7 Em7 Am C | 松弛、都市夜晚感 |
+
+## 与流行走向的差别
+
+以 `C | G | Am | F`（I–V–vi–IV）为对照：
+
+- 起点不同：日系常从 **IV** 或 **vi** 开始，而非 I
+- 和弦质量不同：三和弦 → **七和弦**
+- 连接方式不同：直线功能进行 → **加入副属和弦绕路**
+
+这三点共同产生了「日系感」。因此 P4 给这类用户的建议，
+重点应放在**和弦质量与连接方式**上，而不是替换整个走向。
+
+## 确定性说明
+
+`confidence_level` 为 `medium`：这些进行的命名与归属在不同资料中有差异，
+且「日系感」本身是主观风格标签。本条目的价值在于提供**可操作的候选方案**，
+而不是给出严格的乐理分类。

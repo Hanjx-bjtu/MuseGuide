@@ -1,0 +1,57 @@
+---
+id: emotion.warm_harmony.01
+title: 「温暖」是怎么做出来的
+title_en: Techniques for Warmth
+category: emotion
+subcategory: warm_harmony
+layman_title: 让歌听起来「暖」
+layman_content: |
+  「暖」主要来自两件事：用听起来明亮的和弦，以及让和弦之间连得顺。
+  具体做法很简单：多用大调的和弦（C、F、G 这类），
+  给它们加个音会变得更柔和，再把低音排成一条平缓的线。
+  反过来，突然冒出一个不属于这个调的和弦，暖意就会被打破。
+content: |
+  温暖感由三个层面共同构成：
+  和声层面，以大三和弦与七和弦为主（I、IV、V、Imaj7、IVmaj7），
+  避免过多的减和弦与强烈的调外和弦；
+  低音层面，使用级进下行的低音线（C → G/B → Am → F/A），
+  连贯的低音比跳跃的低音更「暖」；
+  旋律层面，多停留在三音与五音上，减少尖锐的经过音。
+  速度与音区同样参与：中慢速、中低音区听感更温暖。
+  要避免的做法：连续使用多个调外和弦（调性模糊，温暖感消失）、
+  整段转为小调（变成忧郁而非温暖）。
+tags: [emotion, warmth, major, seventh chord, bass line]
+emotions: [温暖, 温柔]
+examples: ["C | G/B | Am | F/A | Fm/Ab | C", "Cmaj7 | Fmaj7 | G | C"]
+key_context: C Major
+roman_numerals: ["I", "V6", "vi", "IV6"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, citypop]
+source:
+  title: MuseGuide 情绪映射表（综合 Open Music Theory 条目整理）
+  url: https://openmusictheory.github.io/harmonicFunctions.html
+  license: CC BY-SA 4.0
+related: [emotion.sad_to_hopeful.01, harmony.chord_color.01, examples.bass_line.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户说「想要更温暖」「听起来太冷了」「想要治愈一点」。
+这是仅次于「伤感」的高频诉求。
+
+## 温暖的三个来源
+
+| 层面 | 做法 | 反例 |
+|---|---|---|
+| 和声 | 大三和弦 + 七和弦 | 连续调外和弦 |
+| 低音 | 级进下行 | 大跳低音 |
+| 旋律 | 停留三音五音 | 尖锐经过音 |
+
+## 与「忧郁但温暖」的区别
+
+纯温暖：全程大调。
+忧郁但温暖：**大调框架 + 局部小调色彩**（见 `emotion.sad_to_hopeful.01`）。
+这是两个不同的目标，不能混为一谈 —— 用户说「温暖」时不要擅自加小调和弦，
+那是自作主张；要先确认他是否也想要一点忧郁。

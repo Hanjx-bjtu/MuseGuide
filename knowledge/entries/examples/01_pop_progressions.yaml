@@ -1,0 +1,51 @@
+---
+id: examples.pop_progressions.01
+title: 流行乐常见和弦进行案例
+title_en: Pop Progression Examples
+category: examples
+subcategory: chord_progressions
+layman_title: 「听起来普通」时可以换成什么
+layman_content: |
+  如果你的和弦听起来「还行但没什么特别」，通常不是写错了，
+  而是用得太常见了。
+  这里有几套用得很多的搭配。你可以：
+  给和弦加个音（更柔和）、换掉最后一个和弦（多一丝忧伤）、
+  或者让低音一步步往下走（更连贯）—— 都只改一点点，但听感会明显不一样。
+content: |
+  以下为流行 / 抒情歌中高频出现的和弦进行（事实性数据进行整理，不含受版权保护的乐谱）。
+  C → G → Am → F（I–V–vi–IV）：使用最广的走向之一，稳定、通用、好记。
+  Am → F → C → G（vi–IV–I–V）：同一条走向的旋转，从伤感切入，落点更开阔。
+  C → G/B → Am → F/A：低音级进下行，听感更连贯、更「有设计感」。
+  C → G → Am → Fm：最后一步借用平行小调的 iv，加一层阴影。
+  Cmaj7 → G/B → Am7 → Fmaj7：功能关系不变，但色彩明显更柔和。
+  用途：当用户说「我的和弦听起来很普通」时，这些是可直接对比的候选方案。
+tags: [examples, pop, progression, reharmonization]
+emotions: [温暖, 伤感, 释然]
+examples: ["C | G | Am | F", "C | G/B | Am | F/A", "C | G | Am | Fm"]
+key_context: C Major
+roman_numerals: ["I", "V", "vi", "IV"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, ballad, folk]
+source:
+  title: MuseGuide 案例库（公开和弦进行数据整理）
+  url: https://openmusictheory.github.io/
+  license: CC BY-SA 4.0
+related: [harmony.modal_interchange.01, harmony.seventh_chords.01, starter.common_progressions.01]
+priority: 4
+---
+
+## 怎么用这一篇
+
+进阶用户输入 `C | G | Am | F` 并说「太普通了」时，系统给出修改方向，
+其中每一条都应当能对应到本条目里的一行 —— **这样建议才有依据，而不是模型的自由发挥。**
+
+## 三条改动的性质差异
+
+| 方案 | 改动量 | 听感变化 | 风险 |
+|---|---|---|---|
+| Cmaj7 / G/B / Am7 / Fmaj7 | 小 | 更柔和梦幻 | 低 |
+| C / G / Am / Fm | 极小 | 多一层阴影 | 低 |
+| 低音级进下行 | 小 | 更连贯 | 低 |
+
+三个方向都在「保持温暖」的约束内 —— 这正是用户提出的目标。

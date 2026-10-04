@@ -1,0 +1,54 @@
+---
+id: emotion.sad_to_hopeful.01
+title: 「伤感→释然」的情绪转折实现
+title_en: Implementing a Sad-to-Hopeful Transition
+category: emotion
+subcategory: sad_to_hopeful
+layman_title: 伤感怎么变成释然
+layman_content: |
+  伤感来自「不太稳定的和弦」，释然来自「稳稳落回原地的和弦」。
+  所以不需要把整首歌都写得很悲伤：
+  主歌用听起来柔和忧伤的和弦先铺垫，副歌换回明亮温暖的和弦，
+  中间自然就形成了「从难过到放下」的过程。
+  就像讲故事，先说心事，最后给出一个确定的结尾。
+content: |
+  「伤感但最后释然」是本项目最高频的复合诉求。它的技术本质是
+  「小调色彩 → 大调色彩」的转向，而不是整首歌从小调改成大调。
+  实现路径按改动成本从低到高：
+  第一步，主歌使用小调和弦（Am、Dm、Em），副歌回到大调和弦（C、F、G）；
+  第二步，在转折处使用 iv → I 或 V → I 的终止关系，让「释然」有落点；
+  第三步，让旋律轮廓从下行转为上行，与和声转向同步。
+  要避免的两种做法：整首停留在小调（听不到释然）；
+  或过早进入大调（伤感的部分站不住，转折失去对比）。
+tags: [emotion, transition, minor to major, structure]
+emotions: [伤感, 释然]
+examples: ["主歌 Am | F | C | G", "副歌 C | G | Am | F"]
+key_context: C Major
+roman_numerals: ["vi", "IV", "I", "V"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad]
+source:
+  title: MuseGuide 情绪映射表（综合 Open Music Theory 条目整理）
+  url: https://openmusictheory.github.io/modalMixture.html
+  license: CC BY-SA 4.0
+related: [harmony.modal_interchange.01, starter.common_progressions.01]
+priority: 5
+---
+
+## 为什么这样有效
+
+听感上的「释然」来自两件事：**紧张感的解除**，以及**回到稳定的和声**。
+小调和弦提供紧张，大调主和弦提供稳定。两者的先后顺序，就构成了「伤感→释然」。
+
+## 常见配置
+
+```text
+主歌：Am → F → C → G      （从小调开始，偏伤感）
+副歌：C → G → Am → F      （从大调开始，更开阔）
+```
+
+## 什么时候不适用
+
+如果用户想要的是「一直很忧郁」，就不要做这个转向 —— 那属于
+`emotion.melancholy.01`（纯小调色彩）的场景。

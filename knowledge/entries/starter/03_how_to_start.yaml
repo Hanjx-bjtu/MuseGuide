@@ -1,0 +1,59 @@
+---
+id: starter.how_to_start.01
+title: 从零开始写第一首歌的四个决定
+title_en: How to Start a Song
+category: starter
+subcategory: how_to_start
+layman_title: 写歌其实只需要做四个决定
+layman_content: |
+  别被「创作」两个字吓到。第一首歌只需要决定四件事：
+  想要什么情绪、大概多快、用什么调、和弦怎么走。
+  这四件事定了，一段能唱的东西就有了。
+  剩下的都是把这四个决定改得更好 —— 而改，比从零想容易得多。
+content: |
+  零基础用户的第一步不是「学会乐理」，而是做出四个可回答的决定。
+  一、情绪：这首歌想让人感觉到什么？这决定调性倾向与和弦色彩。
+  二、速度：像翻相册（60）、像散步（82）、还是像走路（100）？这决定整体气质。
+  三、调性：建议从 C 大调或 A 小调开始 —— 黑键最少，最容易在琴上试，
+  解释成本也最低。
+  四、和弦：直接采用一种常见走向（见 `starter.common_progressions.01`），
+  不要自己设计。
+  这四个决定都能用日常语言回答，不需要任何术语。
+  系统的作用就是把用户的日常语言翻译成这四个决定，并给出一个可修改的初稿。
+tags: [starter, beginner, workflow, first_song]
+emotions: [温柔, 温暖, 轻快]
+examples: ["C | G | Am | F", "82 BPM"]
+key_context: C Major
+roman_numerals: ["I", "V", "vi", "IV"]
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, ballad, rock]
+source:
+  title: MuseGuide 起步引导整理（综合 Open Music Theory 条目）
+  url: https://openmusictheory.github.io/
+  license: CC BY-SA 4.0
+related: [starter.choosing_key_and_tempo.01, starter.common_progressions.01, starter.song_structure.01, starter.first_song_landing.01]
+priority: 5
+---
+
+## 什么时候会用到
+
+用户说「我想写歌但完全不知道从哪开始」。
+这是 `MVP计划.md` §3.2 里用户典型问题 A，也是 Creative Starter 的触发条件。
+
+## 四个决定
+
+| # | 决定 | 用户怎么回答 | 系统怎么处理 |
+|---|---|---|---|
+| 1 | 情绪 | 「有点伤感」 | 映射到调性倾向与和弦色彩 |
+| 2 | 速度 | 「像散步那样」 | 映射到 BPM |
+| 3 | 调性 | 通常由系统建议 | 给 C 大调 / A 小调 + 通俗理由 |
+| 4 | 和弦 | 「你帮我定」 | 从常见走向里选一组 |
+
+## 为什么是这四个
+
+它们**都能用日常语言回答**，且**回答完就足以产生可听的东西**。
+任何需要乐理才能回答的问题（「你想用什么级数？」）都不应该出现在第一步。
+
+这条原则来自 `MVP计划.md` §3.10.2 的界面草案：首页只有一句话输入框 +
+几个大方向按钮，没有任何技术字段。界面形状本身就是这条原则的体现。

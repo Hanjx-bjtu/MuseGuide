@@ -1,0 +1,69 @@
+---
+id: layman.emotion_and_harmony.01
+title: 情绪和音乐是怎么连起来的
+title_en: How Emotion Maps to Music
+category: layman
+subcategory: concept_explanation
+layman_title: 为什么换个和弦，情绪就变了
+layman_content: |
+  音乐影响情绪，靠的是三样东西一起作用：
+  和弦是明还是暗、旋律往上还是往下、速度快还是慢。
+  想更明亮，就让和弦更「亮」、旋律往上走、速度稍快；
+  想更低落，就反过来。
+  你不需要懂原理，只要记住这个方向：亮 ↔ 暗、上 ↔ 下、快 ↔ 慢。
+content: |
+  情绪与音乐手段之间存在稳定的对应关系，可以归纳为三对可调的方向：
+  明 ↔ 暗：由和弦性质与调式决定。大三和弦 / 大调偏明亮，
+  小三和弦 / 小调偏暗，借用的调外和弦提供额外的色彩。
+  上 ↔ 下：由旋律轮廓与音区决定。上行与高音区偏激动、开阔；
+  下行与低音区偏低落、内敛。
+  快 ↔ 慢：由速度与和声节奏决定。快速与密集偏活跃、紧张；
+  慢速与宽松偏沉静、抒情。
+  这三对方向**同向变化时效果最强**：
+  同时变亮、变上、变快，听感就是明确的「振奋」；
+  若只改其中一项，变化会显得含糊。
+  这也解释了为什么「伤感→释然」需要和声与旋律同时转向。
+tags: [layman, concept, emotion, mapping, major minor]
+emotions: [温暖, 忧郁, 激昂]
+examples: ["C", "Am"]
+key_context: C Major
+roman_numerals: []
+difficulty: beginner
+confidence_level: high
+applicable_genres: [pop, folk, rock, ballad, jazz]
+source:
+  title: MuseGuide 通俗解释层（项目自建）
+  url: https://openmusictheory.github.io/modalMixture.html
+  license: CC BY-SA 4.0
+related: [layman.what_is_chord.01, layman.what_is_key.01, emotion.tension_resolution.01, melody.contour.01]
+priority: 5
+---
+
+## 使用场景
+
+用户问「为什么这样选」「我想让它听起来更 X，该怎么办」。
+这是系统里最常被触发的一篇概念科普。
+
+## 三对方向（系统的核心解释框架）
+
+| 方向 | 手段 | 调这里 |
+|---|---|---|
+| 明 ↔ 暗 | 大小三和弦、调式 | 换和弦 |
+| 上 ↔ 下 | 旋律轮廓、音区 | 改旋律 |
+| 快 ↔ 慢 | 速度、和声节奏 | 调速度 |
+
+## 为什么这个框架对零基础用户有效
+
+它把「情绪」这个抽象目标，拆成了**三个用户可以直接操作的旋钮**，
+而且每个旋钮都能用日常语言描述（亮/暗、上/下、快/慢），
+不需要任何术语。
+
+这与 `app/services/intent.py` 的映射逻辑是同一套认知模型：
+用户说「想要更温暖」→ 规则层映射到「倾向大调和声」（调「明 ↔ 暗」旋钮）；
+说「想要高潮感」→ 映射到「音域升高」（调「上 ↔ 下」旋钮）。
+**知识库与代码共享同一个情绪模型**，这是输出能被用户理解的前提。
+
+## 零基础模式下的禁区
+
+**不出现**：协和与不协和、张力理论、调式色彩、心理声学。
+用户需要的是旋钮，不是原理。
