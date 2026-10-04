@@ -15,7 +15,18 @@
 
 from __future__ import annotations
 
-import streamlit as st
+import sys
+from pathlib import Path
+
+# ⚠️ 必须在 import streamlit 之前修正 sys.path。
+#
+# ``streamlit run app/main.py`` 会把**脚本所在目录**（app/）放进 sys.path[0]，
+# 而不是当前工作目录，于是 ``import app.*`` 会失败：
+#     ModuleNotFoundError: No module named 'app'
+# 测试里发现不了（AppTest / pytest 都从仓库根运行）。详见 app/bootstrap.py。
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import streamlit as st  # noqa: E402
 
 st.set_page_config(
     page_title="MuseGuide · 帮你迈出写歌的第一步",

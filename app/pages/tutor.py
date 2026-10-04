@@ -5,10 +5,17 @@
 
 from __future__ import annotations
 
-import streamlit as st
+import sys
+from pathlib import Path
 
-from app.ui.client import APIError, MuseGuideClient
-from app.ui.components import (
+# 修正 sys.path：streamlit run 会把脚本所在目录放进 sys.path[0]，
+# 导致 `import app.*` 失败。详见 app/bootstrap.py。
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+import streamlit as st  # noqa: E402
+
+from app.ui.client import APIError, MuseGuideClient  # noqa: E402
+from app.ui.components import (  # noqa: E402
     format_chords,
     guard_layman_text,
     render_degradation,
@@ -26,6 +33,8 @@ def _init_state() -> None:
         "tutor_user_level": "some",
         "tutor_keep_warm": True,
         "tutor_result": None,
+        # 生成期间置 True 并禁用按钮，防止重复点击造成多次 API 调用
+        "tutor_busy": False,
     }
     for key, value in defaults.items():
         st.session_state.setdefault(key, value)
@@ -77,20 +86,35 @@ def _render_inputs() -> None:
         help="勾选后，把整体转向小调之类的方案会被标记为违反约束（§7.2 的 Relevance 维度）",
     )
 
-    if st.button("开始分析", type="primary", use_container_width=True):
+    # 提交前校验：空输入应给出可读提示，而不是让后端返回 400
+    if st.button(
+        "开始分析",
+        type="primary",
+        use_container_width=True,
+        disabled=st.session_state.get("tutor_busy", False),
+    ):
+        chords = (st.session_state.tutor_chords or "").strip()
+        melody = (st.session_state.tutor_melody or "").strip()
+        if not chords and not melody:
+            st.warning("请至少填写和弦进行或旋律，我才能开始分析。")
+            return
+
         constraints = ["保持温暖"] if st.session_state.tutor_keep_warm else []
-        with st.spinner("正在分析并生成建议……"):
-            try:
+        st.session_state.tutor_busy = True
+        try:
+            with st.spinner("正在分析并生成建议……（约 6~10 秒）"):
                 st.session_state.tutor_result = _client().advice(
                     goal=st.session_state.tutor_goal,
-                    chords=st.session_state.tutor_chords,
-                    melody=st.session_state.tutor_melody,
+                    chords=chords,
+                    melody=melody,
                     user_level=st.session_state.tutor_user_level,
                     constraints=constraints,
                 )
-                st.rerun()
-            except APIError as exc:
-                st.error(str(exc))
+        except APIError as exc:
+            st.error(str(exc))
+        finally:
+            st.session_state.tutor_busy = False
+        st.rerun()
 
 
 def _render_analysis(breakdown: dict, problems: list[str]) -> None:

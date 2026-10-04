@@ -75,7 +75,26 @@ class MuseGuideClient:
     ) -> None:
         self.base_url = (base_url or os.environ.get("MUSEGUIDE_API") or DEFAULT_BASE_URL).rstrip("/")
         self.timeout = timeout
-        self._client = httpx.Client(base_url=self.base_url, timeout=timeout, transport=transport)
+        self._client = httpx.Client(
+            base_url=self.base_url,
+            timeout=timeout,
+            transport=transport,
+            # ⚠️ 必须禁用环境代理（trust_env=False）。
+            #
+            # 实测教训（一个极难定位的 bug）：界面连本地后端时频繁报
+            # ``ReadError: [WinError 10054] 远程主机强迫关闭了一个现有的连接``，
+            # 偶尔返回 ``502``（且 body 为空 —— 说明不是 uvicorn 发的）。
+            # 同一时刻 PowerShell 的 Invoke-WebRequest 却完全正常。
+            #
+            # 根因：httpx 默认 ``trust_env=True``，它会从**操作系统级代理设置**
+            # （Windows 注册表的 WinINET 配置）读取代理，而这个机器上配置了代理，
+            # 于是发往 127.0.0.1 的请求被绕进代理，代理再返回 502 或直接断连。
+            # 关键点：**代理并不只来自环境变量**，所以「env 里没有 PROXY」并不代表没有代理。
+            #
+            # 界面调用的是本机后端，任何代理都只会帮倒忙。
+            # 实测：``trust_env=False`` 后 5/5 成功，默认设置下 3/5 失败。
+            trust_env=False,
+        )
 
     # ---- 底层 ----
 

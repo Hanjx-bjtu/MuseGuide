@@ -8,9 +8,16 @@
 
 from __future__ import annotations
 
-import streamlit as st
+import sys
+from pathlib import Path
 
-from app.ui.client import MuseGuideClient
+# 修正 sys.path：streamlit run 会把脚本所在目录放进 sys.path[0]，
+# 导致 `import app.*` 失败。详见 app/bootstrap.py。
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+import streamlit as st  # noqa: E402
+
+from app.ui.client import MuseGuideClient  # noqa: E402
 
 
 def _render_health() -> None:

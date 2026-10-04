@@ -6,10 +6,17 @@
 
 from __future__ import annotations
 
-import streamlit as st
+import sys
+from pathlib import Path
 
-from app.ui.client import APIError, MuseGuideClient
-from app.ui.components import (
+# 修正 sys.path：streamlit run 会把脚本所在目录放进 sys.path[0]，
+# 导致 `import app.*` 失败。详见 app/bootstrap.py。
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+import streamlit as st  # noqa: E402
+
+from app.ui.client import APIError, MuseGuideClient  # noqa: E402
+from app.ui.components import (  # noqa: E402
     format_chords,
     guard_layman_text,
     render_degradation,
@@ -38,6 +45,8 @@ def _init_state() -> None:
         "starter_tempo": None,
         "starter_stage": "home",  # home -> guide -> plan
         "starter_result": None,
+        # 生成期间置 True 并禁用按钮，防止用户重复点击造成多次 API 调用
+        "starter_busy": False,
     }
     for key, value in defaults.items():
         st.session_state.setdefault(key, value)
@@ -125,12 +134,20 @@ def _render_option_group(
     current = st.session_state.get(state_key)
     index = concepts.index(current) if current in concepts else None
 
+    # 未选择时给出明确的空选项，而不是让 st.radio 自己显示「没有任何选中」。
+    #
+    # **实测问题：** 三组都是 `index=None` 时，用户看到的是三排没有光标的按钮，
+    # 既不知道要不要选、也不知道不选会怎样；而点「生成」竟然能直接出结果。
+    # 显式加一个「还没想好」选项后，用户至少有确定的默认态可点。
+    placeholder = "还没想好，帮我决定"
+    options = [placeholder, *labels]
+
     chosen_label = st.radio(
         title,
-        labels,
-        index=index,
+        options,
+        index=(index + 1) if index is not None else 0,
         label_visibility="collapsed",
-        captions=[item.get("hint", "") for item in items],
+        captions=["交给系统根据你的描述来定"] + [item.get("hint", "") for item in items],
         key=f"{state_key}_widget",
     )
 
@@ -171,24 +188,66 @@ def _render_guide(options: dict) -> None:
     )
 
     st.divider()
+
+    # 提交前先回显「系统将依据什么来生成」，避免用户不清楚自己的选择是否生效。
+    _render_selection_summary()
+
     left, right = st.columns([1, 1])
     if left.button("← 返回", use_container_width=True):
         st.session_state.starter_stage = "home"
         st.rerun()
-    if right.button("生成起步方案 →", type="primary", use_container_width=True):
-        with st.spinner("正在为你搭一个框架……"):
-            try:
+    if right.button(
+        "生成起步方案 →",
+        type="primary",
+        use_container_width=True,
+        disabled=st.session_state.get("starter_busy", False),
+    ):
+        st.session_state.starter_busy = True
+        try:
+            with st.spinner("正在为你搭一个框架……（约 5~10 秒）"):
                 result = _client().starter(
                     text=st.session_state.starter_text,
                     emotion=st.session_state.starter_emotion,
                     style=st.session_state.starter_style,
                     tempo_label=st.session_state.starter_tempo,
                 )
-                st.session_state.starter_result = result
-                st.session_state.starter_stage = "plan"
-                st.rerun()
-            except APIError as exc:
-                st.error(str(exc))
+            st.session_state.starter_result = result
+            st.session_state.starter_stage = "plan"
+        except APIError as exc:
+            st.error(str(exc))
+        finally:
+            st.session_state.starter_busy = False
+        st.rerun()
+
+
+def _render_selection_summary() -> None:
+    """回显当前选择，并说明没选的项会怎么处理。
+
+    实测问题：三组选择都不点时，用户完全不知道系统会用什么值 ——
+    而系统确实会从描述里推断，或退回默认值。**把这件事说清楚，
+    比让用户点一个没有反馈的按钮要好。**
+    """
+    emotion = st.session_state.get("starter_emotion")
+    style = st.session_state.get("starter_style")
+    tempo = st.session_state.get("starter_tempo")
+
+    chosen = [
+        label
+        for label, value in (("情绪", emotion), ("风格", style), ("速度", tempo))
+        if value
+    ]
+
+    if len(chosen) == 3:
+        st.caption(f"将依据：情绪 **{emotion}**、风格 **{style}**、速度 **{tempo}**")
+    elif chosen:
+        picked = "、".join(
+            f"{name} **{value}**"
+            for name, value in (("情绪", emotion), ("风格", style), ("速度", tempo))
+            if value
+        )
+        st.caption(f"将依据：{picked}；其余部分由系统根据你的描述推断。")
+    else:
+        st.caption("将依据：你的描述 —— 三组都交给系统根据描述推断。")
 
 
 # --------------------------------------------------------------------------- #

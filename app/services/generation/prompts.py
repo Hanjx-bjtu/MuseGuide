@@ -37,6 +37,34 @@ STARTER_OUTPUT_SCHEMA = """{
 }"""
 
 
+#: 零基础档的「和弦符号必须被解释」约束。
+#:
+#: **实测教训（来自人工评分）：** `comprehensibility` 是八个维度里唯一未达标的
+#: （3.94 / 门槛 4.0），而且 16 题里 15 题都给 4 分、**没有一题给 5 分** ——
+#: 说明不是个别题差，而是普遍存在一层「还差一点」的门槛。
+#:
+#: 逐条核对输出后定位到原因：起步方案做得不错，**每个和弦名都会在解释里被复述
+#: 并配上情绪类比**（「Am 听起来像阴天」）；但进阶建议里，
+#: 和弦串是 ``Cmaj7 | G/B | Am7 | Fmaj7``，解释却**一个和弦名都没提**，
+#: 更没有解释 ``maj7`` 或斜杠低音 ``G/B`` 是什么。
+#:
+#: 对零基础用户来说，**和弦符号本身就是术语**：他需要同时知道
+#: 「字母代表一个和弦」「斜杠是什么意思」「maj7 和 m7 差在哪」三件事，
+#: 而系统只做了第一件。
+LAYMAN_CHORD_RULE = """
+[和弦符号的解释要求 —— 面向完全不懂乐理的用户]
+用户不认识和弦符号。凡是给出和弦的地方，必须让他能对上号：
+1. 每个和弦后面紧跟一句「它听起来像什么」，用日常事物类比
+   （如「Am 像阴天」「C 像阳光照进来」），不要只写名字。
+2. **出现带后缀或斜杠的和弦时（如 Cmaj7、Am7、G/B），必须用一句话说明它和
+   基础和弦的区别**，用日常说法解释，例如：
+   - 「Cmaj7 就是在 C 的基础上多加一个音，听起来更柔和、更梦幻」
+   - 「G/B 就是 G 和弦，只是把最低的那个音换成了 B，让连接更顺」
+   不要出现「七和弦」「低声部改写」「延伸音」这类术语名称。
+3. 不要罗列罗马数字（I、V、vi）—— 零基础用户看不懂。
+"""
+
+
 def render_intent(intent: CreativeIntent) -> str:
     """渲染 Intent Mapping 结果（§3.3.4 的第二段）。"""
     lines = [
@@ -122,7 +150,7 @@ def starter_prompt(
 {selection_block}
 [Intent Mapping 结果]
 {render_intent(intent)}
-{tempo_constraint}
+{tempo_constraint}{LAYMAN_CHORD_RULE if level == "zero" else ""}
 [检索到的知识]
 {render_evidence(evidence, level)}
 
@@ -163,7 +191,7 @@ def tutor_prompt(
 
 [用户目标]
 {goal_text or '（用户未明确说明目标）'}
-{constraint_block}
+{constraint_block}{LAYMAN_CHORD_RULE if level == "zero" else ""}
 [检索到的知识]
 {render_evidence(evidence, level)}
 
